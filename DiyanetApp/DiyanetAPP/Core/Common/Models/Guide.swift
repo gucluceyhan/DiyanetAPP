@@ -1,6 +1,7 @@
 import Foundation
+import SwiftUI
 
-struct Guide: Codable, Identifiable {
+struct Guide: Identifiable {
     let id: String
     let title: String
     let description: String
@@ -13,71 +14,61 @@ struct Guide: Codable, Identifiable {
     let readTime: Int
     let createdAt: Date
     let updatedAt: Date
-    let isBookmarked: Bool
+    var isBookmarked: Bool
+}
+
+enum GuideCategory: String, CaseIterable {
+    case PRAYER = "prayer"
+    case FASTING = "fasting"
+    case ZAKAT = "zakat"
+    case PILGRIMAGE = "hac"
+    case UMRAH = "umre"
+    case JERUSALEM = "kudus"
+    case FAMILY = "aile"
+    case RAMADAN = "ramazan"
+    case EDUCATION = "egitim"
+    case HISTORY = "tarih"
+    case OTHER = "diger"
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case title
-        case description
-        case content
-        case category
-        case author
-        case tags
-        case images
-        case videoUrl = "video_url"
-        case readTime = "read_time"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
-        case isBookmarked = "is_bookmarked"
+    var title: String {
+        switch self {
+        case .PRAYER: return "Namaz"
+        case .FASTING: return "Oruç"
+        case .ZAKAT: return "Zekat"
+        case .PILGRIMAGE: return "Hac"
+        case .UMRAH: return "Umre"
+        case .JERUSALEM: return "Kudüs"
+        case .FAMILY: return "Aile"
+        case .RAMADAN: return "Ramazan"
+        case .EDUCATION: return "Eğitim"
+        case .HISTORY: return "Tarih"
+        case .OTHER: return "Diğer"
+        }
+    }
+    
+    var iconName: String {
+        switch self {
+        case .PRAYER: return "hands.sparkles"
+        case .FASTING: return "moon.stars"
+        case .ZAKAT: return "banknote"
+        case .PILGRIMAGE: return "mappin.and.ellipse"
+        case .UMRAH: return "figure.walk.motion"
+        case .JERUSALEM: return "building.2"
+        case .FAMILY: return "person.3"
+        case .RAMADAN: return "star.and.crescent"
+        case .EDUCATION: return "book"
+        case .HISTORY: return "clock.arrow.circlepath"
+        case .OTHER: return "doc.text"
+        }
     }
 }
 
-enum GuideCategory: String, Codable {
-    case prayer = "PRAYER"
-    case fasting = "FASTING"
-    case zakat = "ZAKAT"
-    case hajj = "HAJJ"
-    case quran = "QURAN"
-    case hadith = "HADITH"
-    case lifestyle = "LIFESTYLE"
-    case family = "FAMILY"
-    case other = "OTHER"
-}
-
-struct Author: Codable, Identifiable {
-    let id: String
+struct Author {
     let name: String
-    let title: String?
-    let bio: String?
-    let avatarUrl: String?
-    let socialMedia: AuthorSocialMedia?
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case title
-        case bio
-        case avatarUrl = "avatar_url"
-        case socialMedia = "social_media"
-    }
+    let imageUrl: String?
 }
 
-struct AuthorSocialMedia: Codable {
-    let twitter: String?
-    let linkedin: String?
-    let website: String?
-}
-
-struct GuideImage: Codable, Identifiable {
-    let id: String
+struct GuideImage {
     let url: String
     let caption: String?
-    let altText: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case url
-        case caption
-        case altText = "alt_text"
-    }
 } 

@@ -14,3 +14,23 @@ Diyanet İşleri Başkanlığı mobil uygulaması. Bu uygulama, namaz vakitlerin
 - iOS 15.0+
 - Xcode 13.0+
 - Swift 5.5+
+
+DiyanetAPP/
+├── Core/
+│   ├── Network/
+│   ├── Storage/
+│   ├── Authentication/
+│   ├── Common/
+│   └── Utilities/
+├── Features/
+│   ├── Authentication/
+│   ├── Home/
+│   ├── Guides/
+│   ├── Prayers/
+│   ├── Maps/
+│   └── Profile/
+├── Resources/
+│   ├── Localizations/
+│   ├── Assets/
+│   └── Fonts/
+└── SupportingFiles/
