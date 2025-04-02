@@ -629,27 +629,30 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
+            // Ana Sayfa tabı
             HomeView()
                 .tabItem {
                     Label("Ana Sayfa", systemImage: "house.fill")
                 }
                 .tag(0)
             
+            // Namaz tabı
             PrayersView()
                 .tabItem {
                     Label("Namaz", systemImage: "moon.stars.fill")
                 }
                 .tag(1)
             
-            // GuidesView yerine basit bir görünüm kullanıyorum
-            NavigationView {
+            // Rehberler tabı - karmaşık ifadeyi alt ifadelere bölelim
+            let rehberlerView = NavigationView {
                 VStack(spacing: 20) {
                     Text("Rehberler")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                     
                     VStack(alignment: .leading, spacing: 15) {
-                        NavigationLink(destination: HajjGuideView()) {
+                        // Hac Rehberi bağlantısı
+                        let hacRehberiLink = NavigationLink(destination: HajjGuideView()) {
                             HStack {
                                 Image(systemName: "mappin.and.ellipse")
                                     .font(.title2)
@@ -670,7 +673,8 @@ struct MainTabView: View {
                             .cornerRadius(10)
                         }
                         
-                        NavigationLink(destination: UmrahGuideView()) {
+                        // Umre Rehberi bağlantısı
+                        let umreRehberiLink = NavigationLink(destination: UmrahGuideView()) {
                             HStack {
                                 Image(systemName: "building.columns")
                                     .font(.title2)
@@ -691,7 +695,8 @@ struct MainTabView: View {
                             .cornerRadius(10)
                         }
                         
-                        NavigationLink(destination: JerusalemGuideView()) {
+                        // Kudüs Rehberi bağlantısı
+                        let kudusRehberiLink = NavigationLink(destination: JerusalemGuideView()) {
                             HStack {
                                 Image(systemName: "building.2")
                                     .font(.title2)
@@ -711,23 +716,32 @@ struct MainTabView: View {
                             .background(Color(.secondarySystemBackground))
                             .cornerRadius(10)
                         }
+                        
+                        // Rehberleri VStack içine yerleştir
+                        hacRehberiLink
+                        umreRehberiLink
+                        kudusRehberiLink
                     }
                     .padding(.horizontal)
                 }
                 .navigationTitle("Dini Rehberler")
                 .padding(.top)
             }
-            .tabItem {
-                Label("Rehberler", systemImage: "book.fill")
-            }
-            .tag(2)
             
+            rehberlerView
+                .tabItem {
+                    Label("Rehberler", systemImage: "book.fill")
+                }
+                .tag(2)
+            
+            // Camiler tabı
             MapsView()
                 .tabItem {
                     Label("Camiler", systemImage: "map.fill")
                 }
                 .tag(3)
             
+            // Profil tabı
             ProfileView()
                 .tabItem {
                     Label("Profil", systemImage: "person.fill")
