@@ -403,7 +403,7 @@ struct SpecialGuideCard: View {
                     Text("Detaylı Göster")
                         .font(.caption)
                         .fontWeight(.medium)
-                        .foregroundStyle(.accentColor)
+                        .foregroundStyle(Color.accentColor)
                 }
             }
             .padding(.horizontal, 10)

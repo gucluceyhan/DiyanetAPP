@@ -19,7 +19,7 @@ struct HajjGuideView: View {
                     
                     Image(systemName: "building.columns.fill")
                         .font(.title)
-                        .foregroundStyle(.accentColor)
+                        .foregroundStyle(Color.accentColor)
                 }
                 .padding(.horizontal)
                 
@@ -350,7 +350,7 @@ struct HajjGuideView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Image(systemName: icon)
-                    .foregroundStyle(.accentColor)
+                    .foregroundStyle(Color.accentColor)
                 Text(title)
                     .font(.headline)
             }
@@ -394,7 +394,7 @@ struct HajjGuideView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text(day)
                 .font(.headline)
-                .foregroundStyle(.accentColor)
+                .foregroundStyle(Color.accentColor)
             
             Text(content)
                 .font(.body)
@@ -427,7 +427,7 @@ struct HajjGuideView: View {
                 }) {
                     Text("Haritada Göster")
                         .font(.caption)
-                        .foregroundStyle(.accentColor)
+                        .foregroundStyle(Color.accentColor)
                 }
             }
         }

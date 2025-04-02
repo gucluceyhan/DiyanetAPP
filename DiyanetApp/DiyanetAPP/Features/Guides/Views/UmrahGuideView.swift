@@ -19,7 +19,7 @@ struct UmrahGuideView: View {
                     
                     Image(systemName: "figure.walk.motion")
                         .font(.title)
-                        .foregroundStyle(.accentColor)
+                        .foregroundStyle(Color.accentColor)
                 }
                 .padding(.horizontal)
                 
@@ -355,7 +355,7 @@ struct UmrahGuideView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Image(systemName: icon)
-                    .foregroundStyle(.accentColor)
+                    .foregroundStyle(Color.accentColor)
                 Text(title)
                     .font(.headline)
             }
@@ -377,7 +377,7 @@ struct UmrahGuideView: View {
             
             Text(period)
                 .font(.subheadline)
-                .foregroundStyle(.accentColor)
+                .foregroundStyle(Color.accentColor)
                 .fontWeight(.medium)
             
             Text(description)
@@ -425,7 +425,7 @@ struct UmrahGuideView: View {
                 
                 Text(location)
                     .font(.subheadline)
-                    .foregroundStyle(.accentColor)
+                    .foregroundStyle(Color.accentColor)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 4)
                     .background(Color.accentColor.opacity(0.1))
@@ -455,7 +455,7 @@ struct UmrahGuideView: View {
                     Text("Haritada Göster")
                 }
                 .font(.caption)
-                .foregroundStyle(.accentColor)
+                .foregroundStyle(Color.accentColor)
             }
             .padding(.top, 4)
         }

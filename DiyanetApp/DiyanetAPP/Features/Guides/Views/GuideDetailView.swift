@@ -21,7 +21,7 @@ struct GuideDetailView: View {
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
                             .background(Color.accentColor.opacity(0.2))
-                            .foregroundStyle(.accentColor)
+                            .foregroundStyle(Color.accentColor)
                             .clipShape(Capsule())
                         
                         Spacer()
@@ -127,7 +127,7 @@ struct AuthorView: View {
                 ForEach(socialMedia, id: \.platform) { link in
                     Link(destination: URL(string: link.url)!) {
                         Image(systemName: link.platform.iconName)
-                            .foregroundStyle(.accentColor)
+                            .foregroundStyle(Color.accentColor)
                     }
                 }
             }

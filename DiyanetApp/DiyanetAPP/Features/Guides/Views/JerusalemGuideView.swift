@@ -19,7 +19,7 @@ struct JerusalemGuideView: View {
                     
                     Image(systemName: "building.2.fill")
                         .font(.title)
-                        .foregroundStyle(.accentColor)
+                        .foregroundStyle(Color.accentColor)
                 }
                 .padding(.horizontal)
                 
@@ -474,7 +474,7 @@ struct JerusalemGuideView: View {
         HStack(alignment: .top, spacing: 16) {
             Image(systemName: iconName)
                 .font(.title2)
-                .foregroundStyle(.accentColor)
+                .foregroundStyle(Color.accentColor)
                 .frame(width: 30)
             
             VStack(alignment: .leading, spacing: 8) {
@@ -523,7 +523,7 @@ struct JerusalemGuideView: View {
                 }) {
                     Text("Haritada Göster")
                         .font(.caption)
-                        .foregroundStyle(.accentColor)
+                        .foregroundStyle(Color.accentColor)
                 }
             }
         }

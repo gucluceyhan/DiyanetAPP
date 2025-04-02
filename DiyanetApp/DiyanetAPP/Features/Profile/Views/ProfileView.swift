@@ -161,7 +161,7 @@ struct StatisticItem: View {
         VStack(spacing: 8) {
             Image(systemName: systemImage)
                 .font(.title2)
-                .foregroundStyle(.accentColor)
+                .foregroundStyle(Color.accentColor)
             
             Text(value)
                 .font(.title)
@@ -221,7 +221,7 @@ struct BookmarkedGuideCard: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .background(Color.accentColor.opacity(0.2))
-                    .foregroundStyle(.accentColor)
+                    .foregroundStyle(Color.accentColor)
                     .clipShape(Capsule())
                 
                 Spacer()
