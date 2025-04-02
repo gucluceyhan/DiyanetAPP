@@ -656,7 +656,7 @@ struct MainTabView: View {
                             HStack {
                                 Image(systemName: "mappin.and.ellipse")
                                     .font(.title2)
-                                    .foregroundStyle(.accentColor)
+                                    .foregroundStyle(Color.accentColor)
                                     .frame(width: 40)
                                 
                                 VStack(alignment: .leading) {
@@ -678,7 +678,7 @@ struct MainTabView: View {
                             HStack {
                                 Image(systemName: "building.columns")
                                     .font(.title2)
-                                    .foregroundStyle(.accentColor)
+                                    .foregroundStyle(Color.accentColor)
                                     .frame(width: 40)
                                 
                                 VStack(alignment: .leading) {
@@ -700,7 +700,7 @@ struct MainTabView: View {
                             HStack {
                                 Image(systemName: "building.2")
                                     .font(.title2)
-                                    .foregroundStyle(.accentColor)
+                                    .foregroundStyle(Color.accentColor)
                                     .frame(width: 40)
                                 
                                 VStack(alignment: .leading) {
