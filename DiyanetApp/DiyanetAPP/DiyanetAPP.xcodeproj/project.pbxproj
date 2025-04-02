@@ -1,0 +1,928 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BEDDB0B22D9D9B6000466830 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEDDB0942D9D9B6000466830 /* Assets.xcassets */; };
+		BEDDB0B32D9D9B6000466830 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEDDB0922D9D9B6000466830 /* Preview Assets.xcassets */; };
+		BEDDB0B42D9D9B6000466830 /* DiyanetAPP.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEDDB0972D9D9B6000466830 /* DiyanetAPP.xcdatamodeld */; };
+		BEDDB0B62D9D9B6000466830 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDDB0952D9D9B6000466830 /* ContentView.swift */; };
+		BEDDB0B72D9D9B6000466830 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDDB09A2D9D9B6000466830 /* Persistence.swift */; };
+		BEDDB0BA2D9D9B6000466830 /* DiyanetAPPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDDB0982D9D9B6000466830 /* DiyanetAPPApp.swift */; };
+		BEF723B12D9DC8D900D5DB3F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEF723B02D9DC8D900D5DB3F /* XCTest.framework */; platformFilter = ios; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BEDDB06D2D9D953200466830 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEDDB04D2D9D953000466830 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BEDDB0542D9D953000466830;
+			remoteInfo = DiyanetAPP;
+		};
+		BEDDB0772D9D953200466830 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEDDB04D2D9D953000466830 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BEDDB0542D9D953000466830;
+			remoteInfo = DiyanetAPP;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BEDDB0552D9D953000466830 /* DiyanetAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiyanetAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEDDB06C2D9D953200466830 /* DiyanetAPPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiyanetAPPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEDDB0762D9D953200466830 /* DiyanetAPPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiyanetAPPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEDDB0922D9D9B6000466830 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BEDDB0942D9D9B6000466830 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BEDDB0952D9D9B6000466830 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BEDDB0962D9D9B6000466830 /* DiyanetAPP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiyanetAPP.entitlements; sourceTree = "<group>"; };
+		BEDDB0982D9D9B6000466830 /* DiyanetAPPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiyanetAPPApp.swift; sourceTree = "<group>"; };
+		BEDDB09A2D9D9B6000466830 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		BEDDB09C2D9D9B6000466830 /* DiyanetAPP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = DiyanetAPP.xcodeproj; sourceTree = "<group>"; };
+		BEDDB0B02D9D9B6000466830 /* DiyanetAPP.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DiyanetAPP.xcdatamodel; sourceTree = "<group>"; };
+		BEF723B02D9DC8D900D5DB3F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		BEF723B72D9DCBC000D5DB3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BEF723B82D9DCBC000D5DB3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BEF723B92D9DCBC000D5DB3F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BEF723BA2D9DCBC000D5DB3F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		BEF723BC2D9DCFD500D5DB3F /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		BEF723BE2D9DCFD500D5DB3F /* Guide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Guide.swift; sourceTree = "<group>"; };
+		BEF723BF2D9DCFD500D5DB3F /* Mosque.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mosque.swift; sourceTree = "<group>"; };
+		BEF723C02D9DCFD500D5DB3F /* Prayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prayer.swift; sourceTree = "<group>"; };
+		BEF723C12D9DCFD500D5DB3F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		BEF723C32D9DCFD500D5DB3F /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		BEF723C62D9DCFD500D5DB3F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		BEF723C92D9DCFD500D5DB3F /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		BEF723CC2D9DCFD500D5DB3F /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		BEF723CE2D9DCFD500D5DB3F /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		BEF723CF2D9DCFD500D5DB3F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		BEF723D02D9DCFD500D5DB3F /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		BEF723D32D9DCFD500D5DB3F /* GuidesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidesViewModel.swift; sourceTree = "<group>"; };
+		BEF723D52D9DCFD500D5DB3F /* GuideDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideDetailView.swift; sourceTree = "<group>"; };
+		BEF723D62D9DCFD500D5DB3F /* GuidesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidesView.swift; sourceTree = "<group>"; };
+		BEF723D92D9DCFD500D5DB3F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		BEF723DB2D9DCFD500D5DB3F /* FeaturedGuidesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedGuidesSection.swift; sourceTree = "<group>"; };
+		BEF723DC2D9DCFD500D5DB3F /* NearbyMosquesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyMosquesSection.swift; sourceTree = "<group>"; };
+		BEF723DD2D9DCFD500D5DB3F /* PrayerTimesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerTimesCard.swift; sourceTree = "<group>"; };
+		BEF723DF2D9DCFD500D5DB3F /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		BEF723E22D9DCFD500D5DB3F /* MapsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewModel.swift; sourceTree = "<group>"; };
+		BEF723E42D9DCFD500D5DB3F /* MapsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsView.swift; sourceTree = "<group>"; };
+		BEF723E72D9DCFD500D5DB3F /* PrayersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayersViewModel.swift; sourceTree = "<group>"; };
+		BEF723E92D9DCFD500D5DB3F /* PrayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayersView.swift; sourceTree = "<group>"; };
+		BEF723EC2D9DCFD500D5DB3F /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		BEF723EE2D9DCFD500D5DB3F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		BEF723F22D9DCFD500D5DB3F /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		BEF723F32D9DCFD500D5DB3F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BEF723F62D9DCFD500D5DB3F /* DiyanetApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DiyanetApp.xcdatamodel; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BEDDB0522D9D953000466830 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEDDB0692D9D953200466830 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEDDB0732D9D953200466830 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEF723B12D9DC8D900D5DB3F /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BEDDB04C2D9D953000466830 = {
+			isa = PBXGroup;
+			children = (
+				BEF723CB2D9DCFD500D5DB3F /* Core */,
+				BEF723F12D9DCFD500D5DB3F /* Features */,
+				BEF723F22D9DCFD500D5DB3F /* Package.swift */,
+				BEF723F42D9DCFD500D5DB3F /* Resources */,
+				BEDDB0562D9D953000466830 /* Products */,
+				BEDDB09B2D9D9B6000466830 /* DiyanetAPP */,
+				BEDDB09C2D9D9B6000466830 /* DiyanetAPP.xcodeproj */,
+				BEDDB0AD2D9D9B6000466830 /* SupportingFiles */,
+				BEF723AF2D9DC8D900D5DB3F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		BEDDB0562D9D953000466830 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BEDDB0552D9D953000466830 /* DiyanetAPP.app */,
+				BEDDB06C2D9D953200466830 /* DiyanetAPPTests.xctest */,
+				BEDDB0762D9D953200466830 /* DiyanetAPPUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BEDDB0932D9D9B6000466830 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				BEDDB0922D9D9B6000466830 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BEDDB09B2D9D9B6000466830 /* DiyanetAPP */ = {
+			isa = PBXGroup;
+			children = (
+				BEDDB0932D9D9B6000466830 /* Preview Content */,
+				BEDDB0942D9D9B6000466830 /* Assets.xcassets */,
+				BEDDB0952D9D9B6000466830 /* ContentView.swift */,
+				BEDDB0962D9D9B6000466830 /* DiyanetAPP.entitlements */,
+				BEDDB0972D9D9B6000466830 /* DiyanetAPP.xcdatamodeld */,
+				BEDDB0982D9D9B6000466830 /* DiyanetAPPApp.swift */,
+				BEF723B82D9DCBC000D5DB3F /* Info.plist */,
+				BEDDB09A2D9D9B6000466830 /* Persistence.swift */,
+			);
+			path = DiyanetAPP;
+			sourceTree = "<group>";
+		};
+		BEDDB0AD2D9D9B6000466830 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723B72D9DCBC000D5DB3F /* AppDelegate.swift */,
+				BEF723B92D9DCBC000D5DB3F /* LaunchScreen.storyboard */,
+				BEF723BA2D9DCBC000D5DB3F /* SceneDelegate.swift */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		BEDDB0AE2D9D9B6000466830 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BEF723AF2D9DC8D900D5DB3F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723B02D9DC8D900D5DB3F /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BEF723BD2D9DCFD500D5DB3F /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723BC2D9DCFD500D5DB3F /* AuthenticationManager.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		BEF723C22D9DCFD500D5DB3F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723BE2D9DCFD500D5DB3F /* Guide.swift */,
+				BEF723BF2D9DCFD500D5DB3F /* Mosque.swift */,
+				BEF723C02D9DCFD500D5DB3F /* Prayer.swift */,
+				BEF723C12D9DCFD500D5DB3F /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BEF723C42D9DCFD500D5DB3F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723C32D9DCFD500D5DB3F /* MainTabView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BEF723C52D9DCFD500D5DB3F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723C22D9DCFD500D5DB3F /* Models */,
+				BEF723C42D9DCFD500D5DB3F /* Views */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		BEF723C72D9DCFD500D5DB3F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723C62D9DCFD500D5DB3F /* NetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		BEF723CA2D9DCFD500D5DB3F /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723C82D9DCFD500D5DB3F /* DiyanetApp.xcdatamodeld */,
+				BEF723C92D9DCFD500D5DB3F /* StorageManager.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		BEF723CB2D9DCFD500D5DB3F /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723BD2D9DCFD500D5DB3F /* Authentication */,
+				BEF723C52D9DCFD500D5DB3F /* Common */,
+				BEF723C72D9DCFD500D5DB3F /* Network */,
+				BEF723CA2D9DCFD500D5DB3F /* Storage */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		BEF723CD2D9DCFD500D5DB3F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723CC2D9DCFD500D5DB3F /* AuthenticationViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		BEF723D12D9DCFD500D5DB3F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723CE2D9DCFD500D5DB3F /* ForgotPasswordView.swift */,
+				BEF723CF2D9DCFD500D5DB3F /* LoginView.swift */,
+				BEF723D02D9DCFD500D5DB3F /* RegisterView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BEF723D22D9DCFD500D5DB3F /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723CD2D9DCFD500D5DB3F /* ViewModels */,
+				BEF723D12D9DCFD500D5DB3F /* Views */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		BEF723D42D9DCFD500D5DB3F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723D32D9DCFD500D5DB3F /* GuidesViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		BEF723D72D9DCFD500D5DB3F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723D52D9DCFD500D5DB3F /* GuideDetailView.swift */,
+				BEF723D62D9DCFD500D5DB3F /* GuidesView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BEF723D82D9DCFD500D5DB3F /* Guides */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723D42D9DCFD500D5DB3F /* ViewModels */,
+				BEF723D72D9DCFD500D5DB3F /* Views */,
+			);
+			path = Guides;
+			sourceTree = "<group>";
+		};
+		BEF723DA2D9DCFD500D5DB3F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723D92D9DCFD500D5DB3F /* HomeViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		BEF723DE2D9DCFD500D5DB3F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723DB2D9DCFD500D5DB3F /* FeaturedGuidesSection.swift */,
+				BEF723DC2D9DCFD500D5DB3F /* NearbyMosquesSection.swift */,
+				BEF723DD2D9DCFD500D5DB3F /* PrayerTimesCard.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		BEF723E02D9DCFD500D5DB3F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723DE2D9DCFD500D5DB3F /* Components */,
+				BEF723DF2D9DCFD500D5DB3F /* HomeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BEF723E12D9DCFD500D5DB3F /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723DA2D9DCFD500D5DB3F /* ViewModels */,
+				BEF723E02D9DCFD500D5DB3F /* Views */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		BEF723E32D9DCFD500D5DB3F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723E22D9DCFD500D5DB3F /* MapsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		BEF723E52D9DCFD500D5DB3F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723E42D9DCFD500D5DB3F /* MapsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BEF723E62D9DCFD500D5DB3F /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723E32D9DCFD500D5DB3F /* ViewModels */,
+				BEF723E52D9DCFD500D5DB3F /* Views */,
+			);
+			path = Maps;
+			sourceTree = "<group>";
+		};
+		BEF723E82D9DCFD500D5DB3F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723E72D9DCFD500D5DB3F /* PrayersViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		BEF723EA2D9DCFD500D5DB3F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723E92D9DCFD500D5DB3F /* PrayersView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BEF723EB2D9DCFD500D5DB3F /* Prayers */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723E82D9DCFD500D5DB3F /* ViewModels */,
+				BEF723EA2D9DCFD500D5DB3F /* Views */,
+			);
+			path = Prayers;
+			sourceTree = "<group>";
+		};
+		BEF723ED2D9DCFD500D5DB3F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723EC2D9DCFD500D5DB3F /* ProfileViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		BEF723EF2D9DCFD500D5DB3F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723EE2D9DCFD500D5DB3F /* ProfileView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BEF723F02D9DCFD500D5DB3F /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723ED2D9DCFD500D5DB3F /* ViewModels */,
+				BEF723EF2D9DCFD500D5DB3F /* Views */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		BEF723F12D9DCFD500D5DB3F /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723D22D9DCFD500D5DB3F /* Authentication */,
+				BEF723D82D9DCFD500D5DB3F /* Guides */,
+				BEF723E12D9DCFD500D5DB3F /* Home */,
+				BEF723E62D9DCFD500D5DB3F /* Maps */,
+				BEF723EB2D9DCFD500D5DB3F /* Prayers */,
+				BEF723F02D9DCFD500D5DB3F /* Profile */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		BEF723F42D9DCFD500D5DB3F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BEF723F32D9DCFD500D5DB3F /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BEDDB0542D9D953000466830 /* DiyanetAPP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BEDDB07F2D9D953200466830 /* Build configuration list for PBXNativeTarget "DiyanetAPP" */;
+			buildPhases = (
+				BEDDB0512D9D953000466830 /* Sources */,
+				BEDDB0522D9D953000466830 /* Frameworks */,
+				BEDDB0532D9D953000466830 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DiyanetAPP;
+			packageProductDependencies = (
+			);
+			productName = DiyanetAPP;
+			productReference = BEDDB0552D9D953000466830 /* DiyanetAPP.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BEDDB06B2D9D953200466830 /* DiyanetAPPTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BEDDB0842D9D953200466830 /* Build configuration list for PBXNativeTarget "DiyanetAPPTests" */;
+			buildPhases = (
+				BEDDB0682D9D953200466830 /* Sources */,
+				BEDDB0692D9D953200466830 /* Frameworks */,
+				BEDDB06A2D9D953200466830 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BEDDB06E2D9D953200466830 /* PBXTargetDependency */,
+			);
+			name = DiyanetAPPTests;
+			packageProductDependencies = (
+			);
+			productName = DiyanetAPPTests;
+			productReference = BEDDB06C2D9D953200466830 /* DiyanetAPPTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		BEDDB0752D9D953200466830 /* DiyanetAPPUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BEDDB0872D9D953200466830 /* Build configuration list for PBXNativeTarget "DiyanetAPPUITests" */;
+			buildPhases = (
+				BEDDB0722D9D953200466830 /* Sources */,
+				BEDDB0732D9D953200466830 /* Frameworks */,
+				BEDDB0742D9D953200466830 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BEDDB0782D9D953200466830 /* PBXTargetDependency */,
+			);
+			name = DiyanetAPPUITests;
+			packageProductDependencies = (
+			);
+			productName = DiyanetAPPUITests;
+			productReference = BEDDB0762D9D953200466830 /* DiyanetAPPUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BEDDB04D2D9D953000466830 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					BEDDB0542D9D953000466830 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					BEDDB06B2D9D953200466830 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = BEDDB0542D9D953000466830;
+					};
+					BEDDB0752D9D953200466830 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = BEDDB0542D9D953000466830;
+					};
+				};
+			};
+			buildConfigurationList = BEDDB0502D9D953000466830 /* Build configuration list for PBXProject "DiyanetAPP" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BEDDB04C2D9D953000466830;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = BEDDB0562D9D953000466830 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = BEDDB0AE2D9D9B6000466830 /* Products */;
+					ProjectRef = BEDDB09C2D9D9B6000466830 /* DiyanetAPP.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				BEDDB0542D9D953000466830 /* DiyanetAPP */,
+				BEDDB06B2D9D953200466830 /* DiyanetAPPTests */,
+				BEDDB0752D9D953200466830 /* DiyanetAPPUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BEDDB0532D9D953000466830 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEDDB0B22D9D9B6000466830 /* Assets.xcassets in Resources */,
+				BEDDB0B32D9D9B6000466830 /* Preview Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEDDB06A2D9D953200466830 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEDDB0742D9D953200466830 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BEDDB0512D9D953000466830 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEDDB0B42D9D9B6000466830 /* DiyanetAPP.xcdatamodeld in Sources */,
+				BEDDB0B62D9D9B6000466830 /* ContentView.swift in Sources */,
+				BEDDB0B72D9D9B6000466830 /* Persistence.swift in Sources */,
+				BEDDB0BA2D9D9B6000466830 /* DiyanetAPPApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEDDB0682D9D953200466830 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEDDB0722D9D953200466830 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BEDDB06E2D9D953200466830 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BEDDB0542D9D953000466830 /* DiyanetAPP */;
+			targetProxy = BEDDB06D2D9D953200466830 /* PBXContainerItemProxy */;
+		};
+		BEDDB0782D9D953200466830 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BEDDB0542D9D953000466830 /* DiyanetAPP */;
+			targetProxy = BEDDB0772D9D953200466830 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		BEDDB0802D9D953200466830 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DiyanetAPP/DiyanetAPP.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DiyanetAPP/Preview Content\"";
+				DEVELOPMENT_TEAM = 47Y55C2CQ2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DiyanetAPP/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kepmarktechnology.DiyanetAPP;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BEDDB0812D9D953200466830 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DiyanetAPP/DiyanetAPP.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DiyanetAPP/Preview Content\"";
+				DEVELOPMENT_TEAM = 47Y55C2CQ2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DiyanetAPP/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kepmarktechnology.DiyanetAPP;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BEDDB0822D9D953200466830 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BEDDB0832D9D953200466830 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BEDDB0852D9D953200466830 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 47Y55C2CQ2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kepmarktechnology.DiyanetAPPTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiyanetAPP.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DiyanetAPP";
+			};
+			name = Debug;
+		};
+		BEDDB0862D9D953200466830 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 47Y55C2CQ2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kepmarktechnology.DiyanetAPPTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiyanetAPP.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DiyanetAPP";
+			};
+			name = Release;
+		};
+		BEDDB0882D9D953200466830 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 47Y55C2CQ2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kepmarktechnology.DiyanetAPPUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DiyanetAPP;
+			};
+			name = Debug;
+		};
+		BEDDB0892D9D953200466830 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 47Y55C2CQ2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kepmarktechnology.DiyanetAPPUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DiyanetAPP;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BEDDB0502D9D953000466830 /* Build configuration list for PBXProject "DiyanetAPP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEDDB0822D9D953200466830 /* Debug */,
+				BEDDB0832D9D953200466830 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BEDDB07F2D9D953200466830 /* Build configuration list for PBXNativeTarget "DiyanetAPP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEDDB0802D9D953200466830 /* Debug */,
+				BEDDB0812D9D953200466830 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BEDDB0842D9D953200466830 /* Build configuration list for PBXNativeTarget "DiyanetAPPTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEDDB0852D9D953200466830 /* Debug */,
+				BEDDB0862D9D953200466830 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BEDDB0872D9D953200466830 /* Build configuration list for PBXNativeTarget "DiyanetAPPUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEDDB0882D9D953200466830 /* Debug */,
+				BEDDB0892D9D953200466830 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BEDDB0972D9D9B6000466830 /* DiyanetAPP.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BEDDB0B02D9D9B6000466830 /* DiyanetAPP.xcdatamodel */,
+			);
+			currentVersion = BEDDB0B02D9D9B6000466830 /* DiyanetAPP.xcdatamodel */;
+			path = DiyanetAPP.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		BEF723C82D9DCFD500D5DB3F /* DiyanetApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BEF723F62D9DCFD500D5DB3F /* DiyanetApp.xcdatamodel */,
+			);
+			currentVersion = BEF723F62D9DCFD500D5DB3F /* DiyanetApp.xcdatamodel */;
+			path = DiyanetApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = BEDDB04D2D9D953000466830 /* Project object */;
+}

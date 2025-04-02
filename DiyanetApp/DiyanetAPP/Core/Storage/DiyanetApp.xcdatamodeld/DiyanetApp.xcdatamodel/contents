@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDGuide" representedClassName="CDGuide" syncable="YES" codeGenerationType="class">
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="category" attributeType="String"/>
+        <attribute name="content" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="descriptionText" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="images" optional="YES" attributeType="Transformable"/>
+        <attribute name="isBookmarked" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="readTime" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tags" optional="YES" attributeType="Transformable"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="videoUrl" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="CDPrayer" representedClassName="CDPrayer" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String"/>
+        <attribute name="isCompleted" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="location" attributeType="String"/>
+        <attribute name="time" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="type" attributeType="String"/>
+    </entity>
+    <entity name="CDUser" representedClassName="CDUser" syncable="YES" codeGenerationType="class">
+        <attribute name="avatarUrl" optional="YES" attributeType="String"/>
+        <attribute name="email" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="preferences" optional="YES" attributeType="Transformable"/>
+    </entity>
+</model> 

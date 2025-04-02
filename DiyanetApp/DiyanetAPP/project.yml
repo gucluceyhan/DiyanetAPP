@@ -1,0 +1,41 @@
+name: DiyanetApp
+options:
+  bundleIdPrefix: com.diyanet
+  deploymentTarget:
+    iOS: 14.0
+targets:
+  DiyanetApp:
+    type: application
+    platform: iOS
+    sources:
+      - Sources
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleDisplayName: "Diyanet Hac & Umre"
+        UILaunchStoryboardName: LaunchScreen
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default Configuration
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.diyanet.hacumre
+        DEVELOPMENT_TEAM: ""
+        CODE_SIGN_STYLE: Automatic
+        TARGETED_DEVICE_FAMILY: 1,2
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: 5.0
+    dependencies:
+      - package: SwiftUI 
