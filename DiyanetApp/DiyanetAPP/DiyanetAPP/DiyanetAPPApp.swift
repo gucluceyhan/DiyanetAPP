@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
-import Combine
+import Foundation
 import CoreLocation
+import Combine
+import MapKit
 
 // MARK: - Models
 
@@ -639,11 +641,86 @@ struct MainTabView: View {
                 }
                 .tag(1)
             
-            GuidesView()
-                .tabItem {
-                    Label("Rehberler", systemImage: "book.fill")
+            // GuidesView yerine basit bir görünüm kullanıyorum
+            NavigationView {
+                VStack(spacing: 20) {
+                    Text("Rehberler")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    
+                    VStack(alignment: .leading, spacing: 15) {
+                        NavigationLink(destination: HajjGuideView()) {
+                            HStack {
+                                Image(systemName: "mappin.and.ellipse")
+                                    .font(.title2)
+                                    .foregroundStyle(.accentColor)
+                                    .frame(width: 40)
+                                
+                                VStack(alignment: .leading) {
+                                    Text("Hac Rehberi")
+                                        .font(.headline)
+                                    Text("Hac ibadeti için kapsamlı rehber")
+                                        .font(.caption)
+                                        .foregroundStyle(.gray)
+                                }
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color(.secondarySystemBackground))
+                            .cornerRadius(10)
+                        }
+                        
+                        NavigationLink(destination: UmrahGuideView()) {
+                            HStack {
+                                Image(systemName: "building.columns")
+                                    .font(.title2)
+                                    .foregroundStyle(.accentColor)
+                                    .frame(width: 40)
+                                
+                                VStack(alignment: .leading) {
+                                    Text("Umre Rehberi")
+                                        .font(.headline)
+                                    Text("Umre ziyareti için detaylı bilgiler")
+                                        .font(.caption)
+                                        .foregroundStyle(.gray)
+                                }
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color(.secondarySystemBackground))
+                            .cornerRadius(10)
+                        }
+                        
+                        NavigationLink(destination: JerusalemGuideView()) {
+                            HStack {
+                                Image(systemName: "building.2")
+                                    .font(.title2)
+                                    .foregroundStyle(.accentColor)
+                                    .frame(width: 40)
+                                
+                                VStack(alignment: .leading) {
+                                    Text("Kudüs Rehberi")
+                                        .font(.headline)
+                                    Text("Mescid-i Aksa ve Kudüs ziyareti")
+                                        .font(.caption)
+                                        .foregroundStyle(.gray)
+                                }
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color(.secondarySystemBackground))
+                            .cornerRadius(10)
+                        }
+                    }
+                    .padding(.horizontal)
                 }
-                .tag(2)
+                .navigationTitle("Dini Rehberler")
+                .padding(.top)
+            }
+            .tabItem {
+                Label("Rehberler", systemImage: "book.fill")
+            }
+            .tag(2)
             
             MapsView()
                 .tabItem {
@@ -871,15 +948,6 @@ struct ProfileView: View {
         NavigationView {
             Text("Profil")
                 .navigationTitle("Hesabım")
-        }
-    }
-}
-
-struct GuidesView: View {
-    var body: some View {
-        NavigationView {
-            Text("Rehberler")
-                .navigationTitle("Rehberler")
         }
     }
 }
