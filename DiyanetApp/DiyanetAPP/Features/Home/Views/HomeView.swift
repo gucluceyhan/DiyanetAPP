@@ -6,36 +6,46 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Namaz Vakitleri Kartı
-                    if let prayerTimes = viewModel.prayerTimes {
-                        PrayerTimesCard(prayerTimes: prayerTimes)
+            ZStack {
+                Color(.systemGroupedBackground)
+                    .ignoresSafeArea()
+                
+                ScrollView {
+                    VStack(spacing: 20) {
+                        // Namaz Vakitleri Kartı
+                        if let prayerTimes = viewModel.prayerTimes {
+                            PrayerTimesCard(prayerTimes: prayerTimes)
+                                .padding(.horizontal)
+                        }
+                        
+                        // Yakındaki Camiler
+                        if !viewModel.nearbyMosques.isEmpty {
+                            NearbyMosquesSection(mosques: viewModel.nearbyMosques)
+                                .padding(.horizontal)
+                        }
+                        
+                        // Öne Çıkan Rehberler
+                        if !viewModel.featuredGuides.isEmpty {
+                            FeaturedGuidesSection(guides: viewModel.featuredGuides)
+                                .padding(.horizontal)
+                        }
                     }
-                    
-                    // Yakındaki Camiler
-                    if !viewModel.nearbyMosques.isEmpty {
-                        NearbyMosquesSection(mosques: viewModel.nearbyMosques)
-                    }
-                    
-                    // Öne Çıkan Rehberler
-                    if !viewModel.featuredGuides.isEmpty {
-                        FeaturedGuidesSection(guides: viewModel.featuredGuides)
-                    }
+                    .padding(.vertical)
                 }
-                .padding()
+                
+                if viewModel.isLoading {
+                    Color.black.opacity(0.3)
+                        .ignoresSafeArea()
+                    
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .scaleEffect(1.5)
+                }
             }
             .navigationTitle("Diyanet")
             .navigationBarItems(trailing: profileButton)
             .refreshable {
                 viewModel.refreshData()
-            }
-            .overlay {
-                if viewModel.isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(1.5)
-                }
             }
             .alert(item: Binding(
                 get: { viewModel.error.map { ErrorWrapper(message: $0) } },
@@ -48,12 +58,14 @@ struct HomeView: View {
                 )
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     private var profileButton: some View {
         NavigationLink(destination: ProfileView()) {
             Image(systemName: "person.circle")
                 .imageScale(.large)
+                .foregroundStyle(Color.accentColor)
         }
     }
 }
@@ -124,11 +136,16 @@ struct NearbyMosquesSection: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
                     ForEach(mosques) { mosque in
-                        NavigationLink(destination: MosqueDetailView(mosque: mosque)) {
+                        NavigationLink {
+                            MosqueDetailView(mosque: mosque)
+                        } label: {
                             MosqueCard(mosque: mosque)
+                                .contentShape(Rectangle())
                         }
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
+                .padding(.horizontal, 2)
             }
         }
     }
