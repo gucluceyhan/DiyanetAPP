@@ -592,15 +592,15 @@ struct GuidesPlaceholder: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             
-            NavigationLink(destination: HajjGuideView()) {
+            NavigationLink(destination: Text("Hac Rehberi").navigationTitle("Hac Rehberi")) {
                 rehberButonu(baslik: "Hac Rehberi", aciklama: "Hac ibadeti için kapsamlı rehber", ikon: "mappin.and.ellipse")
             }
             
-            NavigationLink(destination: UmrahGuideView()) {
+            NavigationLink(destination: Text("Umre Rehberi").navigationTitle("Umre Rehberi")) {
                 rehberButonu(baslik: "Umre Rehberi", aciklama: "Umre ziyareti için detaylı bilgiler", ikon: "building.columns")
             }
             
-            NavigationLink(destination: JerusalemGuideView()) {
+            NavigationLink(destination: Text("Kudüs Rehberi").navigationTitle("Kudüs Rehberi")) {
                 rehberButonu(baslik: "Kudüs Rehberi", aciklama: "Mescid-i Aksa ve Kudüs ziyareti", ikon: "building.2")
             }
             
@@ -1058,78 +1058,8 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-// MARK: - Guide Views
-struct HajjGuideView: View {
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Hac Rehberi")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding()
-                
-                Text("Hac, İslam'ın beş şartından biridir ve her Müslümanın gücü yettiğinde hayatında bir kez yapması gereken bir ibadettir.")
-                    .padding()
-                
-                Image("hajj_guide")
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
-                
-                Text("Bu rehber, hac ibadetinin detaylarını ve kutsal mekanlarda yapılması gerekenleri anlatır.")
-                    .padding()
-            }
-        }
-        .navigationTitle("Hac Rehberi")
-    }
-}
+// MARK: - Persistence Controller
 
-struct UmrahGuideView: View {
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Umre Rehberi")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding()
-                
-                Text("Umre, hac mevsimi dışında, herhangi bir zamanda Kabe'yi, Safa ve Merve tepelerini ziyaret etmek ve sa'y etmekten ibarettir.")
-                    .padding()
-                
-                Image("umrah_guide")
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
-                
-                Text("Bu rehber, umre ziyaretinizde yapmanız gereken ibadetleri ve dikkat edilmesi gereken hususları anlatır.")
-                    .padding()
-            }
-        }
-        .navigationTitle("Umre Rehberi")
-    }
-}
-
-struct JerusalemGuideView: View {
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Kudüs Rehberi")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding()
-                
-                Text("Kudüs, üç semavi din için kutsal sayılan kadim bir şehirdir. Mescid-i Aksa, Müslümanların ilk kıblesi olarak özel bir öneme sahiptir.")
-                    .padding()
-                
-                Image("jerusalem_guide")
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
-                
-                Text("Bu rehber, Kudüs'teki kutsal mekanları ve ziyaret edilmesi gereken yerleri anlatır.")
-                    .padding()
-            }
-        }
-        .navigationTitle("Kudüs Rehberi")
-    }
+class PersistenceController {
+    static let shared = PersistenceController()
 }
