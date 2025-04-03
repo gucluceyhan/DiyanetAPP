@@ -11,6 +11,8 @@ import CoreLocation
 import Combine
 import MapKit
 
+// DiyanetApp/DiyanetAPP/Features/Guides/Views/GuidesView.swift modülüne erişmek gerekiyor
+
 // MARK: - Models
 
 struct PrayerTimes: Identifiable {
@@ -586,6 +588,65 @@ struct MainTabView: View {
     }
 }
 
+// GuidesView yerine geçici bir görünüm
+struct GuidesPlaceholder: View {
+    var body: some View {
+        VStack(spacing: 20) {
+            Text("Rehberler")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.top, 20)
+            
+            Text("Aşağıdaki rehberlerden birini seçin:")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            
+            NavigationLink(destination: Text("Hac Rehberi").navigationTitle("Hac Rehberi")) {
+                rehberButonu(baslik: "Hac Rehberi", aciklama: "Hac ibadeti için kapsamlı rehber", ikon: "mappin.and.ellipse")
+            }
+            
+            NavigationLink(destination: Text("Umre Rehberi").navigationTitle("Umre Rehberi")) {
+                rehberButonu(baslik: "Umre Rehberi", aciklama: "Umre ziyareti için detaylı bilgiler", ikon: "building.columns")
+            }
+            
+            NavigationLink(destination: Text("Kudüs Rehberi").navigationTitle("Kudüs Rehberi")) {
+                rehberButonu(baslik: "Kudüs Rehberi", aciklama: "Mescid-i Aksa ve Kudüs ziyareti", ikon: "building.2")
+            }
+            
+            Spacer()
+        }
+        .padding()
+        .navigationTitle("Dini Rehberler")
+    }
+    
+    private func rehberButonu(baslik: String, aciklama: String, ikon: String) -> some View {
+        HStack {
+            Image(systemName: ikon)
+                .font(.title2)
+                .frame(width: 40, height: 40)
+                .foregroundStyle(Color.accentColor)
+                .background(Color.accentColor.opacity(0.2))
+                .cornerRadius(10)
+            
+            VStack(alignment: .leading) {
+                Text(baslik)
+                    .font(.headline)
+                Text(aciklama)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            
+            Spacer()
+            
+            Image(systemName: "chevron.right")
+                .foregroundStyle(.gray)
+        }
+        .padding()
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(12)
+    }
+}
+
 // Auth View Model
 class AuthViewModel: ObservableObject {
     @Published var isAuthenticated = false
@@ -940,13 +1001,13 @@ struct FeaturedGuidesSection: View {
                 .fontWeight(.bold)
             
             ForEach(guides) { guide in
-                GuideCard(guide: guide)
+                FeaturedGuideCard(guide: guide)
             }
         }
     }
 }
 
-struct GuideCard: View {
+struct FeaturedGuideCard: View {
     let guide: Guide
     
     var body: some View {
