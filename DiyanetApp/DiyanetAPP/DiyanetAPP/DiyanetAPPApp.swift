@@ -897,7 +897,7 @@ struct MapsView: View {
                             ZStack {
                                 Circle()
                                     .fill(.white)
-                                    .frame(width: 44, height: 44)
+                                    .frame(width: 32, height: 32)
                                     .shadow(radius: 2)
                                 
                                 // Özel cami ikonu
@@ -905,26 +905,26 @@ struct MapsView: View {
                                     // Ana kubbe
                                     Circle()
                                         .fill(Color.accentColor)
-                                        .frame(width: 22, height: 22)
+                                        .frame(width: 16, height: 16)
                                     
                                     // Ana bina
                                     Rectangle()
                                         .fill(Color.accentColor)
-                                        .frame(width: 32, height: 16)
-                                        .offset(y: 10)
+                                        .frame(width: 22, height: 12)
+                                        .offset(y: 8)
                                     
                                     // Minareler
-                                    HStack(spacing: 36) {
+                                    HStack(spacing: 26) {
                                         Rectangle()
                                             .fill(Color.accentColor)
-                                            .frame(width: 4, height: 26)
+                                            .frame(width: 3, height: 20)
                                         
                                         Rectangle()
                                             .fill(Color.accentColor)
-                                            .frame(width: 4, height: 26)
+                                            .frame(width: 3, height: 20)
                                     }
                                 }
-                                .frame(width: 36, height: 36)
+                                .frame(width: 26, height: 26)
                             }
                         }
                     }
@@ -1089,37 +1089,37 @@ struct MosqueDetailSheet: View {
             HStack {
                 // Cami ikonu
                 ZStack {
-                    Circle()
-                        .fill(Color.accentColor.opacity(0.2))
-                        .frame(width: 60, height: 60)
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(width: 50, height: 50)
                     
-                    // Özel cami ikonu
+                    // Cami ikonu
                     ZStack {
                         // Ana kubbe
                         Circle()
                             .fill(Color.accentColor)
-                            .frame(width: 30, height: 30)
+                            .frame(width: 40, height: 40)
                         
                         // Ana bina
                         Rectangle()
                             .fill(Color.accentColor)
-                            .frame(width: 40, height: 20)
-                            .offset(y: 12)
+                            .frame(width: 56, height: 32)
+                            .offset(y: 20)
                         
                         // Minareler
-                        HStack(spacing: 44) {
+                        HStack(spacing: 64) {
                             Rectangle()
                                 .fill(Color.accentColor)
-                                .frame(width: 5, height: 34)
+                                .frame(width: 6, height: 48)
                             
                             Rectangle()
                                 .fill(Color.accentColor)
-                                .frame(width: 5, height: 34)
+                                .frame(width: 6, height: 48)
                         }
                     }
-                    .frame(width: 44, height: 44)
+                    .frame(height: 64)
                 }
-                .frame(width: 60, height: 60)
+                .frame(width: 50, height: 50)
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text(mosque.name)
@@ -1258,26 +1258,26 @@ struct MosqueCard: View {
                     // Ana kubbe
                     Circle()
                         .fill(Color.accentColor)
-                        .frame(width: 50, height: 50)
+                        .frame(width: 40, height: 40)
                     
                     // Ana bina
                     Rectangle()
                         .fill(Color.accentColor)
-                        .frame(width: 70, height: 40)
-                        .offset(y: 25)
+                        .frame(width: 56, height: 32)
+                        .offset(y: 20)
                     
                     // Minareler
-                    HStack(spacing: 80) {
+                    HStack(spacing: 64) {
                         Rectangle()
                             .fill(Color.accentColor)
-                            .frame(width: 8, height: 60)
+                            .frame(width: 6, height: 48)
                         
                         Rectangle()
                             .fill(Color.accentColor)
-                            .frame(width: 8, height: 60)
+                            .frame(width: 6, height: 48)
                     }
                 }
-                .frame(height: 80)
+                .frame(height: 64)
             }
             .frame(width: 200, height: 120)
             .cornerRadius(10)
