@@ -3,7 +3,7 @@ import Combine
 import CoreLocation
 import SwiftUI
 
-class PrayersViewModel: ObservableObject {
+class PrayersViewModel: ObservableObject, CLLocationManagerDelegate {
     @Published var prayerTimes: PrayerTimes?
     @Published var weeklyPrayerTimes: [PrayerTimes] = []
     @Published var monthlyPrayerTimes: [PrayerTimes] = []
@@ -30,13 +30,43 @@ class PrayersViewModel: ObservableObject {
     private let locationManager = CLLocationManager()
     private let networkManager = NetworkManager.shared
     private var cancellables = Set<AnyCancellable>()
+    private var isInitialSetupComplete = false
     
     init() {
         print("PrayersViewModel - init başladı")
         setupLocationManager()
         loadDefaultLocations()
-        fetchData()
+        
+        // Verileri hemen yüklemeden önce bir anlık bekleyerek UI'nin hazırlanmasını sağla
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.fetchData()
+        }
         print("PrayersViewModel - init tamamlandı")
+    }
+    
+    // MARK: - CLLocationManagerDelegate
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        print("PrayersViewModel - Konum izni durumu değişti: \(manager.authorizationStatus.rawValue)")
+        
+        switch manager.authorizationStatus {
+        case .authorizedWhenInUse, .authorizedAlways:
+            // Konum izni verildi, konum verilerini alabilirsiniz
+            print("PrayersViewModel - Konum izni verildi")
+            // Sadece ilk kez veri yüklenmemişse yükle
+            if !isInitialSetupComplete {
+                isInitialSetupComplete = true
+                fetchData()
+            }
+        case .denied, .restricted:
+            // Konum izni reddedildi veya kısıtlandı
+            print("PrayersViewModel - Konum izni reddedildi")
+            self.error = "Konum izni reddedildi. Lütfen ayarlardan konum erişimine izin verin."
+        case .notDetermined:
+            // Kullanıcı henüz karar vermedi
+            print("PrayersViewModel - Konum izni durumu belirlenmedi")
+        @unknown default:
+            print("PrayersViewModel - Bilinmeyen konum izni durumu")
+        }
     }
     
     // MARK: - Public Methods
@@ -105,63 +135,109 @@ class PrayersViewModel: ObservableObject {
     
     func loadCities(forCountry country: String) {
         // Diyanet API'sinden ülkeye göre şehirleri çek
-        isLoading = true
-        // Örnek olarak sadece Türkiye illeri
-        self.availableCities = ["ADANA", "ADIYAMAN", "AFYONKARAHİSAR", "AĞRI", "AKSARAY", "AMASYA", 
-                              "ANKARA", "ANTALYA", "ARDAHAN", "ARTVİN", "AYDIN", "BALIKESİR", 
-                              "BARTIN", "BATMAN", "BAYBURT", "BİLECİK", "BİNGÖL", "BİTLİS", 
-                              "BOLU", "BURDUR", "BURSA", "ÇANAKKALE", "ÇANKIRI", "ÇORUM", 
-                              "DENİZLİ", "DİYARBAKIR", "DÜZCE", "EDİRNE", "ELAZIĞ", "ERZİNCAN", 
-                              "ERZURUM", "ESKİŞEHİR", "GAZİANTEP", "GİRESUN", "GÜMÜŞHANE", 
-                              "HAKKARİ", "HATAY", "IĞDIR", "ISPARTA", "İSTANBUL", "İZMİR", 
-                              "KAHRAMANMARAŞ", "KARABÜK", "KARAMAN", "KARS", "KASTAMONU", 
-                              "KAYSERİ", "KİLİS", "KIRIKKALE", "KIRKLARELİ", "KIRŞEHİR", 
-                              "KOCAELİ", "KONYA", "KÜTAHYA", "MALATYA", "MANİSA", "MARDİN", 
-                              "MERSİN", "MUĞLA", "MUŞ", "NEVŞEHİR", "NİĞDE", "ORDU", 
-                              "OSMANİYE", "RİZE", "SAKARYA", "SAMSUN", "ŞANLIURFA", "SİİRT", 
-                              "SİNOP", "ŞIRNAK", "SİVAS", "TEKİRDAĞ", "TOKAT", "TRABZON", 
-                              "TUNCELİ", "UŞAK", "VAN", "YALOVA", "YOZGAT", "ZONGULDAK"]
-        isLoading = false
+        print("PrayersViewModel - \(country) için şehirler yükleniyor")
+        let wasLoading = isLoading
+        if !wasLoading { isLoading = true }
+        
+        // Örnek olarak sadece Türkiye illeri (UI block etmemek için arka planda yap)
+        DispatchQueue.global().async { [weak self] in
+            let cities = ["ADANA", "ADIYAMAN", "AFYONKARAHİSAR", "AĞRI", "AKSARAY", "AMASYA", 
+                          "ANKARA", "ANTALYA", "ARDAHAN", "ARTVİN", "AYDIN", "BALIKESİR", 
+                          "BARTIN", "BATMAN", "BAYBURT", "BİLECİK", "BİNGÖL", "BİTLİS", 
+                          "BOLU", "BURDUR", "BURSA", "ÇANAKKALE", "ÇANKIRI", "ÇORUM", 
+                          "DENİZLİ", "DİYARBAKIR", "DÜZCE", "EDİRNE", "ELAZIĞ", "ERZİNCAN", 
+                          "ERZURUM", "ESKİŞEHİR", "GAZİANTEP", "GİRESUN", "GÜMÜŞHANE", 
+                          "HAKKARİ", "HATAY", "IĞDIR", "ISPARTA", "İSTANBUL", "İZMİR", 
+                          "KAHRAMANMARAŞ", "KARABÜK", "KARAMAN", "KARS", "KASTAMONU", 
+                          "KAYSERİ", "KİLİS", "KIRIKKALE", "KIRKLARELİ", "KIRŞEHİR", 
+                          "KOCAELİ", "KONYA", "KÜTAHYA", "MALATYA", "MANİSA", "MARDİN", 
+                          "MERSİN", "MUĞLA", "MUŞ", "NEVŞEHİR", "NİĞDE", "ORDU", 
+                          "OSMANİYE", "RİZE", "SAKARYA", "SAMSUN", "ŞANLIURFA", "SİİRT", 
+                          "SİNOP", "ŞIRNAK", "SİVAS", "TEKİRDAĞ", "TOKAT", "TRABZON", 
+                          "TUNCELİ", "UŞAK", "VAN", "YALOVA", "YOZGAT", "ZONGULDAK"]
+            
+            DispatchQueue.main.async {
+                self?.availableCities = cities
+                if !wasLoading { self?.isLoading = false }
+                print("PrayersViewModel - Şehirler yüklendi: \(cities.count) adet")
+            }
+        }
     }
     
     func loadDistricts(forCity city: String) {
         // Diyanet API'sinden şehire göre ilçeleri çek
-        isLoading = true
+        print("PrayersViewModel - \(city) için ilçeler yükleniyor")
+        let wasLoading = isLoading
+        if !wasLoading { isLoading = true }
         
-        // Örnek olarak Ankara ilçeleri (gerçek API entegrasyonunda burası dinamik olacak)
-        if city == "ANKARA" {
-            self.availableDistricts = ["AKYURT", "ANKARA", "AYAŞ", "BALA", "BEYPAZARI", "ÇAMLIDERE", 
-                                     "CUBUK", "ELMADAĞ", "EVREN", "GÜDÜL", "HAYMANA", 
-                                     "KAHRAMANKAZAN", "KALECİK", "KIZILCAHAMAM", "NALLIHAN", 
-                                     "POLATLI", "ŞEREFLİKOÇHİSAR"]
-        } else if city == "İSTANBUL" {
-            self.availableDistricts = ["ADALAR", "ARNAVUTKÖY", "ATAŞEHİR", "AVCILAR", "BAĞCILAR", 
-                                     "BAHÇELİEVLER", "BAKIRKÖY", "BAŞAKŞEHİR", "BAYRAMPAŞA", 
-                                     "BEŞİKTAŞ", "BEYKOZ", "BEYLİKDÜZÜ", "BEYOĞLU", "BÜYÜKÇEKMECE", 
-                                     "ÇATALCA", "ÇEKMEKÖY", "ESENLER", "ESENYURT", "EYÜPSULTAN", 
-                                     "FATİH", "GAZİOSMANPAŞA", "GÜNGÖREN", "KADIKÖY", "KAĞITHANE", 
-                                     "KARTAL", "KÜÇÜKÇEKMECE", "MALTEPE", "PENDİK", "SANCAKTEPE", 
-                                     "SARIYER", "SİLİVRİ", "SULTANBEYLİ", "SULTANGAZİ", "ŞİLE", 
-                                     "ŞİŞLİ", "TUZLA", "ÜMRANİYE", "ÜSKÜDAR", "ZEYTİNBURNU"]
-        } else {
-            // Diğer şehirler için varsayılan ilçe listesi
-            self.availableDistricts = ["MERKEZ"]
+        // UI block etmemek için arka planda yap
+        DispatchQueue.global().async { [weak self] in
+            var districts: [String] = []
+            
+            // Örnek olarak Ankara ilçeleri (gerçek API entegrasyonunda burası dinamik olacak)
+            if city == "ANKARA" {
+                districts = ["AKYURT", "ANKARA", "AYAŞ", "BALA", "BEYPAZARI", "ÇAMLIDERE", 
+                             "CUBUK", "ELMADAĞ", "EVREN", "GÜDÜL", "HAYMANA", 
+                             "KAHRAMANKAZAN", "KALECİK", "KIZILCAHAMAM", "NALLIHAN", 
+                             "POLATLI", "ŞEREFLİKOÇHİSAR"]
+            } else if city == "İSTANBUL" {
+                districts = ["ADALAR", "ARNAVUTKÖY", "ATAŞEHİR", "AVCILAR", "BAĞCILAR", 
+                             "BAHÇELİEVLER", "BAKIRKÖY", "BAŞAKŞEHİR", "BAYRAMPAŞA", 
+                             "BEŞİKTAŞ", "BEYKOZ", "BEYLİKDÜZÜ", "BEYOĞLU", "BÜYÜKÇEKMECE", 
+                             "ÇATALCA", "ÇEKMEKÖY", "ESENLER", "ESENYURT", "EYÜPSULTAN", 
+                             "FATİH", "GAZİOSMANPAŞA", "GÜNGÖREN", "KADIKÖY", "KAĞITHANE", 
+                             "KARTAL", "KÜÇÜKÇEKMECE", "MALTEPE", "PENDİK", "SANCAKTEPE", 
+                             "SARIYER", "SİLİVRİ", "SULTANBEYLİ", "SULTANGAZİ", "ŞİLE", 
+                             "ŞİŞLİ", "TUZLA", "ÜMRANİYE", "ÜSKÜDAR", "ZEYTİNBURNU"]
+            } else {
+                // Diğer şehirler için varsayılan ilçe listesi
+                districts = ["MERKEZ"]
+            }
+            
+            DispatchQueue.main.async {
+                self?.availableDistricts = districts
+                if !wasLoading { self?.isLoading = false }
+                print("PrayersViewModel - İlçeler yüklendi: \(districts.count) adet")
+            }
         }
-        
-        isLoading = false
     }
     
     func updateLocation(country: String, city: String, district: String) {
+        print("PrayersViewModel - Konum güncelleniyor: \(country), \(city), \(district)")
         self.selectedCountry = country
         self.selectedCity = city
         self.selectedDistrict = district
-        fetchData() // Yeni konuma göre verileri güncelle
+        
+        // Yeni verileri yükle (gecikmeli olarak çağır - view güncellemelerini önlemek için)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.fetchData()
+        }
     }
     
     // MARK: - Private Methods
     private func setupLocationManager() {
+        print("PrayersViewModel - setupLocationManager başladı")
+        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        locationManager.requestWhenInUseAuthorization()
+        
+        // Ana thread'de requestWhenInUseAuthorization çağrısı yapmıyoruz
+        // Bunun yerine delegate'i bekliyoruz
+        let authStatus = locationManager.authorizationStatus
+        
+        print("PrayersViewModel - Mevcut konum izni durumu: \(authStatus.rawValue)")
+        
+        // Konum izni zaten varsa delegate metodu otomatik çağrılmayacak
+        // bu nedenle manuel olarak kontrol ediyoruz
+        if authStatus == .authorizedWhenInUse || authStatus == .authorizedAlways {
+            print("PrayersViewModel - Konum izni zaten var")
+            isInitialSetupComplete = true
+        } else if authStatus == .notDetermined {
+            // Konum izni henüz belirlenmemiş, UI hazır olduğunda isteyeceğiz
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                print("PrayersViewModel - Konum izni isteniyor")
+                self?.locationManager.requestWhenInUseAuthorization()
+            }
+        }
     }
     
     private func loadDefaultLocations() {
@@ -196,16 +272,16 @@ class PrayersViewModel: ObservableObject {
             )
         )
         
-        self.prayerTimes = mockPrayerTimes
-        
-        // Hicri tarihi ayarla
-        self.hijriDate = "5 Şevval 1446"
-        
-        completion()
+        // Main thread'de tüm @Published değişkenlerini güncelle
+        DispatchQueue.main.async { [weak self] in
+            self?.prayerTimes = mockPrayerTimes
+            // Hicri tarihi ayarla
+            self?.hijriDate = "5 Şevval 1446"
+            completion()
+        }
     }
     
     private func fetchWeeklyPrayerTimes(completion: @escaping () -> Void) {
-        // Diyanet API'den haftalık namaz vakitlerini çek
         // Şimdilik sabit veriler kullanıyoruz
         guard let dailyTimes = prayerTimes else {
             completion()
@@ -215,121 +291,131 @@ class PrayersViewModel: ObservableObject {
         var weeklyTimes: [PrayerTimes] = []
         let calendar = Calendar.current
         
-        for dayOffset in 0...6 {
-            let date = calendar.date(byAdding: .day, value: dayOffset, to: Date()) ?? Date()
+        DispatchQueue.global().async { [weak self] in
+            for dayOffset in 0...6 {
+                let date = calendar.date(byAdding: .day, value: dayOffset, to: Date()) ?? Date()
+                
+                // Her gün için vakitleri biraz değiştirerek gerçekçi hale getiriyoruz
+                let fajrMinuteOffset = Int.random(in: -2...2)
+                let sunriseMinuteOffset = Int.random(in: -2...2)
+                let dhuhrMinuteOffset = Int.random(in: -1...1)
+                let asrMinuteOffset = Int.random(in: -1...1)
+                let maghribMinuteOffset = Int.random(in: -2...2)
+                let ishaMinuteOffset = Int.random(in: -2...2)
+                
+                let times = PrayerTimes(
+                    date: date,
+                    fajr: calendar.date(byAdding: .minute, value: fajrMinuteOffset, to: dailyTimes.fajr) ?? dailyTimes.fajr,
+                    sunrise: calendar.date(byAdding: .minute, value: sunriseMinuteOffset, to: dailyTimes.sunrise) ?? dailyTimes.sunrise,
+                    dhuhr: calendar.date(byAdding: .minute, value: dhuhrMinuteOffset, to: dailyTimes.dhuhr) ?? dailyTimes.dhuhr,
+                    asr: calendar.date(byAdding: .minute, value: asrMinuteOffset, to: dailyTimes.asr) ?? dailyTimes.asr,
+                    maghrib: calendar.date(byAdding: .minute, value: maghribMinuteOffset, to: dailyTimes.maghrib) ?? dailyTimes.maghrib,
+                    isha: calendar.date(byAdding: .minute, value: ishaMinuteOffset, to: dailyTimes.isha) ?? dailyTimes.isha,
+                    location: dailyTimes.location
+                )
+                
+                weeklyTimes.append(times)
+            }
             
-            // Her gün için vakitleri biraz değiştirerek gerçekçi hale getiriyoruz
-            let fajrMinuteOffset = Int.random(in: -2...2)
-            let sunriseMinuteOffset = Int.random(in: -2...2)
-            let dhuhrMinuteOffset = Int.random(in: -1...1)
-            let asrMinuteOffset = Int.random(in: -1...1)
-            let maghribMinuteOffset = Int.random(in: -2...2)
-            let ishaMinuteOffset = Int.random(in: -2...2)
-            
-            let times = PrayerTimes(
-                date: date,
-                fajr: calendar.date(byAdding: .minute, value: fajrMinuteOffset, to: dailyTimes.fajr) ?? dailyTimes.fajr,
-                sunrise: calendar.date(byAdding: .minute, value: sunriseMinuteOffset, to: dailyTimes.sunrise) ?? dailyTimes.sunrise,
-                dhuhr: calendar.date(byAdding: .minute, value: dhuhrMinuteOffset, to: dailyTimes.dhuhr) ?? dailyTimes.dhuhr,
-                asr: calendar.date(byAdding: .minute, value: asrMinuteOffset, to: dailyTimes.asr) ?? dailyTimes.asr,
-                maghrib: calendar.date(byAdding: .minute, value: maghribMinuteOffset, to: dailyTimes.maghrib) ?? dailyTimes.maghrib,
-                isha: calendar.date(byAdding: .minute, value: ishaMinuteOffset, to: dailyTimes.isha) ?? dailyTimes.isha,
-                location: dailyTimes.location
-            )
-            
-            weeklyTimes.append(times)
+            DispatchQueue.main.async {
+                self?.weeklyPrayerTimes = weeklyTimes
+                completion()
+            }
         }
-        
-        self.weeklyPrayerTimes = weeklyTimes
-        completion()
     }
     
     private func fetchMonthlyPrayerTimes(completion: @escaping () -> Void) {
-        // Diyanet API'den aylık namaz vakitlerini çek
         // Şimdilik sabit veriler kullanıyoruz
         guard let dailyTimes = prayerTimes else {
             completion()
             return
         }
         
-        var monthlyTimes: [PrayerTimes] = []
-        let calendar = Calendar.current
-        
-        for dayOffset in 0...29 {
-            let date = calendar.date(byAdding: .day, value: dayOffset, to: Date()) ?? Date()
+        DispatchQueue.global().async { [weak self] in
+            var monthlyTimes: [PrayerTimes] = []
+            let calendar = Calendar.current
             
-            // Her gün için vakitleri biraz değiştirerek gerçekçi hale getiriyoruz
-            let fajrMinuteOffset = Int.random(in: -5...5)
-            let sunriseMinuteOffset = Int.random(in: -5...5)
-            let dhuhrMinuteOffset = Int.random(in: -2...2)
-            let asrMinuteOffset = Int.random(in: -3...3)
-            let maghribMinuteOffset = Int.random(in: -5...5)
-            let ishaMinuteOffset = Int.random(in: -5...5)
+            for dayOffset in 0...29 {
+                let date = calendar.date(byAdding: .day, value: dayOffset, to: Date()) ?? Date()
+                
+                // Her gün için vakitleri biraz değiştirerek gerçekçi hale getiriyoruz
+                let fajrMinuteOffset = Int.random(in: -5...5)
+                let sunriseMinuteOffset = Int.random(in: -5...5)
+                let dhuhrMinuteOffset = Int.random(in: -2...2)
+                let asrMinuteOffset = Int.random(in: -3...3)
+                let maghribMinuteOffset = Int.random(in: -5...5)
+                let ishaMinuteOffset = Int.random(in: -5...5)
+                
+                let times = PrayerTimes(
+                    date: date,
+                    fajr: calendar.date(byAdding: .minute, value: fajrMinuteOffset, to: dailyTimes.fajr) ?? dailyTimes.fajr,
+                    sunrise: calendar.date(byAdding: .minute, value: sunriseMinuteOffset, to: dailyTimes.sunrise) ?? dailyTimes.sunrise,
+                    dhuhr: calendar.date(byAdding: .minute, value: dhuhrMinuteOffset, to: dailyTimes.dhuhr) ?? dailyTimes.dhuhr,
+                    asr: calendar.date(byAdding: .minute, value: asrMinuteOffset, to: dailyTimes.asr) ?? dailyTimes.asr,
+                    maghrib: calendar.date(byAdding: .minute, value: maghribMinuteOffset, to: dailyTimes.maghrib) ?? dailyTimes.maghrib,
+                    isha: calendar.date(byAdding: .minute, value: ishaMinuteOffset, to: dailyTimes.isha) ?? dailyTimes.isha,
+                    location: dailyTimes.location
+                )
+                
+                monthlyTimes.append(times)
+            }
             
-            let times = PrayerTimes(
-                date: date,
-                fajr: calendar.date(byAdding: .minute, value: fajrMinuteOffset, to: dailyTimes.fajr) ?? dailyTimes.fajr,
-                sunrise: calendar.date(byAdding: .minute, value: sunriseMinuteOffset, to: dailyTimes.sunrise) ?? dailyTimes.sunrise,
-                dhuhr: calendar.date(byAdding: .minute, value: dhuhrMinuteOffset, to: dailyTimes.dhuhr) ?? dailyTimes.dhuhr,
-                asr: calendar.date(byAdding: .minute, value: asrMinuteOffset, to: dailyTimes.asr) ?? dailyTimes.asr,
-                maghrib: calendar.date(byAdding: .minute, value: maghribMinuteOffset, to: dailyTimes.maghrib) ?? dailyTimes.maghrib,
-                isha: calendar.date(byAdding: .minute, value: ishaMinuteOffset, to: dailyTimes.isha) ?? dailyTimes.isha,
-                location: dailyTimes.location
-            )
-            
-            monthlyTimes.append(times)
+            DispatchQueue.main.async {
+                self?.monthlyPrayerTimes = monthlyTimes
+                completion()
+            }
         }
-        
-        self.monthlyPrayerTimes = monthlyTimes
-        completion()
     }
     
     private func fetchYearlyPrayerTimes(completion: @escaping () -> Void) {
-        // Diyanet API'den yıllık namaz vakitlerini çek
         // Şimdilik sabit veriler kullanıyoruz
         guard let dailyTimes = prayerTimes else {
             completion()
             return
         }
         
-        var yearlyTimes: [PrayerTimes] = []
-        let calendar = Calendar.current
-        
-        // Şimdilik sadece birkaç aylık veri oluşturuyoruz
-        for dayOffset in 0...90 {
-            let date = calendar.date(byAdding: .day, value: dayOffset, to: Date()) ?? Date()
+        DispatchQueue.global().async { [weak self] in
+            var yearlyTimes: [PrayerTimes] = []
+            let calendar = Calendar.current
             
-            // Her gün için vakitleri değiştirerek gerçekçi hale getiriyoruz
-            // Mevsimlere göre değişim ekleyerek daha gerçekçi hale getiriyoruz
-            let monthFactor = Double(calendar.component(.month, from: date))
+            // Şimdilik sadece birkaç aylık veri oluşturuyoruz
+            for dayOffset in 0...90 {
+                let date = calendar.date(byAdding: .day, value: dayOffset, to: Date()) ?? Date()
+                
+                // Her gün için vakitleri değiştirerek gerçekçi hale getiriyoruz
+                // Mevsimlere göre değişim ekleyerek daha gerçekçi hale getiriyoruz
+                let monthFactor = Double(calendar.component(.month, from: date))
+                
+                // Kış aylarında güneş daha geç doğar, erken batar 
+                // Yaz aylarında güneş erken doğar, geç batar
+                let seasonalOffset = monthFactor <= 6 ? monthFactor - 3 : 9 - monthFactor
+                
+                let fajrMinuteOffset = Int(seasonalOffset * -3) + Int.random(in: -5...5)
+                let sunriseMinuteOffset = Int(seasonalOffset * -2) + Int.random(in: -5...5)
+                let dhuhrMinuteOffset = Int.random(in: -2...2)
+                let asrMinuteOffset = Int(seasonalOffset * 1) + Int.random(in: -3...3)
+                let maghribMinuteOffset = Int(seasonalOffset * 2) + Int.random(in: -5...5)
+                let ishaMinuteOffset = Int(seasonalOffset * 2) + Int.random(in: -5...5)
+                
+                let times = PrayerTimes(
+                    date: date,
+                    fajr: calendar.date(byAdding: .minute, value: fajrMinuteOffset, to: dailyTimes.fajr) ?? dailyTimes.fajr,
+                    sunrise: calendar.date(byAdding: .minute, value: sunriseMinuteOffset, to: dailyTimes.sunrise) ?? dailyTimes.sunrise,
+                    dhuhr: calendar.date(byAdding: .minute, value: dhuhrMinuteOffset, to: dailyTimes.dhuhr) ?? dailyTimes.dhuhr,
+                    asr: calendar.date(byAdding: .minute, value: asrMinuteOffset, to: dailyTimes.asr) ?? dailyTimes.asr,
+                    maghrib: calendar.date(byAdding: .minute, value: maghribMinuteOffset, to: dailyTimes.maghrib) ?? dailyTimes.maghrib,
+                    isha: calendar.date(byAdding: .minute, value: ishaMinuteOffset, to: dailyTimes.isha) ?? dailyTimes.isha,
+                    location: dailyTimes.location
+                )
+                
+                yearlyTimes.append(times)
+            }
             
-            // Kış aylarında güneş daha geç doğar, erken batar 
-            // Yaz aylarında güneş erken doğar, geç batar
-            let seasonalOffset = monthFactor <= 6 ? monthFactor - 3 : 9 - monthFactor
-            
-            let fajrMinuteOffset = Int(seasonalOffset * -3) + Int.random(in: -5...5)
-            let sunriseMinuteOffset = Int(seasonalOffset * -2) + Int.random(in: -5...5)
-            let dhuhrMinuteOffset = Int.random(in: -2...2)
-            let asrMinuteOffset = Int(seasonalOffset * 1) + Int.random(in: -3...3)
-            let maghribMinuteOffset = Int(seasonalOffset * 2) + Int.random(in: -5...5)
-            let ishaMinuteOffset = Int(seasonalOffset * 2) + Int.random(in: -5...5)
-            
-            let times = PrayerTimes(
-                date: date,
-                fajr: calendar.date(byAdding: .minute, value: fajrMinuteOffset, to: dailyTimes.fajr) ?? dailyTimes.fajr,
-                sunrise: calendar.date(byAdding: .minute, value: sunriseMinuteOffset, to: dailyTimes.sunrise) ?? dailyTimes.sunrise,
-                dhuhr: calendar.date(byAdding: .minute, value: dhuhrMinuteOffset, to: dailyTimes.dhuhr) ?? dailyTimes.dhuhr,
-                asr: calendar.date(byAdding: .minute, value: asrMinuteOffset, to: dailyTimes.asr) ?? dailyTimes.asr,
-                maghrib: calendar.date(byAdding: .minute, value: maghribMinuteOffset, to: dailyTimes.maghrib) ?? dailyTimes.maghrib,
-                isha: calendar.date(byAdding: .minute, value: ishaMinuteOffset, to: dailyTimes.isha) ?? dailyTimes.isha,
-                location: dailyTimes.location
-            )
-            
-            yearlyTimes.append(times)
+            DispatchQueue.main.async {
+                self?.yearlyPrayerTimes = yearlyTimes
+                completion()
+            }
         }
-        
-        self.yearlyPrayerTimes = yearlyTimes
-        completion()
     }
     
     private func calculateQiblaDirection(completion: @escaping () -> Void) {
@@ -341,32 +427,40 @@ class PrayersViewModel: ObservableObject {
         let userLat = 41.015137 // Örnek olarak İstanbul
         let userLon = 28.979530
         
-        // Kıble açısını hesapla (basit formül)
-        let dLon = kaabaLon - userLon
-        
-        let y = sin(dLon.degreesToRadians)
-        let x = cos(userLat.degreesToRadians) * tan(kaabaLat.degreesToRadians) - sin(userLat.degreesToRadians) * cos(dLon.degreesToRadians)
-        
-        var qiblaAngle = atan2(y, x).radiansToDegrees
-        if qiblaAngle < 0 {
-            qiblaAngle += 360.0
+        DispatchQueue.global().async { [weak self] in
+            // Kıble açısını hesapla (basit formül)
+            let dLon = kaabaLon - userLon
+            
+            let y = sin(dLon.degreesToRadians)
+            let x = cos(userLat.degreesToRadians) * tan(kaabaLat.degreesToRadians) - sin(userLat.degreesToRadians) * cos(dLon.degreesToRadians)
+            
+            var qiblaAngle = atan2(y, x).radiansToDegrees
+            if qiblaAngle < 0 {
+                qiblaAngle += 360.0
+            }
+            
+            DispatchQueue.main.async {
+                self?.qiblaDirection = qiblaAngle
+                self?.qiblaTime = "12:06" // Öğle vakti civarı
+                completion()
+            }
         }
-        
-        self.qiblaDirection = qiblaAngle
-        self.qiblaTime = "12:06" // Öğle vakti civarı
-        
-        completion()
     }
     
     private func fetchReligiousHolidays(completion: @escaping () -> Void) {
-        // Dini günleri getir (örnek veriler)
-        self.upcomingHolidays = [
-            ReligiousHoliday(name: "Ramazan Bayramı", date: Calendar.current.date(from: DateComponents(year: 2025, month: 3, day: 30)) ?? Date(), description: "1 Şevval 1446"),
-            ReligiousHoliday(name: "Kurban Bayramı", date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 16)) ?? Date(), description: "10 Zilhicce 1445"),
-            ReligiousHoliday(name: "Mevlid Kandili", date: Calendar.current.date(from: DateComponents(year: 2024, month: 9, day: 14)) ?? Date(), description: "12 Rebiülevvel 1446")
-        ]
-        
-        completion()
+        DispatchQueue.global().async { [weak self] in
+            // Dini günleri getir (örnek veriler)
+            let holidays = [
+                ReligiousHoliday(name: "Ramazan Bayramı", date: Calendar.current.date(from: DateComponents(year: 2025, month: 3, day: 30)) ?? Date(), description: "1 Şevval 1446"),
+                ReligiousHoliday(name: "Kurban Bayramı", date: Calendar.current.date(from: DateComponents(year: 2024, month: 6, day: 16)) ?? Date(), description: "10 Zilhicce 1445"),
+                ReligiousHoliday(name: "Mevlid Kandili", date: Calendar.current.date(from: DateComponents(year: 2024, month: 9, day: 14)) ?? Date(), description: "12 Rebiülevvel 1446")
+            ]
+            
+            DispatchQueue.main.async {
+                self?.upcomingHolidays = holidays
+                completion()
+            }
+        }
     }
 }
 

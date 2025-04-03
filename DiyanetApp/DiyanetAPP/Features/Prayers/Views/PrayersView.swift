@@ -49,11 +49,11 @@ struct PrayersView: View {
                     HStack {
                         Text("\(viewModel.selectedCity), \(viewModel.selectedDistrict)")
                             .font(.subheadline)
-                            .foregroundStyle(.accentColor)
+                            .foregroundStyle(Color.accentColor)
                         
                         Image(systemName: "chevron.down")
                             .font(.caption)
-                            .foregroundStyle(.accentColor)
+                            .foregroundStyle(Color.accentColor)
                     }
                 }
             }

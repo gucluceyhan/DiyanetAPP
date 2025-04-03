@@ -5,35 +5,45 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            HomeView()
-                .tabItem {
-                    Label("Ana Sayfa", systemImage: "house.fill")
-                }
-                .tag(0)
+            NavigationView {
+                HomeView()
+            }
+            .tabItem {
+                Label("Ana Sayfa", systemImage: "house.fill")
+            }
+            .tag(0)
             
-            PrayersView()
-                .tabItem {
-                    Label("Namaz", systemImage: "moon.stars.fill")
-                }
-                .tag(1)
+            NavigationView {
+                PrayersView()
+            }
+            .tabItem {
+                Label("Namaz", systemImage: "moon.stars.fill")
+            }
+            .tag(1)
             
-            GuidesView()
-                .tabItem {
-                    Label("Rehberler", systemImage: "book.fill")
-                }
-                .tag(2)
+            NavigationView {
+                GuidesView()
+            }
+            .tabItem {
+                Label("Rehberler", systemImage: "book.fill")
+            }
+            .tag(2)
             
-            MapsView()
-                .tabItem {
-                    Label("Camiler", systemImage: "map.fill")
-                }
-                .tag(3)
+            NavigationView {
+                MapsView()
+            }
+            .tabItem {
+                Label("Camiler", systemImage: "map.fill")
+            }
+            .tag(3)
             
-            ProfileView()
-                .tabItem {
-                    Label("Profil", systemImage: "person.fill")
-                }
-                .tag(4)
+            NavigationView {
+                ProfileView()
+            }
+            .tabItem {
+                Label("Profil", systemImage: "person.fill")
+            }
+            .tag(4)
         }
         .accentColor(.accentColor)
     }
