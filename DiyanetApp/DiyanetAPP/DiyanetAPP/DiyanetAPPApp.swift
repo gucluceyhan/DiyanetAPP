@@ -542,20 +542,47 @@ extension HomeViewModel: CLLocationManagerDelegate {
 
 @main
 struct DiyanetAPPApp: App {
-    let persistenceController = PersistenceController.shared
-    @StateObject private var authViewModel = AuthViewModel()
-
+    @StateObject private var persistenceController = PersistenceController.shared
+    
     var body: some Scene {
         WindowGroup {
-            if authViewModel.isAuthenticated {
-                MainTabView()
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .environmentObject(authViewModel)
-            } else {
-                LoginView()
-                    .environmentObject(authViewModel)
-            }
+            MainTabView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+    }
+}
+
+struct MainTabView: View {
+    var body: some View {
+        TabView {
+            HomeView()
+                .tabItem {
+                    Label("Ana Sayfa", systemImage: "house.fill")
+                }
+            
+            NavigationView {
+                GuidesView()
+            }
+            .tabItem {
+                Label("Rehberler", systemImage: "book.fill")
+            }
+            
+            MapsView()
+                .tabItem {
+                    Label("Camiler", systemImage: "building.columns.fill")
+                }
+            
+            PrayersView()
+                .tabItem {
+                    Label("Vakitler", systemImage: "clock.fill")
+                }
+            
+            ProfileView()
+                .tabItem {
+                    Label("Hesabım", systemImage: "person.fill")
+                }
+        }
+        .accentColor(.accentColor)
     }
 }
 
@@ -621,135 +648,6 @@ struct User: Identifiable {
     var id: String
     var name: String
     var email: String
-}
-
-// Tab View
-struct MainTabView: View {
-    @State private var selectedTab = 0
-    
-    var body: some View {
-        TabView(selection: $selectedTab) {
-            // Ana Sayfa tabı
-            HomeView()
-                .tabItem {
-                    Label("Ana Sayfa", systemImage: "house.fill")
-                }
-                .tag(0)
-            
-            // Namaz tabı
-            PrayersView()
-                .tabItem {
-                    Label("Namaz", systemImage: "moon.stars.fill")
-                }
-                .tag(1)
-            
-            // Rehberler tabı - karmaşık ifadeyi alt ifadelere bölelim
-            let rehberlerView = NavigationView {
-                VStack(spacing: 20) {
-                    Text("Rehberler")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    
-                    VStack(alignment: .leading, spacing: 15) {
-                        // Hac Rehberi bağlantısı
-                        let hacRehberiLink = NavigationLink(destination: HajjGuideView()) {
-                            HStack {
-                                Image(systemName: "mappin.and.ellipse")
-                                    .font(.title2)
-                                    .foregroundStyle(Color.accentColor)
-                                    .frame(width: 40)
-                                
-                                VStack(alignment: .leading) {
-                                    Text("Hac Rehberi")
-                                        .font(.headline)
-                                    Text("Hac ibadeti için kapsamlı rehber")
-                                        .font(.caption)
-                                        .foregroundStyle(.gray)
-                                }
-                            }
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(Color(.secondarySystemBackground))
-                            .cornerRadius(10)
-                        }
-                        
-                        // Umre Rehberi bağlantısı
-                        let umreRehberiLink = NavigationLink(destination: UmrahGuideView()) {
-                            HStack {
-                                Image(systemName: "building.columns")
-                                    .font(.title2)
-                                    .foregroundStyle(Color.accentColor)
-                                    .frame(width: 40)
-                                
-                                VStack(alignment: .leading) {
-                                    Text("Umre Rehberi")
-                                        .font(.headline)
-                                    Text("Umre ziyareti için detaylı bilgiler")
-                                        .font(.caption)
-                                        .foregroundStyle(.gray)
-                                }
-                            }
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(Color(.secondarySystemBackground))
-                            .cornerRadius(10)
-                        }
-                        
-                        // Kudüs Rehberi bağlantısı
-                        let kudusRehberiLink = NavigationLink(destination: JerusalemGuideView()) {
-                            HStack {
-                                Image(systemName: "building.2")
-                                    .font(.title2)
-                                    .foregroundStyle(Color.accentColor)
-                                    .frame(width: 40)
-                                
-                                VStack(alignment: .leading) {
-                                    Text("Kudüs Rehberi")
-                                        .font(.headline)
-                                    Text("Mescid-i Aksa ve Kudüs ziyareti")
-                                        .font(.caption)
-                                        .foregroundStyle(.gray)
-                                }
-                            }
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(Color(.secondarySystemBackground))
-                            .cornerRadius(10)
-                        }
-                        
-                        // Rehberleri VStack içine yerleştir
-                        hacRehberiLink
-                        umreRehberiLink
-                        kudusRehberiLink
-                    }
-                    .padding(.horizontal)
-                }
-                .navigationTitle("Dini Rehberler")
-                .padding(.top)
-            }
-            
-            rehberlerView
-                .tabItem {
-                    Label("Rehberler", systemImage: "book.fill")
-                }
-                .tag(2)
-            
-            // Camiler tabı
-            MapsView()
-                .tabItem {
-                    Label("Camiler", systemImage: "map.fill")
-                }
-                .tag(3)
-            
-            // Profil tabı
-            ProfileView()
-                .tabItem {
-                    Label("Profil", systemImage: "person.fill")
-                }
-                .tag(4)
-        }
-        .accentColor(.accentColor)
-    }
 }
 
 // MARK: - Views
