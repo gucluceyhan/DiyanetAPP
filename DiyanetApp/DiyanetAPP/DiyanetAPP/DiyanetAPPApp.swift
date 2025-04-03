@@ -926,16 +926,37 @@ struct MapsView: View {
                             selectedMosque = mosque
                             showingDetail = true
                         } label: {
-                            VStack {
-                                Image(systemName: "building.columns.fill")
-                                    .font(.system(size: 24))
-                                    .foregroundStyle(Color.accentColor)
-                                Text(mosque.name)
-                                    .font(.caption)
-                                    .fontWeight(.semibold)
-                                    .padding(4)
-                                    .background(Color.white.opacity(0.8))
-                                    .cornerRadius(4)
+                            ZStack {
+                                Circle()
+                                    .fill(.white)
+                                    .frame(width: 44, height: 44)
+                                    .shadow(radius: 2)
+                                
+                                // Özel cami ikonu
+                                ZStack {
+                                    // Ana kubbe
+                                    Circle()
+                                        .fill(Color.accentColor)
+                                        .frame(width: 22, height: 22)
+                                    
+                                    // Ana bina
+                                    Rectangle()
+                                        .fill(Color.accentColor)
+                                        .frame(width: 32, height: 16)
+                                        .offset(y: 10)
+                                    
+                                    // Minareler
+                                    HStack(spacing: 36) {
+                                        Rectangle()
+                                            .fill(Color.accentColor)
+                                            .frame(width: 4, height: 26)
+                                        
+                                        Rectangle()
+                                            .fill(Color.accentColor)
+                                            .frame(width: 4, height: 26)
+                                    }
+                                }
+                                .frame(width: 36, height: 36)
                             }
                         }
                     }
@@ -1093,22 +1114,44 @@ struct MapsView: View {
 
 struct MosqueDetailSheet: View {
     let mosque: Mosque
+    @State private var isShowingDirections = false
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 15) {
-                // Cami görseli
+        VStack(alignment: .leading, spacing: 20) {
+            HStack {
+                // Cami ikonu
                 ZStack {
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.3))
-                        .frame(height: 200)
+                    Circle()
+                        .fill(Color.accentColor.opacity(0.2))
+                        .frame(width: 60, height: 60)
                     
-                    Image(systemName: "building.columns.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 100)
-                        .foregroundStyle(Color.accentColor)
+                    // Özel cami ikonu
+                    ZStack {
+                        // Ana kubbe
+                        Circle()
+                            .fill(Color.accentColor)
+                            .frame(width: 30, height: 30)
+                        
+                        // Ana bina
+                        Rectangle()
+                            .fill(Color.accentColor)
+                            .frame(width: 40, height: 20)
+                            .offset(y: 12)
+                        
+                        // Minareler
+                        HStack(spacing: 44) {
+                            Rectangle()
+                                .fill(Color.accentColor)
+                                .frame(width: 5, height: 34)
+                            
+                            Rectangle()
+                                .fill(Color.accentColor)
+                                .frame(width: 5, height: 34)
+                        }
+                    }
+                    .frame(width: 44, height: 44)
                 }
+                .frame(width: 60, height: 60)
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text(mosque.name)
@@ -1195,9 +1238,9 @@ struct MosqueDetailSheet: View {
                         .cornerRadius(10)
                     }
                 }
-                .padding()
             }
         }
+        .padding()
         .navigationTitle(mosque.name)
     }
 }
@@ -1236,10 +1279,40 @@ struct MosqueCard: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            // Cami Görseli (placeholder)
-            Color.gray
-                .frame(width: 200, height: 150)
-                .cornerRadius(10)
+            // Cami Görseli
+            ZStack {
+                Rectangle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(height: 120)
+                
+                // Cami ikonu
+                ZStack {
+                    // Ana kubbe
+                    Circle()
+                        .fill(Color.accentColor)
+                        .frame(width: 50, height: 50)
+                    
+                    // Ana bina
+                    Rectangle()
+                        .fill(Color.accentColor)
+                        .frame(width: 70, height: 40)
+                        .offset(y: 25)
+                    
+                    // Minareler
+                    HStack(spacing: 80) {
+                        Rectangle()
+                            .fill(Color.accentColor)
+                            .frame(width: 8, height: 60)
+                        
+                        Rectangle()
+                            .fill(Color.accentColor)
+                            .frame(width: 8, height: 60)
+                    }
+                }
+                .frame(height: 80)
+            }
+            .frame(width: 200, height: 120)
+            .cornerRadius(10)
             
             Text(mosque.name)
                 .font(.headline)
