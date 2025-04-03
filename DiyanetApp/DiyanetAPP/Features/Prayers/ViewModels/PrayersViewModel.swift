@@ -32,13 +32,16 @@ class PrayersViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     init() {
+        print("PrayersViewModel - init başladı")
         setupLocationManager()
         loadDefaultLocations()
         fetchData()
+        print("PrayersViewModel - init tamamlandı")
     }
     
     // MARK: - Public Methods
     func fetchData() {
+        print("PrayersViewModel - fetchData başladı")
         isLoading = true
         error = nil
         
@@ -81,6 +84,7 @@ class PrayersViewModel: ObservableObject {
         }
         
         group.notify(queue: .main) { [weak self] in
+            print("PrayersViewModel - Tüm veriler yüklendi")
             self?.isLoading = false
         }
     }
@@ -166,6 +170,7 @@ class PrayersViewModel: ObservableObject {
     }
     
     private func fetchDailyPrayerTimes(completion: @escaping () -> Void) {
+        print("PrayersViewModel - fetchDailyPrayerTimes başladı")
         // Diyanet API'ye istek atmak yerine şimdilik sabit veriler kullanıyoruz
         // Gerçek uygulamada burada API isteği yapılacak
         

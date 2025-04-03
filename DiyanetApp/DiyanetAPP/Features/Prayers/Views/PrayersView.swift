@@ -10,146 +10,202 @@ struct PrayersView: View {
     @State private var showHolidays = false
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                // Üst Bilgi Kartı
-                if let prayerTimes = viewModel.prayerTimes {
-                    PrayerTimesHeaderCard(prayerTimes: prayerTimes, hijriDate: viewModel.hijriDate)
-                        .padding()
-                }
-                
-                // Konum Seçici
-                HStack {
-                    Text("Bölge Seçiniz:")
-                        .font(.subheadline)
-                        .foregroundStyle(.gray)
+        VStack(spacing: 0) {
+            // Üst Bilgi Kartı
+            if let prayerTimes = viewModel.prayerTimes {
+                PrayerTimesHeaderCard(prayerTimes: prayerTimes, hijriDate: viewModel.hijriDate)
+                    .padding()
+            } else {
+                // Veri yüklenmediyse
+                VStack(spacing: 10) {
+                    Text("Namaz vakitleri yükleniyor...")
+                        .font(.headline)
                     
-                    Spacer()
-                    
-                    Button {
-                        showLocationPicker = true
-                    } label: {
-                        HStack {
-                            Text("\(viewModel.selectedCity), \(viewModel.selectedDistrict)")
-                                .font(.subheadline)
-                                .foregroundStyle(.accentColor)
-                            
-                            Image(systemName: "chevron.down")
-                                .font(.caption)
-                                .foregroundStyle(.accentColor)
-                        }
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.bottom, 5)
-                
-                // Kıble ve Dini Günler Butonları
-                HStack(spacing: 15) {
-                    Button {
-                        showQiblaDirection = true
-                    } label: {
-                        HStack {
-                            Image(systemName: "arrow.up.left")
-                            Text("Kıble Yönü")
-                        }
-                        .font(.subheadline)
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 12)
-                        .background(Color.accentColor.opacity(0.1))
-                        .foregroundStyle(Color.accentColor)
-                        .cornerRadius(8)
-                    }
-                    
-                    Button {
-                        showHolidays = true
-                    } label: {
-                        HStack {
-                            Image(systemName: "calendar")
-                            Text("Dinî Günler")
-                        }
-                        .font(.subheadline)
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 12)
-                        .background(Color.accentColor.opacity(0.1))
-                        .foregroundStyle(Color.accentColor)
-                        .cornerRadius(8)
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.bottom, 10)
-                
-                // Tab Seçici
-                Picker("Görünüm", selection: $selectedTab) {
-                    Text("Günlük").tag(0)
-                    Text("Haftalık").tag(1)
-                    Text("Aylık").tag(2)
-                    Text("Yıllık").tag(3)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
-                
-                // Tab İçeriği
-                TabView(selection: $selectedTab) {
-                    // Günlük Görünüm
-                    if let prayerTimes = viewModel.prayerTimes {
-                        DailyPrayerView(prayerTimes: prayerTimes)
-                            .tag(0)
-                    }
-                    
-                    // Haftalık Görünüm
-                    WeeklyPrayerView(prayerTimes: viewModel.weeklyPrayerTimes)
-                        .tag(1)
-                    
-                    // Aylık Görünüm
-                    MonthlyPrayerView(prayerTimes: viewModel.monthlyPrayerTimes)
-                        .tag(2)
-                    
-                    // Yıllık Görünüm
-                    YearlyPrayerView(prayerTimes: viewModel.yearlyPrayerTimes)
-                        .tag(3)
-                }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            }
-            .navigationTitle("Namaz Vakitleri")
-            .navigationBarItems(trailing: refreshButton)
-            .refreshable {
-                viewModel.refreshData()
-            }
-            .overlay {
-                if viewModel.isLoading {
+                    // Yükleniyor göstergesi
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .scaleEffect(1.5)
+                        .padding()
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color(.systemBackground))
+                .cornerRadius(15)
+                .shadow(radius: 5)
+                .padding()
+            }
+            
+            // Konum Seçici
+            HStack {
+                Text("Bölge Seçiniz:")
+                    .font(.subheadline)
+                    .foregroundStyle(.gray)
+                
+                Spacer()
+                
+                Button {
+                    showLocationPicker = true
+                } label: {
+                    HStack {
+                        Text("\(viewModel.selectedCity), \(viewModel.selectedDistrict)")
+                            .font(.subheadline)
+                            .foregroundStyle(.accentColor)
+                        
+                        Image(systemName: "chevron.down")
+                            .font(.caption)
+                            .foregroundStyle(.accentColor)
+                    }
                 }
             }
-            .alert(item: Binding(
-                get: { viewModel.error.map { ErrorWrapper(message: $0) } },
-                set: { _ in viewModel.error = nil }
-            )) { error in
-                Alert(
-                    title: Text("Hata"),
-                    message: Text(error.message),
-                    dismissButton: .default(Text("Tamam"))
-                )
+            .padding(.horizontal)
+            .padding(.bottom, 5)
+            
+            // Kıble ve Dini Günler Butonları
+            HStack(spacing: 15) {
+                Button {
+                    showQiblaDirection = true
+                } label: {
+                    HStack {
+                        Image(systemName: "arrow.up.left")
+                        Text("Kıble Yönü")
+                    }
+                    .font(.subheadline)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 12)
+                    .background(Color.accentColor.opacity(0.1))
+                    .foregroundStyle(Color.accentColor)
+                    .cornerRadius(8)
+                }
+                
+                Button {
+                    showHolidays = true
+                } label: {
+                    HStack {
+                        Image(systemName: "calendar")
+                        Text("Dinî Günler")
+                    }
+                    .font(.subheadline)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 12)
+                    .background(Color.accentColor.opacity(0.1))
+                    .foregroundStyle(Color.accentColor)
+                    .cornerRadius(8)
+                }
             }
-            .sheet(isPresented: $showLocationPicker) {
-                LocationPickerView(viewModel: viewModel, isPresented: $showLocationPicker)
+            .padding(.horizontal)
+            .padding(.bottom, 10)
+            
+            // Tab Seçici
+            Picker("Görünüm", selection: $selectedTab) {
+                Text("Günlük").tag(0)
+                Text("Haftalık").tag(1)
+                Text("Aylık").tag(2)
+                Text("Yıllık").tag(3)
             }
-            .sheet(isPresented: $showQiblaDirection) {
-                QiblaDirectionView(qiblaDirection: viewModel.qiblaDirection, qiblaTime: viewModel.qiblaTime)
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.horizontal)
+            
+            // Tab İçeriği
+            TabView(selection: $selectedTab) {
+                // Günlük Görünüm
+                if let prayerTimes = viewModel.prayerTimes {
+                    DailyPrayerView(prayerTimes: prayerTimes)
+                        .tag(0)
+                } else {
+                    Text("Namaz vakitleri yükleniyor...")
+                        .tag(0)
+                }
+                
+                // Haftalık Görünüm
+                if !viewModel.weeklyPrayerTimes.isEmpty {
+                    WeeklyPrayerView(prayerTimes: viewModel.weeklyPrayerTimes)
+                        .tag(1)
+                } else {
+                    Text("Haftalık namaz vakitleri yükleniyor...")
+                        .tag(1)
+                }
+                
+                // Aylık Görünüm
+                if !viewModel.monthlyPrayerTimes.isEmpty {
+                    MonthlyPrayerView(prayerTimes: viewModel.monthlyPrayerTimes)
+                        .tag(2)
+                } else {
+                    Text("Aylık namaz vakitleri yükleniyor...")
+                        .tag(2)
+                }
+                
+                // Yıllık Görünüm
+                if !viewModel.yearlyPrayerTimes.isEmpty {
+                    YearlyPrayerView(prayerTimes: viewModel.yearlyPrayerTimes)
+                        .tag(3)
+                } else {
+                    Text("Yıllık namaz vakitleri yükleniyor...")
+                        .tag(3)
+                }
             }
-            .sheet(isPresented: $showHolidays) {
-                ReligiousHolidaysView(holidays: viewModel.upcomingHolidays)
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            
+            Spacer() // Ekranın alt kısmını doldurmak için
+        }
+        .navigationTitle("Namaz Vakitleri")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    viewModel.refreshData()
+                }) {
+                    Image(systemName: "arrow.clockwise")
+                        .imageScale(.large)
+                }
             }
         }
-    }
-    
-    private var refreshButton: some View {
-        Button(action: {
+        .refreshable {
             viewModel.refreshData()
-        }) {
-            Image(systemName: "arrow.clockwise")
-                .imageScale(.large)
+        }
+        .overlay {
+            if viewModel.isLoading {
+                ZStack {
+                    Color.black.opacity(0.3)
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    VStack {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(1.5)
+                        
+                        Text("Yükleniyor...")
+                            .foregroundStyle(.white)
+                            .padding(.top)
+                    }
+                    .padding()
+                    .background(Color(.systemBackground).opacity(0.8))
+                    .cornerRadius(10)
+                }
+            }
+        }
+        .alert(item: Binding(
+            get: { viewModel.error.map { ErrorWrapper(message: $0) } },
+            set: { _ in viewModel.error = nil }
+        )) { error in
+            Alert(
+                title: Text("Hata"),
+                message: Text(error.message),
+                dismissButton: .default(Text("Tamam"))
+            )
+        }
+        .sheet(isPresented: $showLocationPicker) {
+            LocationPickerView(viewModel: viewModel, isPresented: $showLocationPicker)
+        }
+        .sheet(isPresented: $showQiblaDirection) {
+            QiblaDirectionView(qiblaDirection: viewModel.qiblaDirection, qiblaTime: viewModel.qiblaTime)
+        }
+        .sheet(isPresented: $showHolidays) {
+            ReligiousHolidaysView(holidays: viewModel.upcomingHolidays)
+        }
+        .onAppear {
+            // Veri yoksa yeniden yükle
+            if viewModel.prayerTimes == nil {
+                viewModel.refreshData()
+            }
         }
     }
 }

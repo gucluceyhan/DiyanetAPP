@@ -538,10 +538,12 @@ struct MainTabView: View {
                     Label("Camiler", systemImage: "building.columns.fill")
                 }
             
-            PrayersView()
-                .tabItem {
-                    Label("Vakitler", systemImage: "clock.fill")
-                }
+            NavigationView {
+                PrayersView()
+            }
+            .tabItem {
+                Label("Vakitler", systemImage: "clock.fill")
+            }
             
             ProfileView()
                 .tabItem {

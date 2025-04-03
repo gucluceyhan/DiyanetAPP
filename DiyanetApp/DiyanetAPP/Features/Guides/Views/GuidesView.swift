@@ -9,7 +9,7 @@ struct GuidesView: View {
         NavigationView {
             ZStack {
                 // Ana İçerik
-                VStack(spacing: 0) {
+            VStack(spacing: 0) {
                     // Üst Arama Kısmı
                     VStack(spacing: 12) {
                         // Arama ve Filtre
@@ -35,8 +35,8 @@ struct GuidesView: View {
                         
                         // Kategori Seçici
                         CategoryPicker(selectedCategory: Binding(
-                            get: { viewModel.selectedCategory },
-                            set: { viewModel.selectCategory($0) }
+                        get: { viewModel.selectedCategory },
+                        set: { viewModel.selectCategory($0) }
                         ), categories: viewModel.categories)
                     }
                     .padding(.top)
@@ -95,7 +95,7 @@ struct GuidesView: View {
                             Text("Tüm Rehberler")
                                 .font(.title2)
                                 .fontWeight(.bold)
-                                .padding(.horizontal)
+                .padding(.horizontal)
                                 .padding(.top)
                             
                             if viewModel.filteredGuides.isEmpty {
@@ -321,7 +321,7 @@ struct GuideCard: View {
                     HStack(spacing: 8) {
                         ForEach(guide.tags, id: \.self) { tag in
                             Text("#\(tag)")
-                                .font(.caption)
+                    .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
                     }
