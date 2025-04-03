@@ -141,84 +141,109 @@ struct MosqueCard: View {
         VStack(alignment: .leading) {
             // Cami Görseli
             ZStack {
-                Color.gray
+                // Cami ID'sine göre örnek görseller (gerçek uygulamada API'den gelen resimler kullanılır)
+                Image("Mosques/mosque\(mosque.id)")
+                    .resizable()
+                    .scaledToFill()
                     .frame(width: 200, height: 150)
+                    .clipped()
                     .cornerRadius(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                    )
                 
-                Image(systemName: "building.columns.fill")
-                    .font(.system(size: 50))
-                    .foregroundStyle(Color.white.opacity(0.8))
-            }
-            
-            Text(mosque.name)
-                .font(.headline)
-                .lineLimit(1)
-            
-            if let arabicName = mosque.arabicName {
-                Text(arabicName)
-                    .font(.subheadline)
-                    .foregroundStyle(.gray)
-                    .lineLimit(1)
-            }
-            
-            // Cami Uzaklığı
-            HStack {
-                Image(systemName: "location.fill")
-                    .foregroundStyle(Color.accentColor)
-                    .font(.caption)
-                
-                Text(mosque.address.formattedAddress)
-                    .font(.caption)
-                    .foregroundStyle(.gray)
-                    .lineLimit(1)
-            }
-            .padding(.top, 2)
-            
-            // Hizmetler
-            HStack(spacing: 8) {
-                if mosque.services.hasFridayPrayer {
-                    Image(systemName: "calendar")
-                        .foregroundStyle(Color.green)
-                        .font(.caption)
-                }
-                
-                if mosque.services.hasWuduFacilities {
-                    Image(systemName: "drop.fill")
-                        .foregroundStyle(Color.blue)
-                        .font(.caption)
-                }
-                
-                if mosque.services.hasParking {
-                    Image(systemName: "car.fill")
-                        .foregroundStyle(Color.purple)
-                        .font(.caption)
-                }
-                
-                if mosque.services.hasWomenSection {
-                    Image(systemName: "person.2.fill")
-                        .foregroundStyle(Color.pink)
-                        .font(.caption)
-                }
-                
-                Spacer()
-                
-                if let rating = mosque.rating {
-                    HStack(spacing: 2) {
-                        Image(systemName: "star.fill")
-                            .foregroundStyle(Color.yellow)
-                            .font(.caption2)
-                        Text(String(format: "%.1f", rating))
-                            .font(.caption2)
+                // Cami bilgi etiketi
+                VStack {
+                    Spacer()
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(mosque.name)
+                                .font(.caption)
+                                .fontWeight(.bold)
+                                .foregroundStyle(.white)
+                            
+                            HStack {
+                                Image(systemName: "star.fill")
+                                    .foregroundStyle(Color.yellow)
+                                    .font(.system(size: 10))
+                                Text(String(format: "%.1f", mosque.rating))
+                                    .font(.system(size: 10))
+                                    .foregroundStyle(.white)
+                            }
+                        }
+                        Spacer()
                     }
+                    .padding(8)
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.black.opacity(0.7), Color.black.opacity(0)]),
+                            startPoint: .bottom,
+                            endPoint: .top
+                        )
+                    )
+                    .cornerRadius(10)
                 }
             }
-            .padding(.top, 2)
+            
+            // Cami bilgileri
+            VStack(alignment: .leading, spacing: 6) {
+                Text(mosque.name)
+                    .font(.headline)
+                    .lineLimit(1)
+                
+                // Cami Uzaklığı
+                HStack {
+                    Image(systemName: "location.fill")
+                        .foregroundStyle(Color.accentColor)
+                        .font(.caption)
+                    
+                    Text(mosque.address.formattedAddress)
+                        .font(.caption)
+                        .foregroundStyle(.gray)
+                        .lineLimit(1)
+                }
+                
+                // Hizmetler
+                HStack(spacing: 8) {
+                    if mosque.services.hasFridayPrayer {
+                        Image(systemName: "calendar")
+                            .foregroundStyle(Color.green)
+                            .font(.caption)
+                    }
+                    
+                    if mosque.services.hasWuduFacilities {
+                        Image(systemName: "drop.fill")
+                            .foregroundStyle(Color.blue)
+                            .font(.caption)
+                    }
+                    
+                    if mosque.services.hasParking {
+                        Image(systemName: "car.fill")
+                            .foregroundStyle(Color.purple)
+                            .font(.caption)
+                    }
+                    
+                    if mosque.services.hasWomenSection {
+                        Image(systemName: "person.2.fill")
+                            .foregroundStyle(Color.pink)
+                            .font(.caption)
+                    }
+                    
+                    Spacer()
+                }
+            }
+            .padding(.horizontal, 4)
+            .padding(.top, 4)
         }
         .frame(width: 200)
-        .padding(10)
         .background(Color(.systemBackground))
         .cornerRadius(15)
         .shadow(radius: 3)
+        .overlay(
+            RoundedRectangle(cornerRadius: 15)
+                .stroke(Color.gray.opacity(0.3), lineWidth: 0.5)
+        )
     }
 }
 
@@ -287,19 +312,42 @@ struct MosqueDetailView: View {
     let mosque: Mosque
     @Environment(\.presentationMode) var presentationMode
     @State private var showMap = false
+    @State private var showFullMap = false
+    @State private var region: MKCoordinateRegion
+    
+    init(mosque: Mosque) {
+        self.mosque = mosque
+        _region = State(initialValue: MKCoordinateRegion(
+            center: mosque.location.coordinates,
+            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        ))
+    }
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 // Cami Görseli
-                ZStack {
-                    Color.gray
+                ZStack(alignment: .topTrailing) {
+                    Image("Mosques/mosque\(mosque.id)")
+                        .resizable()
+                        .scaledToFill()
                         .frame(height: 250)
+                        .clipped()
                         .cornerRadius(10)
                     
-                    Image(systemName: "building.columns.fill")
-                        .font(.system(size: 80))
-                        .foregroundStyle(Color.white.opacity(0.8))
+                    // Yıldız puanı
+                    HStack {
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(Color.yellow)
+                        Text(String(format: "%.1f", mosque.rating))
+                            .fontWeight(.bold)
+                        Text("(\(mosque.reviewCount))")
+                            .foregroundStyle(.white)
+                    }
+                    .padding(8)
+                    .background(Color.black.opacity(0.6))
+                    .cornerRadius(20)
+                    .padding(12)
                 }
                 
                 // Cami İsmi
@@ -316,26 +364,71 @@ struct MosqueDetailView: View {
                 }
                 .padding(.horizontal)
                 
-                // Adres ve Konum
-                VStack(alignment: .leading, spacing: 8) {
-                    Label("Adres", systemImage: "mappin.and.ellipse")
-                        .font(.headline)
-                    
-                    Text(mosque.address.formattedAddress)
-                        .font(.body)
-                        .foregroundStyle(.secondary)
-                    
-                    Button(action: {
-                        showMap = true
-                    }) {
-                        Label("Haritada Göster", systemImage: "map")
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 16)
-                            .foregroundStyle(.white)
-                            .background(Color.blue)
-                            .cornerRadius(8)
+                // Mini Harita Önizlemesi ve Adres
+                VStack(alignment: .leading, spacing: 10) {
+                    // Mini harita
+                    ZStack(alignment: .bottomTrailing) {
+                        Map(coordinateRegion: $region, interactionModes: [], annotationItems: [mosque]) { mosque in
+                            MapAnnotation(coordinate: mosque.location.coordinates) {
+                                Image(systemName: "building.columns.fill")
+                                    .font(.title)
+                                    .foregroundStyle(Color.accentColor)
+                            }
+                        }
+                        .frame(height: 150)
+                        .cornerRadius(10)
+                        .disabled(true)
+                        .onTapGesture {
+                            showFullMap = true
+                        }
+                        
+                        Button(action: {
+                            showFullMap = true
+                        }) {
+                            Text("Büyüt")
+                                .font(.footnote)
+                                .padding(8)
+                                .background(Color.black.opacity(0.6))
+                                .foregroundStyle(.white)
+                                .cornerRadius(8)
+                        }
+                        .padding(8)
                     }
-                    .padding(.top, 4)
+                    
+                    // Adres
+                    VStack(alignment: .leading, spacing: 8) {
+                        Label("Adres", systemImage: "mappin.and.ellipse")
+                            .font(.headline)
+                        
+                        Text(mosque.address.street)
+                            .font(.body)
+                        Text("\(mosque.address.city), \(mosque.address.state)")
+                            .font(.body)
+                            .foregroundStyle(.secondary)
+                        
+                        HStack {
+                            Button(action: {
+                                showFullMap = true
+                            }) {
+                                Label("Haritada Göster", systemImage: "map")
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 16)
+                                    .foregroundStyle(.white)
+                                    .background(Color.blue)
+                                    .cornerRadius(8)
+                            }
+                            
+                            Button(action: getDirections) {
+                                Label("Yol Tarifi Al", systemImage: "arrow.triangle.turn.up.right.diamond.fill")
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 16)
+                                    .foregroundStyle(.white)
+                                    .background(Color.green)
+                                    .cornerRadius(8)
+                            }
+                        }
+                        .padding(.top, 4)
+                    }
                 }
                 .padding()
                 .background(Color(.secondarySystemBackground))
@@ -355,28 +448,25 @@ struct MosqueDetailView: View {
                 .cornerRadius(12)
                 .padding(.horizontal)
                 
-                // Puanlama ve Yorumlar
+                // Namaz Vakitleri (Bu bölüm gerçek uygulamada o camiye ait namaz vakitlerini gösterebilir)
                 VStack(alignment: .leading, spacing: 8) {
-                    Label("Değerlendirmeler", systemImage: "star")
+                    Label("Namaz Vakitleri", systemImage: "clock")
                         .font(.headline)
                     
                     HStack {
-                        Text(String(format: "%.1f", mosque.rating))
-                            .font(.system(size: 36, weight: .bold))
-                        
-                        VStack(alignment: .leading) {
-                            HStack {
-                                ForEach(0..<5) { i in
-                                    Image(systemName: i < Int(mosque.rating) ? "star.fill" : "star")
-                                        .foregroundStyle(Color.yellow)
-                                }
-                            }
-                            Text("\(mosque.reviewCount) değerlendirme")
-                                .font(.caption)
-                                .foregroundStyle(.gray)
-                        }
-                        
+                        PrayerTimeItem(name: "Sabah", time: "05:45")
                         Spacer()
+                        PrayerTimeItem(name: "Öğle", time: "13:05")
+                        Spacer()
+                        PrayerTimeItem(name: "İkindi", time: "16:20")
+                    }
+                    
+                    HStack {
+                        PrayerTimeItem(name: "Akşam", time: "19:15")
+                        Spacer()
+                        PrayerTimeItem(name: "Yatsı", time: "20:45")
+                        Spacer()
+                        PrayerTimeItem(name: "Cuma", time: "13:30")
                     }
                 }
                 .padding()
@@ -387,9 +477,21 @@ struct MosqueDetailView: View {
             .padding(.vertical)
         }
         .navigationBarTitle("", displayMode: .inline)
-        .sheet(isPresented: $showMap) {
+        .sheet(isPresented: $showFullMap) {
             MosqueMapView(mosque: mosque)
         }
+    }
+    
+    func getDirections() {
+        let destination = MKMapItem(placemark: MKPlacemark(coordinate: mosque.location.coordinates))
+        destination.name = mosque.name
+        
+        MKMapItem.openMaps(
+            with: [destination],
+            launchOptions: [
+                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+            ]
+        )
     }
 }
 
