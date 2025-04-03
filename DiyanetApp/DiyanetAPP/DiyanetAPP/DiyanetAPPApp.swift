@@ -534,12 +534,13 @@ extension HomeViewModel: CLLocationManagerDelegate {
 }
 
 @main
-struct DiyanetAPPApp: App {
-    @StateObject private var persistenceController = PersistenceController.shared
+struct DiyanetAPP: App {
+    let persistenceController = PersistenceController.shared
     
     var body: some Scene {
         WindowGroup {
             MainTabView()
+                .environmentObject(AuthViewModel())
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
@@ -1056,10 +1057,4 @@ struct ContentView_Previews: PreviewProvider {
         MainTabView()
             .environmentObject(AuthViewModel())
     }
-}
-
-// MARK: - Persistence Controller
-
-class PersistenceController {
-    static let shared = PersistenceController()
 }

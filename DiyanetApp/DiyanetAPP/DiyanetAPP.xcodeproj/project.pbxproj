@@ -10,8 +10,6 @@
 		BE214CB62D9E03E7002A12BD /* JerusalemGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE214CB42D9E03E7002A12BD /* JerusalemGuideView.swift */; };
 		BE214CB72D9E03E7002A12BD /* UmrahGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE214CB52D9E03E7002A12BD /* UmrahGuideView.swift */; };
 		BE214CB82D9E03E7002A12BD /* HajjGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE214CB32D9E03E7002A12BD /* HajjGuideView.swift */; };
-		BE214CD42D9EC861002A12BD /* GuidesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE214CD32D9EC861002A12BD /* GuidesView.swift */; };
-		BE214CD62D9EC904002A12BD /* GuidesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE214CD52D9EC904002A12BD /* GuidesViewModel.swift */; };
 		BEDDB0B22D9D9B6000466830 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEDDB0942D9D9B6000466830 /* Assets.xcassets */; };
 		BEDDB0B32D9D9B6000466830 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEDDB0922D9D9B6000466830 /* Preview Assets.xcassets */; };
 		BEDDB0B42D9D9B6000466830 /* DiyanetAPP.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEDDB0972D9D9B6000466830 /* DiyanetAPP.xcdatamodeld */; };
@@ -42,8 +40,6 @@
 		BE214CB32D9E03E7002A12BD /* HajjGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HajjGuideView.swift; sourceTree = "<group>"; };
 		BE214CB42D9E03E7002A12BD /* JerusalemGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JerusalemGuideView.swift; sourceTree = "<group>"; };
 		BE214CB52D9E03E7002A12BD /* UmrahGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UmrahGuideView.swift; sourceTree = "<group>"; };
-		BE214CD32D9EC861002A12BD /* GuidesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidesView.swift; sourceTree = "<group>"; };
-		BE214CD52D9EC904002A12BD /* GuidesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidesViewModel.swift; sourceTree = "<group>"; };
 		BEDDB0552D9D953000466830 /* DiyanetAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiyanetAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEDDB06C2D9D953200466830 /* DiyanetAPPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiyanetAPPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEDDB0762D9D953200466830 /* DiyanetAPPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiyanetAPPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,8 +155,6 @@
 				BEDDB0962D9D9B6000466830 /* DiyanetAPP.entitlements */,
 				BEDDB0972D9D9B6000466830 /* DiyanetAPP.xcdatamodeld */,
 				BEDDB0982D9D9B6000466830 /* DiyanetAPPApp.swift */,
-				BE214CD32D9EC861002A12BD /* GuidesView.swift */,
-				BE214CD52D9EC904002A12BD /* GuidesViewModel.swift */,
 				BEF723B82D9DCBC000D5DB3F /* Info.plist */,
 				BEDDB09A2D9D9B6000466830 /* Persistence.swift */,
 			);
@@ -587,13 +581,11 @@
 			files = (
 				BEDDB0B42D9D9B6000466830 /* DiyanetAPP.xcdatamodeld in Sources */,
 				BEDDB0B62D9D9B6000466830 /* ContentView.swift in Sources */,
-				BE214CD62D9EC904002A12BD /* GuidesViewModel.swift in Sources */,
 				BEDDB0B72D9D9B6000466830 /* Persistence.swift in Sources */,
 				BE214CB62D9E03E7002A12BD /* JerusalemGuideView.swift in Sources */,
 				BE214CB72D9E03E7002A12BD /* UmrahGuideView.swift in Sources */,
 				BE214CB82D9E03E7002A12BD /* HajjGuideView.swift in Sources */,
 				BEDDB0BA2D9D9B6000466830 /* DiyanetAPPApp.swift in Sources */,
-				BE214CD42D9EC861002A12BD /* GuidesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
