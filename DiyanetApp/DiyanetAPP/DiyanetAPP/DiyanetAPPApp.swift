@@ -99,6 +99,10 @@ class HomeViewModel: NSObject, ObservableObject {
     @Published var error: String?
     @Published var currentLocation: CLLocation?
     @Published var locationAuthorizationStatus: CLAuthorizationStatus = .notDetermined
+    @Published var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 41.0082, longitude: 28.9784), // İstanbul
+        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+    )
     
     private let locationManager = CLLocationManager()
     private var cancellables = Set<AnyCancellable>()
@@ -253,147 +257,115 @@ class HomeViewModel: NSObject, ObservableObject {
     }
     
     private func fetchNearbyMosques(near location: CLLocation) {
-        // API'den yakındaki camileri çekmek yerine şimdilik sahte veri kullanıyoruz
-        // Gerçek API entegrasyonu için burayı değiştirmek gerekiyor
+        isLoading = true
         
-        // Geocoder ile konum adını bul
-        let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(location) { [weak self] placemarks, error in
+        // Cami arama sorgusu oluştur
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = "cami OR mosque OR mescit"
+        
+        // Kullanıcının etrafında arama yap
+        let searchRadius: CLLocationDistance = 5000 // 5 km
+        let region = MKCoordinateRegion(
+            center: location.coordinate,
+            latitudinalMeters: searchRadius,
+            longitudinalMeters: searchRadius
+        )
+        request.region = region
+        
+        // UI bölgesi güncelle
+        DispatchQueue.main.async {
+            self.region = region
+        }
+        
+        // Aramayı başlat
+        let search = MKLocalSearch(request: request)
+        search.start { [weak self] (response, error) in
             guard let self = self else { return }
             
-            if let error = error {
-                self.error = "Konum adı alınamadı: \(error.localizedDescription)"
-                return
-            }
-            
-            if let placemark = placemarks?.first, 
-               let city = placemark.locality ?? placemark.administrativeArea,
-               let country = placemark.country {
+            DispatchQueue.main.async {
+                self.isLoading = false
                 
-                // Gerçek yakındaki cami konumları (daha gerçekçi veriler)
-                // Kullanıcının etrafında rastgele cami konumları oluşturuyoruz
-                let userLocation = Location(
-                    latitude: location.coordinate.latitude,
-                    longitude: location.coordinate.longitude,
-                    city: city,
-                    country: country
-                )
-                
-                // İstanbul'daki önemli camileri getirelim (gerçek koordinatlar)
-                var mosques: [Mosque] = [
-                    // Süleymaniye Camii (gerçek konum)
-                    createMosque(
-                        id: "1",
-                        name: "Süleymaniye Camii",
-                        latitude: 41.0165,
-                        longitude: 28.9639,
-                        city: "İstanbul",
-                        country: "Türkiye",
-                        district: "Fatih",
-                        services: ["namaz", "eğitim", "dini sohbet", "turist ziyareti"],
-                        rating: 4.8,
-                        reviewCount: 1250,
-                        userLocation: userLocation
-                    ),
-                    
-                    // Sultan Ahmet Camii (gerçek konum)
-                    createMosque(
-                        id: "2",
-                        name: "Sultan Ahmet Camii",
-                        latitude: 41.0054,
-                        longitude: 28.9768,
-                        city: "İstanbul",
-                        country: "Türkiye",
-                        district: "Fatih",
-                        services: ["namaz", "turist rehberliği", "müze"],
-                        rating: 4.9,
-                        reviewCount: 2500,
-                        userLocation: userLocation
-                    ),
-                    
-                    // Eyüp Sultan Camii (gerçek konum)
-                    createMosque(
-                        id: "3",
-                        name: "Eyüp Sultan Camii",
-                        latitude: 41.0481,
-                        longitude: 28.9334,
-                        city: "İstanbul",
-                        country: "Türkiye",
-                        district: "Eyüp",
-                        services: ["namaz", "türbe", "dini sohbet"],
-                        rating: 4.7,
-                        reviewCount: 1850,
-                        userLocation: userLocation
-                    ),
-                    
-                    // Ortaköy Camii (gerçek konum)
-                    createMosque(
-                        id: "4",
-                        name: "Ortaköy Camii",
-                        latitude: 41.0471,
-                        longitude: 29.0275,
-                        city: "İstanbul",
-                        country: "Türkiye",
-                        district: "Beşiktaş",
-                        services: ["namaz", "turistik gezi"],
-                        rating: 4.6,
-                        reviewCount: 1200,
-                        userLocation: userLocation
-                    ),
-                    
-                    // Kullanıcının yakınında birkaç yerel cami
-                    createMosque(
-                        id: "5",
-                        name: "Yerel Merkez Camii",
-                        latitude: location.coordinate.latitude + 0.005,
-                        longitude: location.coordinate.longitude + 0.005,
-                        city: city,
-                        country: country,
-                        district: placemark.subLocality ?? "Merkez",
-                        services: ["namaz", "Kuran kursu"],
-                        rating: 4.4,
-                        reviewCount: 120,
-                        userLocation: userLocation
-                    ),
-                    
-                    createMosque(
-                        id: "6",
-                        name: "Mahalle Camii",
-                        latitude: location.coordinate.latitude - 0.003,
-                        longitude: location.coordinate.longitude - 0.002,
-                        city: city,
-                        country: country,
-                        district: placemark.subLocality ?? "Mahalle",
-                        services: ["namaz"],
-                        rating: 4.3,
-                        reviewCount: 85,
-                        userLocation: userLocation
-                    )
-                ]
-                
-                // Camileri mesafeye göre sırala (en yakın önce)
-                mosques.sort { (mosque1, mosque2) -> Bool in
-                    guard let distance1 = mosque1.distance, let distance2 = mosque2.distance else {
-                        return false
-                    }
-                    return distance1 < distance2
+                if let error = error {
+                    self.error = "Camiler yüklenirken bir hata oluştu: \(error.localizedDescription)"
+                    return
                 }
                 
-                self.nearbyMosques = mosques
-            } else {
-                self.error = "Konum bilgisi çözümlenemedi"
+                if let response = response {
+                    let userLocation = Location(
+                        latitude: location.coordinate.latitude,
+                        longitude: location.coordinate.longitude,
+                        city: "",
+                        country: ""
+                    )
+                    
+                    // Bulunan cami bilgilerini dönüştür
+                    var mosques = [Mosque]()
+                    
+                    for item in response.mapItems {
+                        let placemark = item.placemark
+                        
+                        let mosque = self.createMosqueFromMapItem(
+                            item: item,
+                            userLocation: userLocation
+                        )
+                        
+                        mosques.append(mosque)
+                    }
+                    
+                    // Camileri mesafeye göre sırala
+                    mosques.sort { (mosque1, mosque2) -> Bool in
+                        guard let distance1 = mosque1.distance, let distance2 = mosque2.distance else {
+                            return false
+                        }
+                        return distance1 < distance2
+                    }
+                    
+                    self.nearbyMosques = mosques
+                    
+                    if mosques.isEmpty {
+                        self.error = "Yakında bulunan cami bulunamadı. Arama yarıçapını genişletin veya başka bir bölgede arayın."
+                    }
+                } else {
+                    self.error = "Yakında cami bulunamadı."
+                }
             }
         }
     }
     
-    // Yardımcı fonksiyon: Cami oluştur ve mesafeyi hesapla
-    private func createMosque(id: String, name: String, latitude: Double, longitude: Double,
-                              city: String, country: String, district: String, services: [String],
-                              rating: Double, reviewCount: Int, userLocation: Location) -> Mosque {
+    // MapKit arama sonuçlarını Mosque nesnesine dönüştürme
+    private func createMosqueFromMapItem(item: MKMapItem, userLocation: Location) -> Mosque {
+        let placemark = item.placemark
+        let coordinate = placemark.coordinate
         
+        // Adres bilgilerini al
+        let street = placemark.thoroughfare ?? ""
+        let district = placemark.subLocality ?? placemark.subAdministrativeArea ?? ""
+        let city = placemark.locality ?? placemark.administrativeArea ?? ""
+        let postalCode = placemark.postalCode ?? ""
+        let country = placemark.country ?? ""
+        
+        // Formatlı adres oluştur
+        var formattedAddress = ""
+        if !street.isEmpty {
+            formattedAddress += street
+        }
+        if !district.isEmpty {
+            if !formattedAddress.isEmpty { formattedAddress += ", " }
+            formattedAddress += district
+        }
+        if !city.isEmpty {
+            if !formattedAddress.isEmpty { formattedAddress += ", " }
+            formattedAddress += city
+        }
+        if !country.isEmpty && country != "Türkiye" {
+            if !formattedAddress.isEmpty { formattedAddress += ", " }
+            formattedAddress += country
+        }
+        
+        // Konum objesini oluştur
         let location = Location(
-            latitude: latitude,
-            longitude: longitude,
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude,
             city: city,
             country: country
         )
@@ -401,28 +373,28 @@ class HomeViewModel: NSObject, ObservableObject {
         // Kullanıcı konumuna mesafeyi hesapla
         let distance = location.distance(to: userLocation)
         
-        var formattedAddress = "\(district), \(city)"
-        if city != userLocation.city {
-            formattedAddress += ", \(country)"
-        }
-        
+        // Adres objesini oluştur
         let address = Address(
-            street: "\(district) bölgesi",
+            street: street,
             district: district,
             city: city,
-            postalCode: "00000", // Bilinmiyor
+            postalCode: postalCode,
             country: country,
             formattedAddress: formattedAddress
         )
         
+        // Caminin adını al, yoksa varsayılan ad kullan
+        let name = item.name ?? "Cami"
+        
+        // Cami nesnesini oluştur ve döndür
         var mosque = Mosque(
-            id: id,
+            id: UUID().uuidString,
             name: name,
             location: location,
             address: address,
-            services: services,
-            rating: rating,
-            reviewCount: reviewCount
+            services: ["namaz"], // Varsayılan hizmet
+            rating: nil, // MapKit derecelendirme bilgisi sağlamıyor
+            reviewCount: 0
         )
         
         mosque.distance = distance
@@ -902,10 +874,6 @@ struct PrayersView: View {
 struct MapsView: View {
     @StateObject private var viewModel = HomeViewModel()
     @State private var selectedMosque: Mosque?
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 41.0082, longitude: 28.9784), // İstanbul
-        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-    )
     @State private var userTrackingMode: MapUserTrackingMode = .follow
     @State private var showingDetail = false
     
@@ -913,7 +881,7 @@ struct MapsView: View {
         NavigationView {
             ZStack {
                 // Harita
-                Map(coordinateRegion: $region,
+                Map(coordinateRegion: $viewModel.region,
                     interactionModes: .all,
                     showsUserLocation: true,
                     userTrackingMode: $userTrackingMode,
@@ -973,11 +941,11 @@ struct MapsView: View {
                                 Button {
                                     // Cami konumuna git
                                     withAnimation {
-                                        region.center = CLLocationCoordinate2D(
+                                        viewModel.region.center = CLLocationCoordinate2D(
                                             latitude: mosque.location.latitude,
                                             longitude: mosque.location.longitude
                                         )
-                                        region.span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                                        viewModel.region.span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
                                     }
                                     selectedMosque = mosque
                                 } label: {
@@ -1037,8 +1005,8 @@ struct MapsView: View {
                                 // Kullanıcı konumuna git
                                 if let location = viewModel.currentLocation {
                                     withAnimation {
-                                        region.center = location.coordinate
-                                        region.span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                                        viewModel.region.center = location.coordinate
+                                        viewModel.region.span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
                                     }
                                 }
                             } label: {
@@ -1053,9 +1021,9 @@ struct MapsView: View {
                             Button {
                                 // Haritayı yakınlaştır
                                 withAnimation {
-                                    region.span = MKCoordinateSpan(
-                                        latitudeDelta: max(region.span.latitudeDelta * 0.5, 0.001),
-                                        longitudeDelta: max(region.span.longitudeDelta * 0.5, 0.001)
+                                    viewModel.region.span = MKCoordinateSpan(
+                                        latitudeDelta: max(viewModel.region.span.latitudeDelta * 0.5, 0.001),
+                                        longitudeDelta: max(viewModel.region.span.longitudeDelta * 0.5, 0.001)
                                     )
                                 }
                             } label: {
@@ -1070,9 +1038,9 @@ struct MapsView: View {
                             Button {
                                 // Haritayı uzaklaştır
                                 withAnimation {
-                                    region.span = MKCoordinateSpan(
-                                        latitudeDelta: min(region.span.latitudeDelta * 2.0, 50),
-                                        longitudeDelta: min(region.span.longitudeDelta * 2.0, 50)
+                                    viewModel.region.span = MKCoordinateSpan(
+                                        latitudeDelta: min(viewModel.region.span.latitudeDelta * 2.0, 50),
+                                        longitudeDelta: min(viewModel.region.span.longitudeDelta * 2.0, 50)
                                     )
                                 }
                             } label: {
@@ -1105,7 +1073,7 @@ struct MapsView: View {
                 
                 // Kullanıcı konumu alındıysa merkezi konumu güncelle
                 if let location = viewModel.currentLocation {
-                    region.center = location.coordinate
+                    viewModel.region.center = location.coordinate
                 }
             }
         }
@@ -1324,7 +1292,7 @@ struct MosqueCard: View {
                 .lineLimit(2)
             
             // Mesafe bilgisi
-            if let _ = mosque.distance {
+            if let distance = mosque.distance {
                 Text(mosque.formattedDistance)
                     .font(.caption)
                     .foregroundStyle(.blue)
