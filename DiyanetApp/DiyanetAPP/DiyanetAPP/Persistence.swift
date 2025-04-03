@@ -6,8 +6,10 @@
 //
 
 import CoreData
+import Foundation
+import Combine
 
-struct PersistenceController {
+class PersistenceController: ObservableObject {
     static let shared = PersistenceController()
 
     static var preview: PersistenceController = {
@@ -17,7 +19,7 @@ struct PersistenceController {
         return result
     }()
 
-    let container: NSPersistentContainer
+    @Published var container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "DiyanetAPP")
