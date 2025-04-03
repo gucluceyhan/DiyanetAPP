@@ -304,39 +304,33 @@ struct JerusalemGuideView: View {
                 .font(.body)
             
             historicalEvent(
-                period: "636-1099",
-                title: "İlk İslam Dönemi",
-                description: "Hz. Ömer döneminde (638) İslam hakimiyetine girmiştir. Emeviler ve Abbasiler döneminde İslam medeniyetinin önemli merkezlerinden biri olmuştur. Bu dönemde Kubbetü's-Sahra ve El-Aksa Camii inşa edilmiştir."
+                date: "636-1099",
+                event: "İlk İslam Dönemi - Hz. Ömer döneminde (638) İslam hakimiyetine girmiştir. Emeviler ve Abbasiler döneminde İslam medeniyetinin önemli merkezlerinden biri olmuştur. Bu dönemde Kubbetü's-Sahra ve El-Aksa Camii inşa edilmiştir."
             )
             
             historicalEvent(
-                period: "1099-1187",
-                title: "Haçlı İşgali",
-                description: "Haçlı Seferleri sırasında Kudüs, 1099'da işgal edilmiş ve birçok Müslüman katledilmiştir. Bu dönemde Kubbetü's-Sahra kiliseye çevrilmiştir."
+                date: "1099-1187",
+                event: "Haçlı İşgali - Haçlı Seferleri sırasında Kudüs, 1099'da işgal edilmiş ve birçok Müslüman katledilmiştir. Bu dönemde Kubbetü's-Sahra kiliseye çevrilmiştir."
             )
             
             historicalEvent(
-                period: "1187-1516",
-                title: "Selahaddin Eyyubi ve Memlükler Dönemi",
-                description: "Selahaddin Eyyubi, 1187'de Kudüs'ü Haçlılardan geri almıştır. Memlük Sultanlığı döneminde şehir imar edilmiş ve İslami eserler restore edilmiştir."
+                date: "1187-1516",
+                event: "Selahaddin Eyyubi ve Memlükler Dönemi - Selahaddin Eyyubi, 1187'de Kudüs'ü Haçlılardan geri almıştır. Memlük Sultanlığı döneminde şehir imar edilmiş ve İslami eserler restore edilmiştir."
             )
             
             historicalEvent(
-                period: "1516-1917",
-                title: "Osmanlı Dönemi",
-                description: "Yavuz Sultan Selim döneminde 1516'da Osmanlı hakimiyetine giren Kudüs, dört yüz yıl boyunca Osmanlı yönetiminde kalmıştır. Kanuni Sultan Süleyman döneminde şehir surları yenilenmiş, su yolları yapılmış ve çeşitli vakıf eserleri inşa edilmiştir."
+                date: "1516-1917",
+                event: "Osmanlı Dönemi - Yavuz Sultan Selim döneminde 1516'da Osmanlı hakimiyetine giren Kudüs, dört yüz yıl boyunca Osmanlı yönetiminde kalmıştır. Kanuni Sultan Süleyman döneminde şehir surları yenilenmiş, su yolları yapılmış ve çeşitli vakıf eserleri inşa edilmiştir."
             )
             
             historicalEvent(
-                period: "1917-1948",
-                title: "İngiliz Mandası",
-                description: "I. Dünya Savaşı sonunda Osmanlı'nın yenilgisiyle Kudüs, İngiliz kontrolüne geçmiştir. Bu dönemde Yahudi göçü artmış ve bölgede gerilimler yükselmiştir."
+                date: "1917-1948",
+                event: "İngiliz Mandası - I. Dünya Savaşı sonunda Osmanlı'nın yenilgisiyle Kudüs, İngiliz kontrolüne geçmiştir. Bu dönemde Yahudi göçü artmış ve bölgede gerilimler yükselmiştir."
             )
             
             historicalEvent(
-                period: "1948'den Günümüze",
-                title: "Modern Dönem",
-                description: "1948'de İsrail'in kurulmasıyla Kudüs bölünmüş, 1967 Altı Gün Savaşı'nda Doğu Kudüs İsrail tarafından işgal edilmiştir. Günümüzde Müslümanlar, Kudüs'ün ve Mescid-i Aksa'nın statüsünün korunması için çabalarını sürdürmektedir."
+                date: "1948'den Günümüze",
+                event: "Modern Dönem - 1948'de İsrail'in kurulmasıyla Kudüs bölünmüş, 1967 Altı Gün Savaşı'nda Doğu Kudüs İsrail tarafından işgal edilmiştir. Günümüzde Müslümanlar, Kudüs'ün ve Mescid-i Aksa'nın statüsünün korunması için çabalarını sürdürmektedir."
             )
             
             Divider()
