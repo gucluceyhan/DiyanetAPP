@@ -138,7 +138,8 @@ struct HajjGuideView: View {
                 preparationItem(title: "İdari Hazırlıklar", icon: "doc.text.fill") {
                     Text("• Diyanet İşleri Başkanlığı'nın açıkladığı tarihlerde hac başvurusu yapılmalıdır.")
                     Text("• Pasaport, vize ve diğer seyahat belgeleri hazırlanmalıdır.")
-                    Text("• Sağlık kontrolleri ve aşılar yaptırılmalıdır.")
+                    Text("• Sağlık kontrolleri ve aşılar yaptırılmalıdır (Menenjit aşısı zorunludur).")
+                    Text("• E-Devlet üzerinden veya Müftülüklere giderek hac kaydı yapılmalıdır.")
                     Text("• Hac eğitimlerine katılım sağlanmalıdır.")
                 }
                 
@@ -147,15 +148,37 @@ struct HajjGuideView: View {
                     Text("• Kul haklarının iadesi yapılmalıdır.")
                     Text("• Hac ve umre duaları öğrenilmelidir.")
                     Text("• İbadetler düzenli şekilde yerine getirilmelidir.")
+                    Text("• İbadetlerin hikmetleri ve manevi anlamları üzerine düşünülmelidir.")
+                }
+                
+                preparationItem(title: "İhram Rehberi", icon: "person.fill") {
+                    Text("• İhrama girmeden önce yapılması gerekenler:")
+                    Text("  - Gusül abdesti almak (sünnet)")
+                    Text("  - Tırnak kesmek, tüyleri gidermek")
+                    Text("  - Güzel koku sürünmek (ihramdan önce)")
+                    Text("• İhram Kıyafeti:")
+                    Text("  - Erkekler: Belden aşağı (izar) ve omuzlara (rida) sarılan iki parça dikişsiz kumaş")
+                    Text("  - Kadınlar: Normal tesettür kıyafetleri, eldiven ve peçe hariç")
+                    Text("• İhram Yasakları:")
+                    Text("  - Saç, sakal ve tüyleri kesmek")
+                    Text("  - Tırnak kesmek")
+                    Text("  - Koku sürünmek")
+                    Text("  - Cinsel ilişki ve buna götüren davranışlar")
+                    Text("  - Avlanmak, bitki koparmak")
+                    Text("  - Dikişli elbise giymek (erkekler için)")
                 }
                 
                 preparationItem(title: "Yanınızda Götürecekleriniz", icon: "bag.fill") {
                     Text("• İhram (erkekler için)")
-                    Text("• Uygun kıyafetler")
-                    Text("• Sağlık malzemeleri")
-                    Text("• Dua kitapları")
+                    Text("• Uygun kıyafetler (hava koşullarına göre)")
+                    Text("• Güneş şapkası/şemsiye (sıcaktan korunmak için)")
+                    Text("• Sağlık malzemeleri ve ilaçlar")
+                    Text("• Dua kitapları ve Kur'an-ı Kerim")
                     Text("• Kişisel bakım ürünleri")
-                    Text("• Rahat ayakkabılar")
+                    Text("• Rahat ayakkabılar, terlikler")
+                    Text("• Elektronik cihazlar için taşınabilir şarj aleti")
+                    Text("• Su matarası/termos")
+                    Text("• Omuz çantası/kemer çantası (değerli eşyalar için)")
                 }
             }
             
@@ -166,12 +189,27 @@ struct HajjGuideView: View {
                 .fontWeight(.semibold)
             
             VStack(alignment: .leading, spacing: 8) {
-                Text("• Diyanet İşleri Başkanlığı Hac ve Umre Hizmetleri Genel Müdürlüğü")
-                Text("• Türkiye'nin Suudi Arabistan Büyükelçiliği")
-                Text("• Cidde ve Mekke'deki Türk Konsoloslukları")
-                Text("• Hac organizasyonu yetkilileri")
+                Text("• Diyanet İşleri Başkanlığı Hac ve Umre Hizmetleri Genel Müdürlüğü: +90 312 295 84 00")
+                Text("• Türkiye'nin Suudi Arabistan Büyükelçiliği: +966 11 4880000")
+                Text("• Cidde Başkonsolosluğu: +966 12 6677561")
+                Text("• Mekke Suudi Arabistan Acil Durum Numarası: 911")
+                Text("• Ambulans: 997")
+                Text("• Polis: 999")
+                Text("• Yol Yardım: 993")
+                Text("• Hac Sorgu ve Şikayet Hattı: 8002451000")
             }
             .font(.caption)
+            
+            preparationItem(title: "Sağlık ve Güvenlik İpuçları", icon: "heart.text.square.fill") {
+                Text("• Sıcak havalarda sık sık su için (en az 2-3 litre/gün)")
+                Text("• İbadetler sırasında enerjinizi korumak için hafif atıştırmalıklar bulundurun")
+                Text("• Güneş çarpmasına karşı şapka/şemsiye kullanın")
+                Text("• Kalabalıklarda gruptan ayrılmamaya özen gösterin")
+                Text("• Değerli eşyalarınızı güvenli şekilde yanınızda taşıyın")
+                Text("• El hijyenine dikkat edin, sık sık el dezenfektanı kullanın")
+                Text("• Yanınızda mutlaka kişisel ilaçlarınızı ve basit ilk yardım malzemelerini bulundurun")
+                Text("• Yüksek tansiyon, kalp rahatsızlığı, diyabet gibi kronik hastalıkları olanlar ilaçlarını yanlarında bulundurmalı")
+            }
         }
     }
     
@@ -215,33 +253,54 @@ struct HajjGuideView: View {
                 .font(.title2)
                 .fontWeight(.bold)
             
+            Text("Hac ibadetinde ziyaret edilecek kutsal mekanlar:")
+                .font(.headline)
+            
             locationCard(
-                name: "Kâbe",
-                description: "İslam'ın en kutsal mekânı, Müslümanların kıblesi. Tavaf ibadetinin yapıldığı yerdir.",
+                name: "Kâbe-i Muazzama",
+                description: "İslam'ın en kutsal mekânı, Müslümanların kıblesi. Hz. İbrahim ve oğlu Hz. İsmail tarafından inşa edilmiştir. Tavaf ibadetinin yapıldığı yerdir.",
+                coordinates: (21.4225, 39.8262)
+            )
+            
+            locationCard(
+                name: "Hacerü'l-Esved",
+                description: "Kâbe'nin güneydoğu köşesinde bulunan siyah taş. Cennet'ten indirildiğine inanılır ve tavaf sırasında selamlanır.",
                 coordinates: (21.4225, 39.8262)
             )
             
             locationCard(
                 name: "Arafat",
-                description: "Hac ibadetinin en önemli rüknü olan vakfenin yapıldığı yer. Arefe günü burada vakfe yapılır.",
+                description: "Hac ibadetinin en önemli rüknü olan vakfenin yapıldığı yer. Arefe günü (9 Zilhicce) burada vakfe yapılır. Hz. Adem ile Hz. Havva'nın burada buluştuğuna inanılır.",
                 coordinates: (21.3549, 39.9841)
             )
             
             locationCard(
                 name: "Müzdelife",
-                description: "Arafat'tan sonra geceyi geçirilen yer. Buradan şeytan taşlamak için taşlar toplanır.",
+                description: "Arafat'tan sonra geceyi geçirilen yer. Buradan şeytan taşlamak için taşlar toplanır. Arefe günü akşamı Mina'ya geçmeden önce burada vakfe yapılır.",
                 coordinates: (21.3764, 39.9375)
             )
             
             locationCard(
                 name: "Mina",
-                description: "Şeytan taşlama ibadetinin yapıldığı ve teşrik günlerinde kalınan yer.",
+                description: "Şeytan taşlama ibadetinin yapıldığı ve teşrik günlerinde kalınan yer. Hz. İbrahim'in oğlu Hz. İsmail'i kurban etmek istediği yer olduğuna inanılır.",
                 coordinates: (21.4133, 39.8933)
             )
             
             locationCard(
+                name: "Safa ve Merve Tepeleri",
+                description: "Hz. Hacer'in oğlu Hz. İsmail için su ararken koştuğu tepeler. Sa'y ibadeti bu iki tepe arasında yapılır.",
+                coordinates: (21.4229, 39.8267)
+            )
+            
+            locationCard(
+                name: "Mescid-i Haram",
+                description: "Kâbe'yi çevreleyen, dünyanın en büyük mescidi. İçinde Kâbe, Hacer-ül Esved, Makam-ı İbrahim, Zemzem kuyusu ve Safa-Merve tepeleri bulunur.",
+                coordinates: (21.4229, 39.8267)
+            )
+            
+            locationCard(
                 name: "Mescid-i Nebevi",
-                description: "Medine'de bulunan, Hz. Muhammed'in kabri ve mescidi.",
+                description: "Medine'de bulunan, Hz. Muhammed'in kabri ve mescidi. Hac sonrası genellikle ziyaret edilir (Haccın rüknü değildir).",
                 coordinates: (24.4672, 39.6111)
             )
             
@@ -256,6 +315,20 @@ struct HajjGuideView: View {
                     .background(Color.accentColor)
                     .cornerRadius(10)
             }
+            
+            Text("Ziyaret Adabı")
+                .font(.title3)
+                .fontWeight(.semibold)
+                .padding(.top)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("• Kutsal mekanlarda sesli konuşmaktan kaçınılmalıdır.")
+                Text("• Fotoğraf çekerken başkalarını rahatsız etmekten sakınılmalıdır.")
+                Text("• Özellikle Kâbe ve Ravza-i Mutahhara ziyaretlerinde izdiham oluşturmaktan kaçınılmalıdır.")
+                Text("• Her ziyaret yerinin kendine özgü duaları vardır, bunlar okunmalıdır.")
+                Text("• Ziyaret esnasında huşu ve saygı içinde olunmalıdır.")
+            }
+            .font(.body)
         }
     }
     
@@ -269,7 +342,7 @@ struct HajjGuideView: View {
                 .font(.headline)
             
             prayerCard(
-                title: "Telbiye",
+                title: "İhrama Girme Niyeti ve Telbiye",
                 arabicText: "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ",
                 turkishText: "Lebbeyk Allahümme lebbeyk. Lebbeyke lâ şerike leke lebbeyk. İnnel hamde ven-ni'mete leke vel-mülk. Lâ şerike lek.",
                 meaning: "Buyur Allah'ım buyur! Emrindeyim, buyur! Senin hiçbir ortağın yoktur. Emrindeyim, buyur! Şüphesiz hamd Sana mahsustur. Nimet de Senindir, mülk de Senindir. Senin hiçbir ortağın yoktur."
@@ -289,20 +362,56 @@ struct HajjGuideView: View {
                 meaning: "Allah'tan başka ilah yoktur, O tektir, ortağı yoktur. Mülk O'nundur, hamd O'nadır ve O her şeye kadirdir."
             )
             
+            prayerCard(
+                title: "Safa ve Merve Duası",
+                arabicText: "إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا",
+                turkishText: "İnnes-safâ vel-mervete min şeâirillâh. Fe men haccel-beyte ev i'temera felâ cünâha aleyhi en yettavvefe bihimâ.",
+                meaning: "Şüphesiz Safa ile Merve, Allah'ın (dininin) nişanelerindendir. Onun için her kim hac ve umre niyetiyle Kâbe'yi ziyaret eder ve onları tavaf ederse, bunda bir günah yoktur."
+            )
+            
+            prayerCard(
+                title: "Müzdelife Duası",
+                arabicText: "اللَّهُمَّ رَبَّ الْمَشْعَرِ الْحَرَامِ أَعْتِقْ رَقَبَتِي مِنَ النَّارِ وَآمِنِّي مِنْ خَوْفِكَ وَاجْمَعْ لِي خَيْرَ الدُّنْيَا وَالْآخِرَةِ",
+                turkishText: "Allahümme Rabbel-Meş'aril-Harâm a'tik rakabetî minen-nâr ve âminnî min havfike vecma' lî hayrad-dünyâ vel-âhirah.",
+                meaning: "Ey Meş'ar-i Haram'ın Rabbi olan Allah'ım! Boynumu ateşten azad eyle, beni korkudan emin kıl ve bana dünya ve ahiretin hayırlarını topla."
+            )
+            
             Divider()
             
             Text("Hac İbadetinde Yapılacak Zikirler")
                 .font(.headline)
             
             VStack(alignment: .leading, spacing: 8) {
-                Text("• Tekbir: Allahu Ekber")
-                Text("• Tesbih: Sübhanallah")
-                Text("• Tahmid: Elhamdülillah")
-                Text("• Tehlil: La ilahe illallah")
-                Text("• İstiğfar: Estağfirullah")
-                Text("• Salavat: Allahümme salli ala Muhammed")
+                Text("• Tekbir: Allahu Ekber (Allah en büyüktür)")
+                Text("• Tesbih: Sübhanallah (Allah'ı tüm eksikliklerden tenzih ederim)")
+                Text("• Tahmid: Elhamdülillah (Hamd Allah'a mahsustur)")
+                Text("• Tehlil: La ilahe illallah (Allah'tan başka ilah yoktur)")
+                Text("• İstiğfar: Estağfirullah (Allah'tan bağışlanma dilerim)")
+                Text("• Salavat: Allahümme salli ala Muhammed (Allah'ım, Muhammed'e salat eyle)")
             }
             .font(.body)
+            
+            Text("Önemli Zikirler İçin Sesli Rehberlik")
+                .font(.headline)
+                .padding(.top)
+            
+            Button(action: {
+                // TODO: Sesli rehberliği başlat
+            }) {
+                HStack {
+                    Image(systemName: "speaker.wave.2.fill")
+                    Text("Sesli Dua Rehberini Başlat")
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.accentColor)
+                .foregroundStyle(.white)
+                .cornerRadius(8)
+            }
+            
+            Text("Not: Sesli rehberlik, çevrimdışı modda da kullanılabilir.")
+                .font(.caption)
+                .foregroundStyle(.gray)
         }
     }
     
@@ -314,7 +423,7 @@ struct HajjGuideView: View {
             
             faqItem(
                 question: "Türkiye'den hac başvurusu nasıl yapılır?",
-                answer: "Diyanet İşleri Başkanlığı'nın internet sitesinde veya il/ilçe müftülüklerinde hac kayıt dönemlerinde başvuru yapabilirsiniz. Başvurular genellikle kura sistemiyle değerlendirilmektedir."
+                answer: "Diyanet İşleri Başkanlığı'nın internet sitesinde veya il/ilçe müftülüklerinde hac kayıt dönemlerinde başvuru yapabilirsiniz. Başvurular genellikle kura sistemiyle değerlendirilmektedir. E-Devlet üzerinden de başvuru yapılabilmektedir."
             )
             
             faqItem(
@@ -340,6 +449,31 @@ struct HajjGuideView: View {
             faqItem(
                 question: "Hacda hangi aşılara ihtiyaç vardır?",
                 answer: "Suudi Arabistan Krallığı'nın belirlediği sağlık şartlarına göre menenjit aşısı zorunludur. Ayrıca doktorunuzun önerdiği diğer aşılar da (grip, zatürre, hepatit vb.) yaptırılabilir."
+            )
+            
+            faqItem(
+                question: "Hac ve umre arasındaki fark nedir?",
+                answer: "Hac, belirli bir zamanda (Zilhicce ayının 8-13. günleri) yapılması gereken ve hayatta bir kez farz olan bir ibadettir. Umre ise yılın herhangi bir zamanında yapılabilen ve sünnet olan bir ibadettir. Hac, umreyi de içerir ancak ayrıca Arafat vakfesi ve şeytan taşlama gibi ek ritüeller içerir."
+            )
+            
+            faqItem(
+                question: "Hac sırasında Medine ziyareti zorunlu mudur?",
+                answer: "Hayır, Medine ziyareti haccın rüknü veya vacip bir parçası değildir. Ancak Hz. Muhammed'in (s.a.v.) kabrini ziyaret etmek manevi açıdan çok değerli görüldüğünden, hac organizasyonları genellikle Medine ziyaretini de içerir."
+            )
+            
+            faqItem(
+                question: "Vekalet yoluyla hac yapılabilir mi?",
+                answer: "Evet, vefat etmiş kişiler veya sağlık durumu hac yapmaya elvermeyecek derecede kötü olan kişiler adına vekalet yoluyla hac yapılabilir. Bunun için bir başkasını vekil tayin edip gerekli masrafları karşılamak gerekir."
+            )
+            
+            faqItem(
+                question: "Hac sırasında şeytan taşlama neden yapılır?",
+                answer: "Şeytan taşlama (cemre), Hz. İbrahim'in şeytanı taşlamasını sembolize eder. İbrahim Peygamber'e oğlu İsmail'i kurban etmesi için vesvese vermeye çalışan şeytanı taşladığı rivayet edilir. Bu ritüel, Mina'da bulunan üç cemre noktasında (küçük, orta ve büyük) gerçekleştirilir."
+            )
+            
+            faqItem(
+                question: "Hac esnasında yaşlı ve hastalar için kolaylıklar var mıdır?",
+                answer: "Evet, yaşlı ve hastalar için çeşitli kolaylıklar sağlanmaktadır. Örneğin, tavaf ve sa'y için tekerlekli sandalye kullanabilirler, şeytan taşlama için vekil tayin edebilirler. Ayrıca özel sağlık hizmetleri ve konaklama imkanları da sunulmaktadır."
             )
         }
     }

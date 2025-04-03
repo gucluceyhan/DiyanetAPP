@@ -89,51 +89,72 @@ struct JerusalemGuideView: View {
     
     private var overviewSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Kudüs'e Genel Bakış")
+            Text("Kudüs Hakkında")
                 .font(.title2)
                 .fontWeight(.bold)
             
-            Text("Kudüs (Arapça: القدس el-Kuds, İbranice: ירושלים Yeruşalayim), üç semavi dinin (İslam, Hristiyanlık ve Yahudilik) kutsal kabul ettiği, Filistin'in doğusunda yer alan tarihi şehirdir. İslam dininde Mekke ve Medine'den sonra üçüncü kutsal şehir olarak kabul edilir.")
-                .font(.body)
-            
-            Image("jerusalem_overview")
-                .resizable()
-                .scaledToFit()
-                .cornerRadius(8)
-            
-            Divider()
-            
-            Text("Coğrafi Konum")
-                .font(.title3)
-                .fontWeight(.semibold)
-            
-            Text("Kudüs, Akdeniz ve Lut Gölü arasında, Akdeniz'den yaklaşık 60 km doğuda, deniz seviyesinden yaklaşık 750-800 metre yükseklikte bulunan dağlık bir alanda yer almaktadır. Şehir, doğu ve batı olmak üzere iki kısma ayrılmıştır.")
+            Text("Kudüs (Arapça: القدس el-Kuds, İbranice: ירושלים Yeruşalayim), üç semavi din için kutsal kabul edilen, zengin tarihi ve kültürel mirası ile dünya tarihinin en önemli şehirlerinden biridir.")
                 .font(.body)
             
             Divider()
             
-            Text("İklim ve En Uygun Ziyaret Zamanı")
-                .font(.title3)
-                .fontWeight(.semibold)
+            Text("Kudüs'ün Önemi")
+                .font(.headline)
             
-            Text("Kudüs, Akdeniz iklimine sahiptir. Yazları sıcak ve kuru, kışları ise soğuk ve yağışlıdır. Ziyaret için en uygun dönemler, ilkbahar (Mart-Mayıs) ve sonbahar (Eylül-Kasım) aylarıdır.")
-                .font(.body)
-            
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    Text("Ortalama Sıcaklıklar:")
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                    Spacer()
-                }
+            VStack(alignment: .leading, spacing: 8) {
+                importanceItem(
+                    title: "İslam'daki Yeri",
+                    description: "Müslümanlar için Mekke ve Medine'den sonra üçüncü kutsal şehirdir. Mescid-i Aksa ve Kubbet-üs Sahra burada bulunur. İsra ve Miraç olayının gerçekleştiği yerdir. İlk kıble olma özelliğini taşır."
+                )
                 
-                Text("• Yazın (Haziran-Ağustos): 20-30°C")
-                Text("• Kışın (Aralık-Şubat): 5-15°C")
-                Text("• İlkbahar ve Sonbahar: 15-25°C")
+                importanceItem(
+                    title: "Yahudilikteki Yeri",
+                    description: "Yahudiler için en kutsal şehirdir. Hz. Süleyman'ın inşa ettiği ve sonradan yıkılan mabedin (Süleyman Tapınağı) bulunduğu yerdir. Ağlama Duvarı (Batı Duvarı) kutsal kabul edilir."
+                )
+                
+                importanceItem(
+                    title: "Hristiyanlıktaki Yeri",
+                    description: "Hz. İsa'nın çarmıha gerildiği, gömüldüğü ve dirildiğine inanılan Kutsal Kabir Kilisesi burada bulunur. Hristiyanlığın doğduğu şehir olarak kabul edilir."
+                )
             }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
+            
+            Divider()
+            
+            Text("Coğrafi Konumu ve İklimi")
+                .font(.headline)
+            
+            Text("Kudüs, Akdeniz'in doğusunda, deniz seviyesinden yaklaşık 750 metre yükseklikte yer alır. Şehir, Filistin topraklarında bulunmakla birlikte, siyasi olarak İsrail tarafından işgal edilmiştir ve Doğu Kudüs, Filistin Devleti'nin başkenti olarak kabul edilmektedir.")
+                .font(.body)
+                .padding(.bottom, 4)
+            
+            Text("İklimi Akdeniz iklimidir; yazları sıcak ve kurak, kışları ılık ve yağışlıdır. En uygun ziyaret zamanı ilkbahar (Mart-Mayıs) ve sonbahar (Eylül-Kasım) mevsimleridir.")
+                .font(.body)
+                .padding(.bottom, 8)
+            
+            Text("Nüfus: Yaklaşık 950.000")
+                .font(.body)
+            
+            Divider()
+            
+            Text("Kudüs'ün Kısa Tarihi")
+                .font(.headline)
+            
+            historicalEvent(date: "MÖ 1000 civarı", event: "Hz. Davud tarafından başkent ilan edildi.")
+            historicalEvent(date: "MÖ 970-931", event: "Hz. Süleyman döneminde ilk mabed inşa edildi.")
+            historicalEvent(date: "MÖ 586", event: "Babil Kralı Nebukadnezar tarafından işgal edildi ve Süleyman Mabedi yıkıldı.")
+            historicalEvent(date: "MS 70", event: "Romalılar tarafından işgal edildi ve İkinci Mabed yıkıldı.")
+            historicalEvent(date: "MS 637", event: "Hz. Ömer döneminde Müslümanların idaresine geçti.")
+            historicalEvent(date: "MS 691", event: "Emevi Halifesi Abdülmelik tarafından Kubbet-üs Sahra inşa edildi.")
+            historicalEvent(date: "MS 1099-1187", event: "Haçlı işgali altında kaldı.")
+            historicalEvent(date: "MS 1187", event: "Selahaddin Eyyubi tarafından Haçlılardan geri alındı.")
+            historicalEvent(date: "1517-1917", event: "Osmanlı İmparatorluğu yönetiminde kaldı.")
+            historicalEvent(date: "1917-1948", event: "İngiliz mandası altında kaldı.")
+            historicalEvent(date: "1948", event: "İsrail kuruldu ve Kudüs bölündü.")
+            historicalEvent(date: "1967", event: "Altı Gün Savaşı sonrası tamamen İsrail işgaline girdi.")
+            
+            Text("Günümüzde Kudüs, doğu ve batı olarak bölünmüş durumdadır ve uluslararası toplum tarafından statüsü tartışmalı bir şehirdir.")
+                .font(.body)
+                .padding(.top, 8)
         }
     }
     
@@ -192,66 +213,84 @@ struct JerusalemGuideView: View {
     
     private var holyPlacesSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Kutsal Mekanlar")
+            Text("Kutsal Mekânlar")
                 .font(.title2)
                 .fontWeight(.bold)
             
-            Text("Kudüs'te ziyaret edilmesi gereken İslami kutsal mekanlar:")
-                .font(.body)
+            Text("Kudüs'te ziyaret edilmesi gereken önemli mekânlar:")
+                .font(.headline)
             
             holyPlaceCard(
                 name: "Mescid-i Aksa",
-                description: "İslam'ın ilk kıblesi ve üçüncü kutsal mescidi. Hz. Muhammed'in (s.a.v.) Miraç yolculuğuna çıkmadan önce diğer peygamberlerle namaz kıldığı yer olarak kabul edilir.",
-                historicalNote: "Emevi Halifesi Abdülmelik bin Mervan tarafından 690-691 yıllarında inşa edilmiştir.",
-                coordinates: (31.7767, 35.2356)
+                description: "İslam'ın ilk kıblesi ve üç kutsal mescidinden biridir. Hz. Muhammed'in (s.a.v.) İsra ve Miraç yolculuğu sırasında namaz kıldığı yerdir.",
+                importance: "Peygamber Efendimizin bildirdiğine göre, Mescid-i Aksa'da kılınan bir namaz, başka mescitlerde kılınan 250 namaza denktir.",
+                visitTips: "Cuma namazı için erkenden gidin. Kadınlar için başörtüsü gereklidir. Kimlik kontrolü olacağından pasaportunuzu yanınızda bulundurun."
             )
             
             holyPlaceCard(
-                name: "Kubbetü's-Sahra (Ömer Camii)",
-                description: "Hz. Muhammed'in (s.a.v.) Miraç'a yükseldiği kutsal kaya üzerine inşa edilmiş, altın kubbesiyle ünlü İslam mimarisinin en önemli yapılarından biridir.",
-                historicalNote: "Emevi Halifesi Abdülmelik bin Mervan tarafından 688-691 yılları arasında yaptırılmıştır.",
-                coordinates: (31.7781, 35.2354)
+                name: "Kubbet-üs Sahra (Altın Kubbe)",
+                description: "Hz. Muhammed'in (s.a.v.) miraca yükseldiğine inanılan Muallak Taşı'nın üzerine inşa edilmiş olan muhteşem yapıdır. Altın kubbesi ile Kudüs'ün simgesidir.",
+                importance: "İçinde Hacer-ül Muallak (Muallak Taşı) bulunur. İslam mimarisinin en önemli eserlerinden biridir.",
+                visitTips: "Ziyaretlerde saygılı olun ve sessiz kalın. Ayakkabılarınızı girişte çıkarmanız gerekecektir."
             )
             
             holyPlaceCard(
-                name: "El-Aksa Camii",
-                description: "Mescid-i Aksa'nın güney kısmında bulunan ve yaklaşık 5000 kişilik kapasiteye sahip ana ibadet alanıdır.",
-                historicalNote: "İlk olarak Emevi Halifesi Velid bin Abdülmelik tarafından 705-715 yılları arasında inşa edilmiştir.",
-                coordinates: (31.7762, 35.2358)
+                name: "El-Burak Duvarı (Ağlama Duvarı)",
+                description: "Müslümanlar için Hz. Muhammed'in (s.a.v.) Burak'ı bağladığı duvar, Yahudiler için ise İkinci Mabed'den kalan son kalıntıdır.",
+                importance: "Harem-i Şerif'in batı duvarıdır ve Müslümanlar için kutsal bir alandır.",
+                visitTips: "Ziyaret sırasında saygılı olun. Bazı bölümlere giriş için başörtüsü gerekebilir."
             )
             
             holyPlaceCard(
-                name: "Kubbet-ül Miraç",
-                description: "Hz. Muhammed'in (s.a.v.) Miraç'a yükselmek üzere melek Cebrail ile buluştuğu yer olarak kabul edilir.",
-                historicalNote: "İlk olarak Emevi döneminde inşa edilmiş, sonraki dönemlerde yeniden yapılmıştır.",
-                coordinates: (31.7778, 35.2350)
+                name: "Kutsal Kabir Kilisesi",
+                description: "Hristiyanlar için Hz. İsa'nın çarmıha gerildiği, gömüldüğü ve dirildiğine inanılan yerdir.",
+                importance: "Hristiyanlığın en kutsal mekânlarından biridir ve farklı Hristiyan mezhepleri tarafından ortak kullanılır.",
+                visitTips: "Kalabalık olabilir, mümkünse sabah erken saatlerde ziyaret edin. Uygun kıyafet gereklidir (omuzlar ve dizler kapalı)."
             )
             
             holyPlaceCard(
-                name: "El-Mervan Camii (Kadim El-Aksa)",
-                description: "Mescid-i Aksa'nın altında bulunan ve Hz. Süleyman'ın inşa ettiği mabede ait olduğu düşünülen tarihi bir mekandır.",
-                historicalNote: "Romalılar döneminden kaldığı düşünülmektedir.",
-                coordinates: (31.7760, 35.2359)
+                name: "Hz. Davud'un Türbesi",
+                description: "Hz. Davud'un (a.s.) medfun olduğuna inanılan türbedir.",
+                importance: "Hem Müslümanlar hem de Yahudiler için önemli bir ziyaret yeridir.",
+                visitTips: "Erkekler için başlık (kipa) gerekebilir. Giriş için bilet almanız gerekebilir."
             )
             
             holyPlaceCard(
-                name: "Burak Duvarı",
-                description: "Hz. Muhammed'in (s.a.v.) İsra gecesinde Burak adlı binekini bağladığı duvar olarak kabul edilir. Batı Duvarı veya Yahudilerce 'Ağlama Duvarı' olarak da bilinir.",
-                historicalNote: "M.Ö. 19 yılında II. Herodes döneminde yapılmıştır.",
-                coordinates: (31.7767, 35.2342)
+                name: "Zeytin Dağı",
+                description: "Kudüs'ün doğusunda yer alan, şehrin en güzel manzarasını sunan tarihi tepedir.",
+                importance: "İslam inancına göre kıyamet günü Hz. İsa'nın ineceği yer olarak kabul edilir.",
+                visitTips: "Güneşli günlerde şapka ve su götürün. Manzara fotoğrafları için ideal bir noktadır."
             )
             
-            Button(action: {
-                showingMapView = true
-            }) {
-                Text("Tüm Kutsal Mekanları Haritada Gör")
-                    .font(.headline)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.accentColor)
-                    .cornerRadius(10)
+            holyPlaceCard(
+                name: "Hz. Meryem Türbesi",
+                description: "Hz. Meryem'in medfun olduğuna inanılan türbedir.",
+                importance: "Hem Müslümanlar hem de Hristiyanlar için önemli bir ziyaret yeridir.",
+                visitTips: "Kadınlar için başörtüsü tavsiye edilir. Ziyaret için uygun saatleri kontrol edin."
+            )
+            
+            Divider()
+            
+            Text("Mescid-i Aksa Kompleksi")
+                .font(.title3)
+                .fontWeight(.semibold)
+            
+            Text("Mescid-i Aksa, sadece bilinen gri kubbeli mescidi değil, yaklaşık 144 dönümlük bir alanı kapsayan Harem-i Şerif'in (Kutsal Alan) tamamını ifade eder. Bu kompleks içinde:")
+                .font(.body)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("• Kubbet-üs Sahra (Altın Kubbe)")
+                Text("• Kıble Mescidi (gri kubbeli ana mescit)")
+                Text("• Kadim el-Aksa (yer altındaki eski mescit)")
+                Text("• Mervan Mescidi")
+                Text("• Burak Duvarı")
+                Text("• Kubbetü'l Miraç")
+                Text("• Kubbetü's Silsile (Zincirli Kubbe)")
+                Text("• Sebil-i Kaytbay")
+                Text("• Çeşitli medreseler ve revaklar")
             }
+            .font(.body)
+            .padding(.horizontal)
         }
     }
     
@@ -320,151 +359,219 @@ struct JerusalemGuideView: View {
                 .font(.title2)
                 .fontWeight(.bold)
             
-            Text("Kudüs'ü ziyaret etmek isteyen Müslümanlar için önemli bilgiler:")
-                .font(.body)
+            Text("Kudüs'e Giriş")
+                .font(.headline)
             
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Giriş İşlemleri")
-                    .font(.headline)
-                
-                Text("Türkiye Cumhuriyeti vatandaşları Filistin'e (Batı Şeria) girmek için İsrail vizesi almak zorundadır. Vize başvurusu İsrail Büyükelçiliği veya Konsolosluğu'na yapılır. Vizesi hazır olanların, İsrail havalimanlarında sıkı güvenlik kontrollerinden geçeceğini bilmeleri gerekir.")
-                    .font(.body)
-                    .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 8) {
+                Text("• Türkiye'den Kudüs'e direkt uçuş bulunmamaktadır. Tel Aviv'e uçup oradan kara yoluyla Kudüs'e geçiş yapılmalıdır.")
+                Text("• Türk vatandaşları İsrail'e giriş için vize almalıdır.")
+                Text("• Havalimanında ve sınır kapılarında detaylı güvenlik kontrollerinden geçeceğinizi unutmayın.")
+                Text("• Türkiye'den organize turla gitmek, vize ve ulaşım işlemlerini kolaylaştırabilir.")
+                Text("• Tel Aviv'den Kudüs'e otobüs veya servis araçlarıyla yaklaşık 1 saat içinde ulaşabilirsiniz.")
             }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
+            .font(.body)
             
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Ulaşım")
-                    .font(.headline)
-                
-                Text("Kudüs'e ulaşım genellikle Ben Gurion Havalimanı (Tel Aviv) üzerinden sağlanır. Havalimanından Kudüs'e yaklaşık 60 km mesafe vardır. Otobüs, taksi veya araç kiralama ile Kudüs'e ulaşılabilir. Alternatif olarak, Ürdün üzerinden Allenby (Kral Hüseyin) Köprüsü geçişi ile de Kudüs'e giriş yapılabilir.")
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-            }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
+            Divider()
             
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Konaklama")
-                    .font(.headline)
-                
-                Text("Kudüs'te çeşitli konaklama imkanları mevcuttur. Doğu Kudüs'te (Arap bölgesi) birçok otel ve misafirhane bulunmaktadır. Eski Şehir içinde veya yakınında konaklama tercih edilebilir, böylece kutsal mekanlara yürüme mesafesinde olunur.")
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-            }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
+            Text("Ziyaret İçin En Uygun Zamanlar")
+                .font(.headline)
             
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Mescid-i Aksa Ziyareti")
-                    .font(.headline)
-                
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("• Mescid-i Aksa'ya giriş için pasaport kontrolünden geçmek gerekebilir.")
-                    Text("• Kadınlar tesettüre uygun kıyafetle (başörtüsü dahil) giriş yapmalıdır.")
-                    Text("• Cuma günleri yaş sınırlaması olabilir; genç erkeklerin girişine izin verilmeyebilir.")
-                    Text("• Mescid-i Aksa içerisinde namaz kılmak için en uygun vakitler sabah ve ikindi vakitleridir.")
-                    Text("• Ziyaret sırasında İsrail askerlerinden uzak durmak ve provokasyonlara karşı dikkatli olmak gerekir.")
-                    Text("• Fotoğraf çekerken izin almak veya dikkatli olmak önemlidir.")
-                }
-                .font(.body)
-                .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 8) {
+                Text("• İlkbahar (Mart-Mayıs): Ilıman hava, doğanın canlanması")
+                Text("• Sonbahar (Eylül-Kasım): Sıcakların azaldığı, rahat gezilecek dönem")
+                Text("• Dini bayram ve tatillerden kaçının (Yahudi tatilleri, Ramazan veya Paskalya gibi)")
+                Text("• Cuma namazı için Mescid-i Aksa'da bulunmak istiyorsanız, Perşembe-Cuma günlerini kapsayan bir program planlayın")
             }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
+            .font(.body)
             
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Güvenlik Önerileri")
-                    .font(.headline)
-                
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("• Resmi seyahat belgelerini (pasaport vb.) her zaman yanınızda bulundurun.")
-                    Text("• Politik tartışmalardan uzak durun.")
-                    Text("• Kalabalık gösterilerden ve gergin bölgelerden uzak durun.")
-                    Text("• Acil durumlar için Türkiye'nin Kudüs Başkonsolosluğu iletişim bilgilerini not edin.")
-                    Text("• Yerel haberleri takip edin ve güvenlik durumuna göre hareket edin.")
-                    Text("• Kutsal mekanları ziyaret ederken saygılı ve dikkatli olun.")
-                }
-                .font(.body)
-                .foregroundStyle(.secondary)
-            }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
+            Divider()
             
-            VStack(alignment: .leading, spacing: 12) {
-                Text("En İyi Ziyaret Zamanı")
-                    .font(.headline)
-                
-                Text("Kudüs'ü ziyaret etmek için en uygun dönemler ilkbahar (Mart-Mayıs) ve sonbahar (Eylül-Kasım) aylarıdır. Yazın çok sıcak, kışın ise soğuk ve yağışlı olabilir. Ayrıca, Yahudi bayramları ve tatil dönemlerinde şehir çok kalabalık olabilir, bu dönemlerde fiyatlar yükselir ve bazı yerler kapalı olabilir.")
-                    .font(.body)
-                    .foregroundStyle(.secondary)
+            Text("Güvenlik ve Dikkat Edilecek Hususlar")
+                .font(.headline)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("• Pasaport ve değerli eşyalarınızı güvenli bir şekilde yanınızda taşıyın.")
+                Text("• İsrail güvenlik güçleriyle tartışmaya girmekten kaçının.")
+                Text("• Siyasi gösteri ve kalabalıklardan uzak durun.")
+                Text("• Yerel haberleri takip edin ve güvenlik durumunu kontrol edin.")
+                Text("• Acil durumlar için Türkiye'nin Kudüs Başkonsolosluğu'nun iletişim bilgilerini kaydedin.")
+                Text("• Kudüs'ün Doğu ve Batı kısımları arasında geçişlerde kontrol noktaları olabileceğini unutmayın.")
+                Text("• Kutsal mekânlara girerken uygun kıyafet giyin (omuzlar ve dizler kapalı olmalı).")
+                Text("• Fotoğraf çekerken izin gereken yerlere dikkat edin, özellikle askeri noktalarda fotoğraf çekmekten kaçının.")
             }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
+            .font(.body)
+            
+            Divider()
+            
+            Text("Konaklama ve Ulaşım")
+                .font(.headline)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("• Konaklama için Doğu Kudüs'teki otelleri tercih edebilirsiniz (Arap mahallesi).")
+                Text("• Şehir içi ulaşımda tramvay, otobüs ve taksi kullanabilirsiniz.")
+                Text("• Eski Şehir (Old City) içindeki mesafeler yürüme mesafesindedir.")
+                Text("• Cuma günleri ve Yahudi tatillerinde toplu taşıma hizmetlerinin sınırlı olabileceğini göz önünde bulundurun.")
+                Text("• Para birimi olarak İsrail Şekeli (ILS) kullanılır. Yanınızda dolar veya euro bulundurmak faydalı olabilir.")
+            }
+            .font(.body)
+            
+            Divider()
+            
+            Text("Gezilecek Diğer Yerler")
+                .font(.headline)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("• Eski Şehir Surları ve Kapıları: Şam Kapısı, Yafa Kapısı, El-Halil Kapısı")
+                Text("• Via Dolorosa (Çile Yolu): Hz. İsa'nın çarmıha giderken yürüdüğü yol")
+                Text("• El-Halil Caddesi: Meşhur çarşı ve alışveriş bölgesi")
+                Text("• Yad Vashem: Holokost Anıtı")
+                Text("• İsrail Müzesi: Ölü Deniz Yazmaları'nın sergilendiği müze")
+                Text("• Zeytin Dağı Mezarlığı")
+                Text("• Getsemani Bahçesi")
+                Text("• Beytüllahim (Bethlehem): Hz. İsa'nın doğduğu yer (yaklaşık 10 km uzaklıkta)")
+                Text("• El-Halil (Hebron): Hz. İbrahim'in mezarının bulunduğu yer (yaklaşık 30 km uzaklıkta)")
+            }
+            .font(.body)
         }
     }
     
     private var prayersSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Kudüs ile İlgili Dualar")
+            Text("Dualar ve Manevi Rehberlik")
                 .font(.title2)
                 .fontWeight(.bold)
             
-            Text("Kudüs ziyareti sırasında okunabilecek dualar ve zikirler:")
-                .font(.body)
+            Text("Mescid-i Aksa'da Okunabilecek Dualar")
+                .font(.headline)
             
             prayerCard(
-                title: "Mescid-i Aksa'ya Girerken",
-                arabicText: "اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
-                turkishText: "Allahümme'ftah lî ebvâbe rahmetik",
-                meaning: "Allah'ım! Bana rahmet kapılarını aç."
+                title: "Mescid-i Aksa'ya Giriş Duası",
+                arabicText: "بِسْمِ اللهِ وَالصَّلَاةُ وَالسَّلَامُ عَلَى رَسُولِ اللهِ، اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
+                turkishText: "Bismillâhi ves-salâtü ves-selâmü alâ Rasûlillâh. Allâhümmeftah lî ebvâbe rahmetik.",
+                meaning: "Allah'ın adıyla ve Allah'ın Rasûlü'ne salât ve selam olsun. Allah'ım, bana rahmet kapılarını aç."
             )
             
             prayerCard(
-                title: "Mescid-i Aksa'da",
-                arabicText: "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
-                turkishText: "Allahümme salli alâ Muhammedin ve alâ âli Muhammed. Kemâ salleyte alâ İbrahime ve alâ âli İbrahim. İnneke hamidün mecîd. Allahümme bârik alâ Muhammedin ve alâ âli Muhammed. Kemâ bârekte alâ İbrahime ve alâ âli İbrahim. İnneke hamîdün mecîd.",
-                meaning: "Allah'ım! İbrahim'e ve İbrahim'in ailesine rahmet ettiğin gibi, Muhammed'e ve Muhammed'in ailesine de rahmet et. Şüphesiz sen övülmeye layıksın, şan ve şeref sahibisin. Allah'ım! İbrahim'e ve İbrahim'in ailesine bereketler ihsan ettiğin gibi, Muhammed'e ve Muhammed'in ailesine de bereketler ihsan et. Şüphesiz sen övülmeye layıksın, şan ve şeref sahibisin."
+                title: "Mescid-i Aksa'da Namaz Duası",
+                arabicText: "اللَّهُمَّ إِنِّي أَسْأَلُكَ فِي هَذَا الْبَلَدِ الْمُقَدَّسِ وَالْمَسْجِدِ الْأَقْصَى الْمُبَارَكِ أَنْ تَغْفِرَ لِي ذُنُوبِي وَأَنْ تَكْتُبَنِي مِنْ عِبَادِكَ الصَّالِحِينَ",
+                turkishText: "Allâhümme innî es'elüke fî hâzel-beledil-mukaddesi vel-mescidil-aksâl-mübâraki en tağfira lî zünûbî ve en tektübenî min ibâdikes-sâlihîn.",
+                meaning: "Allah'ım! Bu kutsal beldede ve mübarek Mescid-i Aksa'da Senden günahlarımı bağışlamanı ve beni salih kulların arasına yazmanı diliyorum."
             )
             
             prayerCard(
-                title: "Kubbetü's-Sahra'da",
-                arabicText: "سُبْحَانَ الَّذِي أَسْرَى بِعَبْدِهِ لَيْلًا مِنَ الْمَسْجِدِ الْحَرَامِ إِلَى الْمَسْجِدِ الْأَقْصَى الَّذِي بَارَكْنَا حَوْلَهُ لِنُرِيَهُ مِنْ آيَاتِنَا إِنَّهُ هُوَ السَّمِيعُ الْبَصِيرُ",
-                turkishText: "Sübhanellezî esrâ bi abdihî leylen minel mescidil harâmi ilel mescidil aksallezî bâreknâ havlehû linüriyehû min âyâtinâ, innehû hüves semîul basîr.",
-                meaning: "Bir gece, kendisine ayetlerimizden bir kısmını gösterelim diye kulunu Mescid-i Haram'dan, çevresini mübarek kıldığımız Mescid-i Aksa'ya götüren Allah, her türlü eksiklikten uzaktır. Şüphesiz O, hakkıyla işiten, hakkıyla görendir. (İsra Suresi, 1. Ayet)"
+                title: "Kubbet-üs Sahra Duası",
+                arabicText: "اللَّهُمَّ يَا مُنَزِّلَ الْكِتَابِ، وَيَا مُجْرِيَ السَّحَابِ، وَيَا هَازِمَ الْأَحْزَابِ، اهْزِمْهُمْ وَانْصُرْنَا عَلَيْهِمْ",
+                turkishText: "Allâhümme yâ münezzilel-kitâbi, ve yâ mücriyes-sehâbi, ve yâ hâzimel-ahzâbi, ihzimhüm vensurnâ aleyhim.",
+                meaning: "Ey kitabı indiren, bulutları yürüten ve düşman topluluklarını bozguna uğratan Allah'ım! Onları bozguna uğrat ve bize onlara karşı yardım et."
             )
             
             prayerCard(
-                title: "Kudüs için Dua",
-                arabicText: "اللَّهُمَّ افْتَحْ عَلَيْنَا أَبْوَابَ الْخَيْرِ وَالْبَرَكَةِ وَالرِّزْقِ وَالْفَرَجِ الْقَرِيبِ، وَاجْعَلْنَا مِمَّنْ زَارَ الْمَسْجِدَ الْأَقْصَى وَصَلَّى فِيهِ، وَاجْعَلْنَا مِنْ أَنْصَارِهِ وَمُدَافِعِيهِ إِلَى يَوْمِ الدِّينِ",
-                turkishText: "Allahümme'ftah aleynâ ebvâbel hayri vel beraketi ver rizki vel ferecel karîb. Vec'alnâ mimmen zârel mescidel aksâ ve sallâ fîh. Vec'alnâ min ensârihi ve müdâfiîhi ilâ yevmid dîn.",
-                meaning: "Allah'ım! Bize hayır, bereket, rızık ve yakın kurtuluş kapılarını aç. Bizi Mescid-i Aksa'yı ziyaret eden ve orada namaz kılanlardan eyle. Bizi Kıyamet Günü'ne kadar onun yardımcıları ve savunucuları eyle."
+                title: "Kudüs İçin Dua",
+                arabicText: "اللَّهُمَّ احْفَظْ الْقُدْسَ وَأَهْلَهَا، وَانْصُرْ الْمُرَابِطِينَ فِيهَا، وَاجْعَلْهَا آمِنَةً مُطْمَئِنَّةً، وَاجْمَعْنَا فِيهَا تَحْتَ رَايَةِ الْحَقِّ",
+                turkishText: "Allâhümmahfazil-Kudse ve ehlehâ, vensurül-murâbitîne fîhâ, vec'alhâ âmineten mutmainneten, vecme'nâ fîhâ tahte râyetil-hakk.",
+                meaning: "Allah'ım! Kudüs'ü ve halkını koru, orada nöbet tutanları muzaffer kıl, orayı güvenli ve huzurlu eyle, bizleri orada hak bayrağı altında bir araya getir."
             )
             
             Divider()
             
-            Text("Kudüs Ziyareti Sırasında Okunabilecek Zikirler")
+            Text("Mescid-i Aksa'da Kılınacak Namazın Fazileti")
+                .font(.headline)
+            
+            Text("Hz. Muhammed (s.a.v.) şöyle buyurmuştur: \"Mescid-i Aksa'da kılınan bir namaz, başka mescitlerde kılınan bin namaza denktir.\" (Taberânî)")
+                .font(.body)
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+            
+            Divider()
+            
+            Text("Mescid-i Aksa'ya Yolculuk Adabı")
                 .font(.headline)
             
             VStack(alignment: .leading, spacing: 8) {
-                Text("• Sübhanallah (33 kez)")
-                Text("• Elhamdülillah (33 kez)")
-                Text("• Allahu Ekber (33 kez)")
-                Text("• La ilahe illallahu vahdehû lâ şerike leh. Lehül mülkü ve lehül hamdü ve hüve alâ külli şey'in kadîr (1 kez)")
-                Text("• Ayetü'l-Kürsi")
-                Text("• İhlas, Felak ve Nas Sureleri")
+                Text("• Yolculuk öncesi tövbe ve istiğfar et.")
+                Text("• Kudüs'e ziyaret niyetiyle çıktığın yolculuğun bir ibadet olduğunu hatırla.")
+                Text("• Mescid-i Aksa'da en az iki rekat namaz kılmayı niyet et.")
+                Text("• Yolculuk sırasında çokça dua ve zikir ile meşgul ol.")
+                Text("• Orada rastladığın Müslümanlara selam ver ve onlarla iyi ilişkiler kur.")
+                Text("• Kudüs ve Mescid-i Aksa'nın tarihini öğren.")
+                Text("• Mescid-i Aksa'da ibadete özen göster ve vakti değerlendir.")
+                Text("• Mescid-i Aksa'da ve Kudüs'teki diğer kutsal mekanlarda uygun davranışlarda bulun.")
             }
             .font(.body)
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
+            
+            Divider()
+            
+            Text("Kudüs Ziyareti İçin Önerilen Zikirler")
+                .font(.headline)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("• Subhanallah (33 kez)")
+                Text("• Elhamdülillah (33 kez)")
+                Text("• Allahu Ekber (34 kez)")
+                Text("• La ilahe illallah")
+                Text("• İstiğfar: Estağfirullah el-azim ve etûbü ileyh")
+                Text("• Salavat-ı Şerife")
+            }
+            .font(.body)
+        }
+    }
+    
+    private var faqSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Sık Sorulan Sorular")
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            faqItem(
+                question: "Türkiye'den Kudüs'e nasıl gidilir?",
+                answer: "Türkiye'den doğrudan Kudüs'e uçuş bulunmamaktadır. Tel Aviv'e uçuş yapıp, oradan kara yoluyla Kudüs'e ulaşabilirsiniz. Alternatif olarak, Ürdün üzerinden de Kudüs'e geçiş yapılabilir. Organize turlar, vize ve ulaşım işlemlerini kolaylaştırabilir."
+            )
+            
+            faqItem(
+                question: "Kudüs'e girmek için vize gerekiyor mu?",
+                answer: "Evet, Türk vatandaşları için İsrail vizesi gereklidir. Vize başvurusu İsrail'in Türkiye'deki büyükelçiliği veya konsolosluğu aracılığıyla yapılabilir. Grup turları için genellikle seyahat acenteleri vize işlemlerinde yardımcı olur."
+            )
+            
+            faqItem(
+                question: "Mescid-i Aksa'ya giriş için özel izin gerekir mi?",
+                answer: "Bazen güvenlik durumuna bağlı olarak Mescid-i Aksa'ya giriş sınırlandırılabilir. Müslümanlar için genellikle namaz vakitlerinde giriş daha kolaydır. Kudüs'e gitmeden önce güncel durumu kontrol etmeniz önerilir."
+            )
+            
+            faqItem(
+                question: "Kudüs'te konaklama için en iyi bölge neresidir?",
+                answer: "Müslümanlar için Doğu Kudüs'teki Arap mahallelerinde (özellikle Eski Şehir yakınlarında) konaklama tercih edilebilir. Bu bölgeler Mescid-i Aksa'ya daha yakındır ve Müslüman nüfus yoğunluktadır."
+            )
+            
+            faqItem(
+                question: "Kudüs'te para birimi nedir ve kredi kartı kullanılabilir mi?",
+                answer: "Kudüs'te İsrail Şekeli (ILS) kullanılmaktadır. Büyük işletmelerde kredi kartları genellikle kabul edilir, ancak küçük dükkanlarda ve pazarlarda nakit para bulundurmak daha güvenlidir. Dolar ve Euro kolaylıkla bozulabilir."
+            )
+            
+            faqItem(
+                question: "Mescid-i Aksa kompleksi ne kadar büyüktür?",
+                answer: "Mescid-i Aksa, yaklaşık 144 dönümlük (35 acre) bir alanı kaplayan Harem-i Şerif (Kutsal Alan) olarak bilinen bölgenin tamamını kapsar. Bu alan içinde Kubbet-üs Sahra, Kıble Mescidi (gri kubbeli ana mescit) ve diğer birçok yapı bulunur."
+            )
+            
+            faqItem(
+                question: "Kudüs'te hangi diller konuşulur?",
+                answer: "Kudüs'te ağırlıklı olarak İbranice ve Arapça konuşulur. Batı Kudüs'te İbranice, Doğu Kudüs'te Arapça daha yaygındır. Turistik alanlarda İngilizce de yaygın olarak kullanılmaktadır."
+            )
+            
+            faqItem(
+                question: "Kudüs'te giyim konusunda dikkat edilmesi gereken hususlar nelerdir?",
+                answer: "Kutsal mekânları ziyaret ederken muhafazakâr giyinmek önemlidir. Erkekler ve kadınlar için omuzlar ve dizler kapalı olmalıdır. Mescid-i Aksa'ya girerken kadınların başörtüsü takması gerekir. Yahudi mahallelerinde de dikkatli olmak ve muhafazakâr giyinmek gereklidir."
+            )
+            
+            faqItem(
+                question: "Kudüs'te dini açıdan hassas olan bölgeler nelerdir?",
+                answer: "Eski Şehir'deki dört mahalle (Müslüman, Yahudi, Hristiyan ve Ermeni Mahallesi) dini açıdan hassas bölgelerdir. Özellikle Mescid-i Aksa/Tapınak Tepesi, Ağlama Duvarı ve Kutsal Kabir Kilisesi çevresinde farklı dinlere saygılı olmak ve provokasyondan kaçınmak önemlidir."
+            )
+            
+            faqItem(
+                question: "Kudüs ziyareti için en uygun zaman nedir?",
+                answer: "İlkbahar (Mart-Mayıs) ve sonbahar (Eylül-Kasım) mevsimleri, ılıman hava şartları nedeniyle Kudüs ziyareti için en uygun zamanlardır. Yaz ayları çok sıcak, kış ayları ise yağışlı ve bazen karlı olabilir. Dini bayram ve tatil dönemlerinde şehir çok kalabalık olabilir."
+            )
         }
     }
     
@@ -491,69 +598,54 @@ struct JerusalemGuideView: View {
         .cornerRadius(8)
     }
     
-    private func holyPlaceCard(name: String, description: String, historicalNote: String, coordinates: (Double, Double)) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
+    private func holyPlaceCard(name: String, description: String, importance: String, visitTips: String) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
             Text(name)
                 .font(.headline)
             
             Text(description)
-                .font(.body)
+                .font(.subheadline)
                 .foregroundStyle(.secondary)
             
             Divider()
             
-            Text("Tarihçe:")
-                .font(.subheadline)
-                .fontWeight(.medium)
-            
-            Text(historicalNote)
-                .font(.body)
-                .foregroundStyle(.secondary)
-            
-            HStack {
-                Text("Koordinatlar: \(String(format: "%.4f", coordinates.0)), \(String(format: "%.4f", coordinates.1))")
-                    .font(.caption)
-                    .foregroundStyle(.gray)
-                
-                Spacer()
-                
-                Button(action: {
-                    showingMapView = true
-                    // TODO: Haritayı bu koordinata odakla
-                }) {
-                    Text("Haritada Göster")
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(alignment: .top) {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(Color.yellow)
+                    
+                    Text("Önemi: \(importance)")
                         .font(.caption)
-                        .foregroundStyle(Color.accentColor)
+                        .foregroundStyle(.secondary)
+                }
+                
+                HStack(alignment: .top) {
+                    Image(systemName: "lightbulb.fill")
+                        .foregroundStyle(Color.yellow)
+                    
+                    Text("Ziyaret İpucu: \(visitTips)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
             }
         }
         .padding()
         .background(Color.white)
         .cornerRadius(8)
+        .shadow(radius: 2)
     }
     
-    private func historicalEvent(period: String, title: String, description: String) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(period)
-                    .font(.subheadline)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(Color.accentColor.opacity(0.2))
-                    .clipShape(Capsule())
-                
-                Text(title)
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-            }
+    private func historicalEvent(date: String, event: String) -> some View {
+        HStack(alignment: .top) {
+            Text(date)
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .frame(width: 90, alignment: .leading)
             
-            Text(description)
-                .font(.body)
-                .foregroundStyle(.secondary)
+            Text(event)
+                .font(.subheadline)
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(8)
+        .padding(.vertical, 2)
     }
     
     private func prayerCard(title: String, arabicText: String, turkishText: String, meaning: String) -> some View {
@@ -581,6 +673,32 @@ struct JerusalemGuideView: View {
                 .fontWeight(.medium)
             
             Text(meaning)
+                .font(.body)
+                .foregroundStyle(.secondary)
+        }
+        .padding()
+        .background(Color.white)
+        .cornerRadius(8)
+    }
+    
+    private func importanceItem(title: String, description: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(.headline)
+            
+            Text(description)
+                .font(.body)
+                .foregroundStyle(.secondary)
+        }
+        .padding(.vertical, 4)
+    }
+    
+    private func faqItem(question: String, answer: String) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(question)
+                .font(.headline)
+            
+            Text(answer)
                 .font(.body)
                 .foregroundStyle(.secondary)
         }
