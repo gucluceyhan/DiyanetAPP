@@ -900,11 +900,305 @@ struct PrayersView: View {
 }
 
 struct MapsView: View {
+    @StateObject private var viewModel = HomeViewModel()
+    @State private var selectedMosque: Mosque?
+    @State private var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 41.0082, longitude: 28.9784), // İstanbul
+        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+    )
+    @State private var userTrackingMode: MapUserTrackingMode = .follow
+    @State private var showingDetail = false
+    
     var body: some View {
         NavigationView {
-            Text("Cami Haritası")
-                .navigationTitle("Camiler")
+            ZStack {
+                // Harita
+                Map(coordinateRegion: $region,
+                    interactionModes: .all,
+                    showsUserLocation: true,
+                    userTrackingMode: $userTrackingMode,
+                    annotationItems: viewModel.nearbyMosques) { mosque in
+                    MapAnnotation(coordinate: CLLocationCoordinate2D(
+                        latitude: mosque.location.latitude,
+                        longitude: mosque.location.longitude
+                    )) {
+                        Button {
+                            selectedMosque = mosque
+                            showingDetail = true
+                        } label: {
+                            VStack {
+                                Image(systemName: "building.columns.fill")
+                                    .font(.system(size: 24))
+                                    .foregroundStyle(Color.accentColor)
+                                Text(mosque.name)
+                                    .font(.caption)
+                                    .fontWeight(.semibold)
+                                    .padding(4)
+                                    .background(Color.white.opacity(0.8))
+                                    .cornerRadius(4)
+                            }
+                        }
+                    }
+                }
+                .ignoresSafeArea(edges: .bottom)
+                
+                VStack {
+                    Spacer()
+                    
+                    // Yakındaki camileri gösteren liste
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 15) {
+                            ForEach(viewModel.nearbyMosques) { mosque in
+                                Button {
+                                    // Cami konumuna git
+                                    withAnimation {
+                                        region.center = CLLocationCoordinate2D(
+                                            latitude: mosque.location.latitude,
+                                            longitude: mosque.location.longitude
+                                        )
+                                        region.span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                                    }
+                                    selectedMosque = mosque
+                                } label: {
+                                    MosqueCard(mosque: mosque)
+                                        .frame(width: 200)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    .frame(height: 250)
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color(.systemBackground))
+                            .shadow(radius: 5)
+                    )
+                    .padding(.bottom)
+                    .padding(.horizontal)
+                }
+                
+                // Konum açık değilse veya yükleniyor
+                if viewModel.isLoading && viewModel.nearbyMosques.isEmpty {
+                    ProgressView("Camiler yükleniyor...")
+                        .padding()
+                        .background(Color(.systemBackground))
+                        .cornerRadius(10)
+                } else if viewModel.error != nil && viewModel.nearbyMosques.isEmpty {
+                    VStack {
+                        Text(viewModel.error!)
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(.red)
+                            .padding()
+                        
+                        Button("Tekrar Dene") {
+                            viewModel.refreshData()
+                        }
+                        .padding()
+                        .background(Color.accentColor)
+                        .foregroundStyle(.white)
+                        .cornerRadius(10)
+                    }
+                    .padding()
+                    .background(Color(.systemBackground))
+                    .cornerRadius(10)
+                    .shadow(radius: 5)
+                    .padding()
+                }
+                
+                // Harita kontrolü butonları
+                VStack {
+                    HStack {
+                        Spacer()
+                        
+                        VStack(spacing: 10) {
+                            Button {
+                                // Kullanıcı konumuna git
+                                if let location = viewModel.currentLocation {
+                                    withAnimation {
+                                        region.center = location.coordinate
+                                        region.span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                                    }
+                                }
+                            } label: {
+                                Image(systemName: "location.fill")
+                                    .font(.system(size: 20))
+                                    .padding(10)
+                                    .background(Color(.systemBackground))
+                                    .clipShape(Circle())
+                                    .shadow(radius: 3)
+                            }
+                            
+                            Button {
+                                // Haritayı yakınlaştır
+                                withAnimation {
+                                    region.span = MKCoordinateSpan(
+                                        latitudeDelta: max(region.span.latitudeDelta * 0.5, 0.001),
+                                        longitudeDelta: max(region.span.longitudeDelta * 0.5, 0.001)
+                                    )
+                                }
+                            } label: {
+                                Image(systemName: "plus")
+                                    .font(.system(size: 20))
+                                    .padding(10)
+                                    .background(Color(.systemBackground))
+                                    .clipShape(Circle())
+                                    .shadow(radius: 3)
+                            }
+                            
+                            Button {
+                                // Haritayı uzaklaştır
+                                withAnimation {
+                                    region.span = MKCoordinateSpan(
+                                        latitudeDelta: min(region.span.latitudeDelta * 2.0, 50),
+                                        longitudeDelta: min(region.span.longitudeDelta * 2.0, 50)
+                                    )
+                                }
+                            } label: {
+                                Image(systemName: "minus")
+                                    .font(.system(size: 20))
+                                    .padding(10)
+                                    .background(Color(.systemBackground))
+                                    .clipShape(Circle())
+                                    .shadow(radius: 3)
+                            }
+                        }
+                        .padding(.trailing)
+                    }
+                    
+                    Spacer()
+                }
+                .padding(.top)
+            }
+            .navigationTitle("Camiler")
+            .sheet(isPresented: $showingDetail) {
+                if let mosque = selectedMosque {
+                    MosqueDetailSheet(mosque: mosque)
+                        .presentationDetents([.medium, .large])
+                }
+            }
+            .onAppear {
+                if viewModel.nearbyMosques.isEmpty {
+                    viewModel.refreshData()
+                }
+                
+                // Kullanıcı konumu alındıysa merkezi konumu güncelle
+                if let location = viewModel.currentLocation {
+                    region.center = location.coordinate
+                }
+            }
         }
+    }
+}
+
+struct MosqueDetailSheet: View {
+    let mosque: Mosque
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 15) {
+                // Cami görseli
+                ZStack {
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(height: 200)
+                    
+                    Image(systemName: "building.columns.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 100)
+                        .foregroundStyle(Color.accentColor)
+                }
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(mosque.name)
+                        .font(.title)
+                        .fontWeight(.bold)
+                    
+                    if let distance = mosque.distance {
+                        HStack {
+                            Image(systemName: "location.fill")
+                                .foregroundStyle(Color.accentColor)
+                            Text(mosque.formattedDistance)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    
+                    Divider()
+                    
+                    Text("Adres")
+                        .font(.headline)
+                    
+                    Text(mosque.address.formattedAddress)
+                        .foregroundStyle(.secondary)
+                    
+                    Divider()
+                    
+                    if !mosque.services.isEmpty {
+                        Text("Hizmetler")
+                            .font(.headline)
+                        
+                        HStack {
+                            ForEach(mosque.services, id: \.self) { service in
+                                Text(service.capitalized)
+                                    .font(.caption)
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 5)
+                                    .background(Color.accentColor.opacity(0.1))
+                                    .cornerRadius(10)
+                            }
+                        }
+                        
+                        Divider()
+                    }
+                    
+                    if let rating = mosque.rating {
+                        HStack {
+                            Text("Değerlendirme")
+                                .font(.headline)
+                            
+                            Spacer()
+                            
+                            HStack {
+                                ForEach(0..<5) { i in
+                                    Image(systemName: i < Int(rating) ? "star.fill" : "star")
+                                        .foregroundStyle(.yellow)
+                                }
+                                
+                                Text(String(format: "%.1f", rating))
+                                    .fontWeight(.bold)
+                                
+                                Text("(\(mosque.reviewCount))")
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        
+                        Divider()
+                    }
+                    
+                    // Yol tarifi butonu
+                    Button {
+                        // Harita uygulamasını aç
+                        let url = URL(string: "maps://?daddr=\(mosque.location.latitude),\(mosque.location.longitude)")
+                        if let url = url, UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.open(url)
+                        }
+                    } label: {
+                        HStack {
+                            Image(systemName: "map.fill")
+                            Text("Yol Tarifi Al")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.accentColor)
+                        .foregroundStyle(.white)
+                        .cornerRadius(10)
+                    }
+                }
+                .padding()
+            }
+        }
+        .navigationTitle(mosque.name)
     }
 }
 
