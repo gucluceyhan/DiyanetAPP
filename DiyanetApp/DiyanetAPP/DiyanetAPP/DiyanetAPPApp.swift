@@ -11,8 +11,6 @@ import CoreLocation
 import Combine
 import MapKit
 
-// DiyanetApp/DiyanetAPP/Features/Guides/Views/GuidesView.swift modülüne erişmek gerekiyor
-
 // MARK: - Models
 
 struct PrayerTimes: Identifiable {
@@ -74,28 +72,21 @@ struct Address {
     let formattedAddress: String
 }
 
-struct Guide: Identifiable {
+// NOT: Guide modelini burada tekrar tanımlamıyoruz, Core/Common/Models/Guide.swift dosyasında tanımlanmıştır
+
+// HomeViewModel için geçici basit rehber modeli
+struct HomeGuide: Identifiable {
     let id: String
     let title: String
     let description: String
     let content: String
     let author: String
-    let category: GuideCategory
+    let category: String
     let tags: [String]
     let readTime: Int
     let createdAt: Date
     let updatedAt: Date
     var isBookmarked: Bool
-    var images: [String]? = nil
-    var videoUrl: String? = nil
-}
-
-enum GuideCategory: String {
-    case worship = "ibadet"
-    case education = "eğitim"
-    case history = "tarih"
-    case holiday = "bayram"
-    case family = "aile"
 }
 
 // MARK: - View Models
@@ -103,7 +94,7 @@ enum GuideCategory: String {
 class HomeViewModel: NSObject, ObservableObject {
     @Published var prayerTimes: PrayerTimes?
     @Published var nearbyMosques: [Mosque] = []
-    @Published var featuredGuides: [Guide] = []
+    @Published var featuredGuides: [HomeGuide] = []
     @Published var isLoading = false
     @Published var error: String?
     @Published var currentLocation: CLLocation?
@@ -441,26 +432,26 @@ class HomeViewModel: NSObject, ObservableObject {
     private func fetchFeaturedGuides() {
         // Öne çıkan rehberler
         featuredGuides = [
-            Guide(
+            HomeGuide(
                 id: "1",
                 title: "Namaz Nasıl Kılınır?",
                 description: "Namazın kılınışı, şartları ve çeşitleri hakkında kapsamlı bir rehber.",
                 content: "Namaz, İslam'ın beş şartından biridir ve günde beş vakit olarak kılınır...",
                 author: "İmam Ahmet Yılmaz",
-                category: .worship,
+                category: "worship",
                 tags: ["namaz", "ibadet", "abdest"],
                 readTime: 15,
                 createdAt: Date().addingTimeInterval(-86400 * 7),
                 updatedAt: Date().addingTimeInterval(-86400),
                 isBookmarked: false
             ),
-            Guide(
+            HomeGuide(
                 id: "2",
                 title: "Ramazan Ayı Hazırlıkları",
                 description: "Ramazan ayı için ruhsal ve fiziksel hazırlık önerileri.",
                 content: "Ramazan ayı, Müslümanlar için en kutsal aylardan biridir...",
                 author: "Dr. Mehmet Kartal",
-                category: .holiday,
+                category: "holiday",
                 tags: ["ramazan", "oruç", "iftar"],
                 readTime: 10,
                 createdAt: Date().addingTimeInterval(-86400 * 14),
@@ -563,7 +554,7 @@ struct MainTabView: View {
                 }
             
             NavigationView {
-                GuidesView()
+                GuidesPlaceholder()
             }
             .tabItem {
                 Label("Rehberler", systemImage: "book.fill")
@@ -601,15 +592,15 @@ struct GuidesPlaceholder: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             
-            NavigationLink(destination: Text("Hac Rehberi").navigationTitle("Hac Rehberi")) {
+            NavigationLink(destination: HajjGuideView()) {
                 rehberButonu(baslik: "Hac Rehberi", aciklama: "Hac ibadeti için kapsamlı rehber", ikon: "mappin.and.ellipse")
             }
             
-            NavigationLink(destination: Text("Umre Rehberi").navigationTitle("Umre Rehberi")) {
+            NavigationLink(destination: UmrahGuideView()) {
                 rehberButonu(baslik: "Umre Rehberi", aciklama: "Umre ziyareti için detaylı bilgiler", ikon: "building.columns")
             }
             
-            NavigationLink(destination: Text("Kudüs Rehberi").navigationTitle("Kudüs Rehberi")) {
+            NavigationLink(destination: JerusalemGuideView()) {
                 rehberButonu(baslik: "Kudüs Rehberi", aciklama: "Mescid-i Aksa ve Kudüs ziyareti", ikon: "building.2")
             }
             
@@ -992,7 +983,7 @@ struct MosqueCard: View {
 }
 
 struct FeaturedGuidesSection: View {
-    let guides: [Guide]
+    let guides: [HomeGuide]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -1008,7 +999,7 @@ struct FeaturedGuidesSection: View {
 }
 
 struct FeaturedGuideCard: View {
-    let guide: Guide
+    let guide: HomeGuide
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -1023,7 +1014,7 @@ struct FeaturedGuideCard: View {
             HStack {
                 Label("\(guide.readTime) dk", systemImage: "clock")
                 Spacer()
-                Label(guide.category.rawValue.capitalized, systemImage: "book")
+                Label(guide.category.capitalized, systemImage: "book")
             }
             .font(.caption)
             .foregroundStyle(.gray)
@@ -1044,8 +1035,9 @@ struct MosqueDetailView: View {
     }
 }
 
-struct GuideDetailView: View {
-    let guide: Guide
+// Rehber detay görünümünü yeniden adlandırıyoruz çünkü GuidesView.swift'te tanımlandı
+struct OldGuideDetailView: View {
+    let guide: HomeGuide
     
     var body: some View {
         Text("Rehber Detayları: \(guide.title)")
@@ -1063,5 +1055,81 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         MainTabView()
             .environmentObject(AuthViewModel())
+    }
+}
+
+// MARK: - Guide Views
+struct HajjGuideView: View {
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Hac Rehberi")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding()
+                
+                Text("Hac, İslam'ın beş şartından biridir ve her Müslümanın gücü yettiğinde hayatında bir kez yapması gereken bir ibadettir.")
+                    .padding()
+                
+                Image("hajj_guide")
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                
+                Text("Bu rehber, hac ibadetinin detaylarını ve kutsal mekanlarda yapılması gerekenleri anlatır.")
+                    .padding()
+            }
+        }
+        .navigationTitle("Hac Rehberi")
+    }
+}
+
+struct UmrahGuideView: View {
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Umre Rehberi")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding()
+                
+                Text("Umre, hac mevsimi dışında, herhangi bir zamanda Kabe'yi, Safa ve Merve tepelerini ziyaret etmek ve sa'y etmekten ibarettir.")
+                    .padding()
+                
+                Image("umrah_guide")
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                
+                Text("Bu rehber, umre ziyaretinizde yapmanız gereken ibadetleri ve dikkat edilmesi gereken hususları anlatır.")
+                    .padding()
+            }
+        }
+        .navigationTitle("Umre Rehberi")
+    }
+}
+
+struct JerusalemGuideView: View {
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Kudüs Rehberi")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding()
+                
+                Text("Kudüs, üç semavi din için kutsal sayılan kadim bir şehirdir. Mescid-i Aksa, Müslümanların ilk kıblesi olarak özel bir öneme sahiptir.")
+                    .padding()
+                
+                Image("jerusalem_guide")
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                
+                Text("Bu rehber, Kudüs'teki kutsal mekanları ve ziyaret edilmesi gereken yerleri anlatır.")
+                    .padding()
+            }
+        }
+        .navigationTitle("Kudüs Rehberi")
     }
 }
